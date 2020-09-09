@@ -1,1 +1,3 @@
-- Run "npm install" to install all necessary 
+- Run "npm install" to install all necessary modules, you may have to do this for both the frontend and backend
+- ALL React stuff should go in the "frontend-files" folder, so please make sure the console is in the folder before you install packages
+- Also, make a branch when you are dong stuff and communicate when pushing or merging to master
