@@ -2,4 +2,4 @@
     - When testing frontend stuff, navigate to the "client" fodler and run "npm run build"
     - Once that is done, then go back to the parent directory and run "npm start"
 - ALL React stuff should go in the "client" folder, so please make sure the console is in the folder before you install packages
-- Also, make a branch when you are dong stuff and communicate when pushing or merging to master
+- Also, make a branch when you are doing stuff and communicate when pushing or merging to master
