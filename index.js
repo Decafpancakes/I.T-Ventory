@@ -8,7 +8,7 @@ const path = require('path');
 app.set('port', process.env.PORT || 3000);
 
 var MongoClient = require('mongodb').MongoClient;
-var getSecret = require("./routes/Secret")
+var getSecret = require("./Secret")
 var client = new MongoClient(getSecret("uri"), {
     useNewUrlParser: true,
     useUnifiedTopology: true
