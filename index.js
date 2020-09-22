@@ -15,8 +15,8 @@ var client = new MongoClient(getSecret("uri"), {
 });
 
 //This will allow the frontend files to be displayed and handle view routing
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+//app.set('views', path.join(__dirname, 'views')); //testing to see if these two lines are not needed
+//app.set('view engine', 'pug');
 app.use(express.static('./client/build'));
 
 //Connect to database and start the app
@@ -26,7 +26,7 @@ client.connect((err, database) => {
     }
 
     //Allows for database operation in other files without starting a whole new connection every time
-    app.set('database', database);
+    app.set('db', database);
 
     app.listen(app.get('port'), () => {
         console.log('Express server listening on port ' + app.get('port'));
