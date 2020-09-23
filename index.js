@@ -1,20 +1,25 @@
 //This is the primary backend file.
 //All other backend files are within the "backend-files" folder
 //See "Things to remember" if the app is not working for you
+//-------------------------------------------------------------------------------------//
+
+//Required imports
 const express = require('express');
 const app = express();
-const path = require('path');
 
+//Sets the port of the app to whatever the host is using, or 3000 for local development
 app.set('port', process.env.PORT || 3000);
 
+//Establishes a variable "client" with the database connection info
+//Login information is in Secret.js, which is in the .gitignore so it must be locally created on each machine
 var MongoClient = require('mongodb').MongoClient;
-var getSecret = require("./Secret")
+var getSecret = require("./Secret");
 var client = new MongoClient(getSecret("uri"), {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
 
-//This will allow the frontend files to be displayed and handle view routing, this is literally all you need.
+//This will allow the frontend files to be displayed and handle frontend routing.
 app.use(express.static('./client/build'));
 
 //Routes to each page's respective backend file, does not need .js for the file
@@ -38,4 +43,5 @@ client.connect((err, database) => {
     });
 });
 
-module.exports = app;
+//This line is apparently not required, but I'll leave it here in case stuff starts to break
+//module.exports = app;,
