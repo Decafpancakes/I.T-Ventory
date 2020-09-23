@@ -14,10 +14,15 @@ var client = new MongoClient(getSecret("uri"), {
     useUnifiedTopology: true
 });
 
-//This will allow the frontend files to be displayed and handle view routing
-//app.set('views', path.join(__dirname, 'views')); //testing to see if these two lines are not needed
-//app.set('view engine', 'pug');
+//This will allow the frontend files to be displayed and handle view routing, this is literally all you need.
 app.use(express.static('./client/build'));
+
+//Routes to each page's respective backend file, does not need .js for the file
+app.use('/api/customers_page', require('./routes/Customers Page/Customers_Main'));
+app.use('/api/dashboard_page', require('./routes/Dashboard Page/Dashboard_Main'));
+app.use('/api/integrations_page', require('./routes/Integrations Page/Integrations_Main'));
+app.use('/api/orders_page', require('./routes/Orders Page/Orders_Main'));
+app.use('/api/reports_page', require('./routes/Reports Page/Reports_Main'));
 
 //Connect to database and start the app
 client.connect((err, database) => {
