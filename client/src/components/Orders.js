@@ -1,15 +1,15 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import { renderIntoDocument } from 'react-dom/test-utils';
 
-export default class NewOrder extends Component { 
-    render() { 
+const NewOrder = () => { 
+
         return(
             <div>
-                <h2>Create a new order.</h2>
-            </div>
+                Create a new order.
+            </div> 
         )
-    }
+        
 
 }
 
-
+export default NewOrder;

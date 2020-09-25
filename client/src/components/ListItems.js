@@ -10,14 +10,14 @@ import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter , Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import NewOrder from "./Orders";
 
 
 
 export const mainListItems = (
   <div>
-    <Router> 
       <Link to="/Dashboard">
         <ListItem button>
           <ListItemIcon>
@@ -27,7 +27,7 @@ export const mainListItems = (
         </ListItem>
       </Link>
 
-      <Link to="/Orders"> 
+      <Link to="/orders"> 
         <ListItem button >
           <ListItemIcon>
             <ShoppingCartIcon />
@@ -56,7 +56,6 @@ export const mainListItems = (
         </ListItemIcon>
         <ListItemText primary="Integrations" />
       </ListItem>
-    </Router>
   </div>
 );
 

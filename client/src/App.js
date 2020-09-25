@@ -1,20 +1,18 @@
 import React from "react";
 import Dashboard from "./components/Dashboard";
-
-/* testing routing 
-    import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-    import "bootstrap/dist/css/bootstrap.min.css";
-    import NewOrder from "./components/Orders"
-    <Link to="/create" className="nav-link">Orders</Link> 
-    <Route path = "/create" component= {NewOrder} />
-*/
-
-//delete: const App = () => <Dashboard />; 
+import NewOrder from "./components/Orders";
+import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
-    return <Dashboard />;
-
-    
+    return (
+    <BrowserRouter>
+        <Switch>
+            <Route exact path="/" component={Dashboard} />
+            <Route path ="/orders" component={NewOrder}/>
+        </Switch>
+    </BrowserRouter>
+    )
 }
 
 
