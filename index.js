@@ -6,21 +6,23 @@
 //Required imports
 const express = require('express');
 const app = express();
-
-//Sets the port of the app to whatever the host is using, or 3000 for local development
-app.set('port', process.env.PORT || 3000);
+const path = require('path');
 
 //Establishes a variable "client" with the database connection info
 //Login information is in Secret.js, which is in the .gitignore so it must be locally created on each machine
-var MongoClient = require('mongodb').MongoClient;
-var getSecret = require("./Secret");
-var client = new MongoClient(getSecret("uri"), {
+let MongoClient = require('mongodb').MongoClient;
+let getSecret = require("./Secret");
+let client = new MongoClient(getSecret("uri"), {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
 
-//This will allow the frontend files to be displayed and handle frontend routing.
+//All are needed to prevent crashing on page refresh, this is also what serves the frontend to the browser
+app.set('views', path.join(__dirname, 'views'));
 app.use(express.static('./client/build'));
+app.get("*", (req, res) => { //our GET route needs to point to the index.html in our build
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
 
 //Routes to each page's respective backend file, does not need .js for the file
 app.use('/api/customers_page', require('./routes/Customers Page/Customers_Main'));
@@ -28,6 +30,9 @@ app.use('/api/dashboard_page', require('./routes/Dashboard Page/Dashboard_Main')
 app.use('/api/integrations_page', require('./routes/Integrations Page/Integrations_Main'));
 app.use('/api/orders_page', require('./routes/Orders Page/Orders_Main'));
 app.use('/api/reports_page', require('./routes/Reports Page/Reports_Main'));
+
+//Sets the port of the app to whatever the host is using, or 3000 for local development
+app.set('port', process.env.PORT || 3000);
 
 //Connect to database and start the app
 client.connect((err, database) => {
