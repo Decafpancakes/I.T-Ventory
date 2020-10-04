@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import AppBar from '@material-ui/core/AppBar';
 import {ReactDOM, element} from 'react-dom';
 import PeopleIcon from "@material-ui/icons/People";
+import { InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
 // const useStyles = makeStyles((theme) => ({
     
 //     // necessary for content to be below app bar
@@ -48,9 +49,6 @@ import PeopleIcon from "@material-ui/icons/People";
 
 
 
-import { InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
-
-
 
 
 const useStyles = makeStyles((theme) => ({
@@ -74,62 +72,66 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Order = (props) => {
+  
   const classes = useStyles();
   return (
-    // These 2 lines are needed to make sure the information is below the app bar
+
+    // These 2 lines are needed to maek sure the information is below the app bar
     <main className={classes.content}>
     <div className={classes.appBarSpacer} />
 
-    <Typography variant="h4" gutterBottom component="h2">
-           New Order
-          </Typography>
+ 
 
-          
-      <InputGroup>
-        <InputGroupAddon addonType="prepend">
-          <InputGroupText><PeopleIcon /></InputGroupText>
-        </InputGroupAddon>
-        <Input placeholder="Client Name" />
-      </InputGroup>
+      <Typography variant="h4" gutterBottom component="h2">
+            New Order
+            </Typography>
 
-      <br />
-      <InputGroup>
-        <InputGroupAddon addonType="prepend">
-          <InputGroupText>
-            <Input addon type="checkbox" aria-label="Checkbox for following text input" />
-          </InputGroupText>
-        </InputGroupAddon>
-        <Input placeholder="Check it out" />
-      </InputGroup>
-      <br />
+            
+        <InputGroup>
+          <InputGroupAddon addonType="prepend">
+            <InputGroupText><PeopleIcon /></InputGroupText>
+          </InputGroupAddon>
+          <Input placeholder="Client Name" />
+        </InputGroup>
 
-      <InputGroup>
-        <Input placeholder="username" />
-        <InputGroupAddon addonType="append">
-          <InputGroupText>@example.com</InputGroupText>
-        </InputGroupAddon>
-      </InputGroup>
-      <br />
+        <br />
+        <InputGroup>
+          <InputGroupAddon addonType="prepend">
+            <InputGroupText>
+              <Input addon type="checkbox" aria-label="Checkbox for following text input" />
+            </InputGroupText>
+          </InputGroupAddon>
+          <Input placeholder="Check it out" />
+        </InputGroup>
+        <br />
 
-      <InputGroup>
-        <InputGroupAddon addonType="prepend">
-          <InputGroupText>$</InputGroupText>
-          <InputGroupText>$</InputGroupText>
-        </InputGroupAddon>
-        <Input placeholder="Dolla dolla billz yo!" />
-        <InputGroupAddon addonType="append">
-          <InputGroupText>$</InputGroupText>
-          <InputGroupText>$</InputGroupText>
-        </InputGroupAddon>
-      </InputGroup>
-      <br />
+        <InputGroup>
+          <Input placeholder="username" />
+          <InputGroupAddon addonType="append">
+            <InputGroupText>@example.com</InputGroupText>
+          </InputGroupAddon>
+        </InputGroup>
+        <br />
 
-      <InputGroup>
-        <InputGroupAddon addonType="prepend">$</InputGroupAddon>
-        <Input placeholder="Amount" min={0} max={100} type="number" step="1" />
-        <InputGroupAddon addonType="append">.00</InputGroupAddon>
-      </InputGroup>
-      
+        <InputGroup>
+          <InputGroupAddon addonType="prepend">
+            <InputGroupText>$</InputGroupText>
+            <InputGroupText>$</InputGroupText>
+          </InputGroupAddon>
+          <Input placeholder="Dolla dolla billz yo!" />
+          <InputGroupAddon addonType="append">
+            <InputGroupText>$</InputGroupText>
+            <InputGroupText>$</InputGroupText>
+          </InputGroupAddon>
+        </InputGroup>
+        <br />
+
+        <InputGroup>
+          <InputGroupAddon addonType="prepend">$</InputGroupAddon>
+          <Input placeholder="Amount" min={0} max={100} type="number" step="1" />
+          <InputGroupAddon addonType="append">.00</InputGroupAddon>
+        </InputGroup>
+
     <div/>
     </main>
   );
