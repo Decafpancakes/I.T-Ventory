@@ -8,7 +8,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
-const styles = {
+/* const styles = {
   root: {
     width: "100%",
     overflowX: "auto"
@@ -67,4 +67,58 @@ SimpleTable.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(SimpleTable);
+export default withStyles(styles)(SimpleTable); */
+
+const styles = {
+  root: {
+    width: "100%",
+    overflowX: "auto"
+  },
+  table: {
+    minWidth: 700
+  }
+};
+
+export default class SimpleTable extends React.Component{
+  constructor(props){
+    super(props);
+    
+    this.state = {
+      
+    };
+  }
+
+  async componentDidMount() {
+    let data = await Axios.get('/api/home_page/getTableData');
+    console.log(data.data);
+  }
+
+  render(){
+    return(
+      <Paper className={classes.root}>
+      <Table className={classes.table}>
+        <TableHead>
+          <TableRow>
+          <TableCell>Items</TableCell>
+            <TableCell align="right">Stock</TableCell>
+            <TableCell align="right">Allocated</TableCell>
+            <TableCell align="right">On Order</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.map(n => (
+            <TableRow key={n.id}>
+              <TableCell component="th" scope="row">
+                {n.name}
+              </TableCell>
+              <TableCell align="right">{n.stock}</TableCell>
+              <TableCell align="right">{n.allocated}</TableCell>
+              <TableCell align="right">{n.order}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </Paper>
+    );
+  }
+}

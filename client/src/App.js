@@ -23,7 +23,7 @@ import AssignmentIcon from "@material-ui/icons/Assignment";
 import { BrowserRouter, Route, Link, Switch, Redirect} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NewOrder from "./components/Orders";
-import Home from "./components/Home";
+import Home from "./components/Home/Home";
 import Clients from "./components/Clients";
 
 const drawerWidth = 240;
