@@ -19,7 +19,7 @@ let client = new MongoClient(getSecret("uri"), {
 
 //Routes to each page's respective backend file, does not need .js for the file
 app.use('/api/customers_page', require('./routes/Customers Page/Customers_Main'));
-app.use('/api/dashboard_page', require('./routes/Dashboard Page/Dashboard_Main'));
+app.use('/api/home_page', require('./routes/Home Page/Home_Main'));
 app.use('/api/integrations_page', require('./routes/Integrations Page/Integrations_Main'));
 app.use('/api/orders_page', require('./routes/Orders Page/Orders_Main'));
 app.use('/api/reports_page', require('./routes/Reports Page/Reports_Main'));

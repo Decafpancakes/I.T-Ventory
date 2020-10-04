@@ -1,8 +1,5 @@
-import React, {useState} from 'react';
-import { renderIntoDocument } from 'react-dom/test-utils';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import SimpleLineChart from "./SimpleLineChart";
-import SimpleTable from "./SimpleTable";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import {ReactDOM, element} from 'react-dom';
 
