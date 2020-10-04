@@ -17,19 +17,19 @@ let client = new MongoClient(getSecret("uri"), {
     useUnifiedTopology: true
 });
 
-//All are needed to prevent crashing on page refresh, this is also what serves the frontend to the browser
-app.set('views', path.join(__dirname, 'views'));
-app.use(express.static('./client/build'));
-app.get("*", (req, res) => { //our GET route needs to point to the index.html in our build
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-});
-
 //Routes to each page's respective backend file, does not need .js for the file
 app.use('/api/customers_page', require('./routes/Customers Page/Customers_Main'));
 app.use('/api/dashboard_page', require('./routes/Dashboard Page/Dashboard_Main'));
 app.use('/api/integrations_page', require('./routes/Integrations Page/Integrations_Main'));
 app.use('/api/orders_page', require('./routes/Orders Page/Orders_Main'));
 app.use('/api/reports_page', require('./routes/Reports Page/Reports_Main'));
+
+//All are needed to prevent crashing on page refresh, this is also what serves the frontend to the browser
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static('./client/build'));
+app.get("*", (req, res) => { //our GET route needs to point to the index.html in our build
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+});
 
 //Sets the port of the app to whatever the host is using, or 3000 for local development
 app.set('port', process.env.PORT || 3000);
@@ -49,4 +49,4 @@ client.connect((err, database) => {
 });
 
 //This line is apparently not required, but I'll leave it here in case stuff starts to break
-//module.exports = app;,
+module.exports = app;

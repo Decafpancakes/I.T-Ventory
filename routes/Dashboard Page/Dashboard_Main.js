@@ -2,12 +2,21 @@
 const express = require('express');
 const router = express.Router();
 
-//Recieves HTTP requests at http://localhost:3000/api/dashboard_page
-router.get('/', (req, res, next) => {
-    const db = req.app.get('db');
-    res.json({
-        "message": "WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
-    });
+//Recieves HTTP requests at http://localhost:3000/api/dashboard_page/getLineChartData
+router.get('/getLineChartData', async (req, res) => {
+    //Establishes a usable, but not active, connection to the "Client Orders" collection
+    var db = req.app.get('db');
+    let client_orders = db.db("itventory").collection("Client Orders");
+
+    //Most of these calls will be inside of a try-catch block to handle any errors
+    try {
+        let documents = await client_orders.find({}).toArray();
+        res.json(documents);
+    } catch (error) {
+        res.json({
+            error: error
+        });
+    }
 });
 
 //DO NOT EVER FORGET THIS LINE
