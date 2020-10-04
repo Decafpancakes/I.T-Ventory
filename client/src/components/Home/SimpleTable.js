@@ -7,6 +7,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import Axios from 'axios';
 
 /* const styles = {
   root: {
@@ -69,34 +70,52 @@ SimpleTable.propTypes = {
 
 export default withStyles(styles)(SimpleTable); */
 
-const styles = {
-  root: {
-    width: "100%",
-    overflowX: "auto"
-  },
-  table: {
-    minWidth: 700
-  }
-};
+let id = 0;
+function createData(name, stock, allocated, order) {
+  id += 1;
+  return { id, name, stock, allocated, order};
+}
+
+const data = [
+  createData("Dell 2GR91 Slim USB Keboard ", 50, 20, 15,),
+  createData("HP SB USB Wired Optical Scroll Mouse", 50, 20,8),
+  createData("Microsoft Surface Dock", 10, 3, 4,),
+  createData("Segate 1TB EHD", 8, 0, 10),
+  createData("HP EliteDisplay S340c 34in", 3, 1,5)
+];
 
 export default class SimpleTable extends React.Component{
   constructor(props){
     super(props);
     
     this.state = {
-      
+      asset_data: []
     };
   }
 
   async componentDidMount() {
     let data = await Axios.get('/api/home_page/getTableData');
-    console.log(data.data);
+    let array = [];
+    data.data.forEach(document => {
+      array.push({
+        id: document._id,
+        name: document.item,
+        stock: document.stock,
+        allocated: document.allocated,
+        order: document.on_order
+      });
+    });
+    this.setState(state => {
+      return {
+        asset_data: array
+      };
+    });
   }
 
   render(){
     return(
-      <Paper className={classes.root}>
-      <Table className={classes.table}>
+      <Paper /* className={classes.root} */>
+      <Table /* className={classes.table} */>
         <TableHead>
           <TableRow>
           <TableCell>Items</TableCell>
@@ -106,14 +125,14 @@ export default class SimpleTable extends React.Component{
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.map(n => (
-            <TableRow key={n.id}>
+          {this.state.asset_data.map(data => (
+            <TableRow key={data.id}>
               <TableCell component="th" scope="row">
-                {n.name}
+                {data.name}
               </TableCell>
-              <TableCell align="right">{n.stock}</TableCell>
-              <TableCell align="right">{n.allocated}</TableCell>
-              <TableCell align="right">{n.order}</TableCell>
+              <TableCell align="right">{data.stock}</TableCell>
+              <TableCell align="right">{data.allocated}</TableCell>
+              <TableCell align="right">{data.order}</TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -2,8 +2,8 @@
 const express = require('express');
 const router = express.Router();
 
-//Recieves HTTP requests at http://localhost:3000/api/home_page/getLineChartData
-router.get('/getLineChartData', async (req, res) => {
+//Recieves HTTP requests at http://localhost:3000/api/home_page/getBarChartData
+router.get('/getBarChartData', async (req, res) => {
     //Establishes a usable, but not active, connection to the "Client Orders" collection
     var db = req.app.get('db');
     let client_orders = db.db("itventory").collection("Client Orders");

@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import SimpleLineChart from "./SimpleLineChart";
+import SimpleBarChart from "./BarChart";
 import SimpleTable from "./SimpleTable";
 import Typography from '@material-ui/core/Typography';
 
@@ -47,7 +47,7 @@ const Home = () => {
             Orders
           </Typography>
           <Typography component="div" className={classes.chartContainer}>
-            <SimpleLineChart />
+            <SimpleBarChart />
           </Typography>
           <Typography variant="h4" gutterBottom component="h2">
             Assets
