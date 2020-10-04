@@ -20,6 +20,6 @@
   "dependencies": {
     "bootstrap": "^4.5.2",
     "express": "^4.17.1",
-    "mongodb": "^3.6.1"
+    "mongodb": "^3.6.2"
   }
 }
