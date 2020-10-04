@@ -14,15 +14,12 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
 import AssignmentIcon from "@material-ui/icons/Assignment";
-import { Inbox } from '@material-ui/icons';
 import { BrowserRouter, Route, Link, Switch, Redirect} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NewOrder from "./components/Orders";
@@ -179,7 +176,7 @@ export default function MiniDrawer() {
 
         
         <Divider />
-        <Link to="/Home" className={classes.link}>
+        <Link to="/" className={classes.link}>
         <ListItem button>
           <ListItemIcon>
             <DashboardIcon />
@@ -227,7 +224,7 @@ export default function MiniDrawer() {
 
       <Switch>
            
-           <Route path ="/Home" component={Home}/> 
+           <Route exact path ="/" component={Home}/> 
             <Route path ="/Orders" component={NewOrder}/>
             <Route path ="/Clients" component={Clients}/>
         </Switch>

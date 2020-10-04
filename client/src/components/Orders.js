@@ -76,7 +76,7 @@ const useStyles = makeStyles((theme) => ({
 const Order = (props) => {
   const classes = useStyles();
   return (
-    // These 2 lines are needed to maek sure the information is below the app bar
+    // These 2 lines are needed to make sure the information is below the app bar
     <main className={classes.content}>
     <div className={classes.appBarSpacer} />
 
