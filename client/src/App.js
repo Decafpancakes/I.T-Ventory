@@ -22,9 +22,10 @@ import LayersIcon from "@material-ui/icons/Layers";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import { BrowserRouter, Route, Link, Switch, Redirect} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import NewOrder from "./components/Orders";
+import Order from "./components/Orders1";
 import Home from "./components/Home/Home";
 import Clients from "./components/Clients";
+
 
 const drawerWidth = 240;
 
@@ -32,13 +33,13 @@ const drawerWidth = 240;
 const useStyles = makeStyles((theme) => ({
   
   root: {
-    display: 'flex',
+    display: 'flex', 
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+      duration: theme.transitions.duration.leavingScreen
     }),
   },
   appBarShift: {
@@ -114,7 +115,6 @@ export default function MiniDrawer() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -128,9 +128,8 @@ export default function MiniDrawer() {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
+        position="fixed" style={{backgroundColor:"#2481ba"}} 
+        className={clsx(classes.appBar, { [classes.appBarShift]: open,
         })}
       >
 
@@ -145,11 +144,12 @@ export default function MiniDrawer() {
               [classes.hide]: open,
             })}
           >
-            <MenuIcon />
+          <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
             I.T Ventory
           </Typography>
+
         </Toolbar>
       </AppBar>
 
@@ -203,14 +203,12 @@ export default function MiniDrawer() {
       </ListItem>
       </Link>
 
-      
       <ListItem button>
         <ListItemIcon>
           <BarChartIcon />
         </ListItemIcon>
         <ListItemText primary="Assets" />
       </ListItem>
-      
 
       <ListItem button>
         <ListItemIcon>
@@ -223,9 +221,8 @@ export default function MiniDrawer() {
 
 
       <Switch>
-           
            <Route exact path ="/" component={Home}/> 
-            <Route path ="/Orders" component={NewOrder}/>
+            <Route path ="/Orders" component={Order}/>
             <Route path ="/Clients" component={Clients}/>
         </Switch>
 
