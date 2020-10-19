@@ -6,6 +6,15 @@ import AppBar from '@material-ui/core/AppBar';
 import {ReactDOM, element} from 'react-dom';
 import PeopleIcon from "@material-ui/icons/People";
 import { InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
+import { MDBCol, MDBInput,MDBFormInline, MDBIcon } from "mdbreact";
+import SearchIcon from '@material-ui/icons/Search';
+import SearchBar from "material-ui-search-bar";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
 // const useStyles = makeStyles((theme) => ({
     
 //     // necessary for content to be below app bar
@@ -46,6 +55,20 @@ import { InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
 // }
 
 // export default NewOrder;
+
+
+
+function createData(id, item, ammount, costperitem, total) {
+  return { id, item, ammount, costperitem, total };
+}
+
+const rows = [
+  createData(0, 'Keyboard', '3', '20', '60'),
+  createData(1, 'Display', '2', '45', '90'),
+  createData(2, 'iPad', '5', '100', '500'),
+  createData(3, 'Macbook', '4', '200', '800'),
+  createData(4, 'Surface', '5', '175', '875'),
+];
 
 
 
@@ -93,7 +116,7 @@ const Order = (props) => {
           </InputGroupAddon>
           <Input placeholder="Client Name" />
         </InputGroup>
-
+   
         <br />
         <InputGroup>
           <InputGroupAddon addonType="prepend">
@@ -101,31 +124,18 @@ const Order = (props) => {
               <Input addon type="checkbox" aria-label="Checkbox for following text input" />
             </InputGroupText>
           </InputGroupAddon>
-          <Input placeholder="Check it out" />
+          <Input placeholder="Urgent?" />
         </InputGroup>
         <br />
 
         <InputGroup>
-          <Input placeholder="username" />
+          <Input placeholder="name" />
           <InputGroupAddon addonType="append">
-            <InputGroupText>@example.com</InputGroupText>
+            <InputGroupText>@ntdt.co</InputGroupText>
           </InputGroupAddon>
         </InputGroup>
         <br />
-
-        <InputGroup>
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>$</InputGroupText>
-            <InputGroupText>$</InputGroupText>
-          </InputGroupAddon>
-          <Input placeholder="Dolla dolla billz yo!" />
-          <InputGroupAddon addonType="append">
-            <InputGroupText>$</InputGroupText>
-            <InputGroupText>$</InputGroupText>
-          </InputGroupAddon>
-        </InputGroup>
-        <br />
-
+        
         <InputGroup>
           <InputGroupAddon addonType="prepend">$</InputGroupAddon>
           <Input placeholder="Amount" min={0} max={100} type="number" step="1" />
@@ -138,3 +148,19 @@ const Order = (props) => {
 };
 
 export default Order;
+
+
+// <MDBCol md="6">
+//       <MDBInput hint="Search" type="text" containerClass="active-pink active-pink-2 mt-0 mb-3" />
+// </MDBCol>
+
+
+{/* <InputGroup>
+        <InputGroupAddon>
+        <InputGroupText><SearchIcon /></InputGroupText>
+        </InputGroupAddon>
+        <MDBCol md="6">
+        <MDBIcon icon="search" />
+        <input className="form-control" type="text" placeholder="Search" aria-label="Search" icon="Search"/>
+        </MDBCol>
+        </InputGroup> */}
