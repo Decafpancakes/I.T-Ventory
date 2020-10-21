@@ -2,8 +2,8 @@
 const express = require('express');
 const router = express.Router();
 
-//Recieves HTTP requests at http://localhost:3000/api/orders_page
-router.get('/', (req, res, next) => {
+//Recieves HTTP GET requests at http://localhost:3000/api/orders_page
+router.get('/', (req, res) => {
     const db = req.app.get('db');
     res.json({
         "message": "WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"

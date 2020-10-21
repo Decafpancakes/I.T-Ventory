@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import { renderIntoDocument } from 'react-dom/test-utils';
+//import { renderIntoDocument } from 'react-dom/test-utils';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import AppBar from '@material-ui/core/AppBar';
-import {ReactDOM, element} from 'react-dom';
+/* import AppBar from '@material-ui/core/AppBar';
+import {ReactDOM, element} from 'react-dom'; */
 import PeopleIcon from "@material-ui/icons/People";
 import { InputGroup, InputGroupAddon, InputGroupText, Input } from 'reactstrap';
-import { MDBCol, MDBInput,MDBFormInline, MDBIcon } from "mdbreact";
+/* import { MDBCol, MDBInput,MDBFormInline, MDBIcon } from "mdbreact";
 import SearchIcon from '@material-ui/icons/Search';
 import SearchBar from "material-ui-search-bar";
 import Table from "@material-ui/core/Table";
@@ -14,7 +14,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
+import Paper from "@material-ui/core/Paper"; */
 // const useStyles = makeStyles((theme) => ({
     
 //     // necessary for content to be below app bar

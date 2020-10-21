@@ -2,15 +2,16 @@
 const express = require('express');
 const router = express.Router();
 
-//Recieves HTTP requests at http://localhost:3000/api/home_page/getBarChartData
+//Recieves HTTP GET requests at http://localhost:3000/api/home_page/getBarChartData
 router.get('/getBarChartData', async (req, res) => {
-    //Establishes a usable, but not active, connection to the "Client Orders" collection
-    var db = req.app.get('db');
-    let client_orders = db.db("itventory").collection("Client Orders");
+    //Establishes a connection to the "Client Orders" collection
+    const db = req.app.get('db');
+    const client_orders = db.db("itventory").collection("Client Orders");
 
-    //Most of these calls will be inside of a try-catch block to handle any errors
     try {
+        //Pull all documents
         let documents = await client_orders.find({}).toArray();
+        //Send them to the front-end
         res.json(documents);
     } catch (error) {
         res.json({
@@ -19,15 +20,19 @@ router.get('/getBarChartData', async (req, res) => {
     }
 });
 
-//Recieves HTTP requests at http://localhost:3000/api/home_page/getTableData
+//Recieves HTTP GET requests at http://localhost:3000/api/home_page/getTableData
 router.get('/getTableData', async (req, res) => {
+    //Establishes a connection to the "Assets" collection
     var db = req.app.get('db');
     let assets = db.db("itventory").collection("Assets");
 
     try {
+        //Pull all documents
         let documents = await assets.find({}).toArray();
+        //Send them to the front-end
         res.json(documents);
     } catch (error) {
+        //Send them an error
         res.json({
             error: error
         });
