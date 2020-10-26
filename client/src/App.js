@@ -1,4 +1,5 @@
-import React from 'react';
+//import React from 'react';
+import React, { Component } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -25,92 +26,96 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import NewOrder from "./components/Orders";
 import Home from "./components/Home/Home";
 import Clients from "./components/Clients";
+import SignIn from "./components/SignIn";
+import Assets from "./components/Assets"; 
+import Integrations from "./components/Integrations"; 
+import Login from "./components/Login";
 
-const drawerWidth = 240;
+//Test Code for default page
+//import React, { Component } from 'react'; 
 
-//All Styling
-const useStyles = makeStyles((theme) => ({
-  
-  root: {
-    display: 'flex',
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: 36,
-  },
-  hide: {
-    display: 'none',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-    whiteSpace: 'nowrap',
-  },
-  drawerOpen: {
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerClose: {
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9) + 1,
+
+//Defining 
+const App = () => { 
+  const drawerWidth = 240;
+  const useStyles = makeStyles((theme) => ({
+    
+    root: {
+      display: 'flex',
     },
-  },
-  // necessary for content to be below app bar
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing.unit * 3,
-    height: "100vh",
-    overflow: "auto"
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: theme.spacing(0, 1),
+    appBar: {
+      zIndex: theme.zIndex.drawer + 1,
+      transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+    },
+    appBarShift: {
+      marginLeft: drawerWidth,
+      width: `calc(100% - ${drawerWidth}px)`,
+      transition: theme.transitions.create(['width', 'margin'], {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    },
+    menuButton: {
+      marginRight: 36,
+    },
+    hide: {
+      display: 'none',
+    },
+    drawer: {
+      width: drawerWidth,
+      flexShrink: 0,
+      whiteSpace: 'nowrap',
+    },
+    drawerOpen: {
+      width: drawerWidth,
+      transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+    },
+    drawerClose: {
+      transition: theme.transitions.create('width', {
+        easing: theme.transitions.easing.sharp,
+        duration: theme.transitions.duration.leavingScreen,
+      }),
+      overflowX: 'hidden',
+      width: theme.spacing(7) + 1,
+      [theme.breakpoints.up('sm')]: {
+        width: theme.spacing(9) + 1,
+      },
+    },
     // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-  },
-  chartContainer: {
-    marginLeft: -22
-  },
-  tableContainer: {
-    height: 320
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
-}));
-//End Styling
+    appBarSpacer: theme.mixins.toolbar,
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing.unit * 3,
+      height: "100vh",
+      overflow: "auto"
+    },
+    toolbar: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'flex-end',
+      padding: theme.spacing(0, 1),
+      // necessary for content to be below app bar
+      ...theme.mixins.toolbar,
+    },
+    chartContainer: {
+      marginLeft: -22
+    },
+    tableContainer: {
+      height: 320
+    },
+    content: {
+      flexGrow: 1,
+      padding: theme.spacing(3),
+    },
+  }));
+  //End Styling
 
-
-
-//Drawer/Appbar
-export default function MiniDrawer() {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -122,6 +127,10 @@ export default function MiniDrawer() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+
+  //All Styling
+  
 
   return (
     
@@ -176,7 +185,7 @@ export default function MiniDrawer() {
 
         
         <Divider />
-        <Link to="/" className={classes.link}>
+        <Link to="/Home" className={classes.link}>
         <ListItem button>
           <ListItemIcon>
             <DashboardIcon />
@@ -203,53 +212,42 @@ export default function MiniDrawer() {
       </ListItem>
       </Link>
 
-      
+      <Link to="/Assets" className={classes.link}>
       <ListItem button>
         <ListItemIcon>
           <BarChartIcon />
         </ListItemIcon>
         <ListItemText primary="Assets" />
       </ListItem>
-      
+      </Link>
 
+      <Link to="Integrations" className={classes.link}>
       <ListItem button>
         <ListItemIcon>
           <LayersIcon />
         </ListItemIcon>
         <ListItemText primary="Integrations" />
       </ListItem>
+      </Link>
 
       </Drawer>
 
 
       <Switch>
-           
-           <Route exact path ="/" component={Home}/> 
-            <Route path ="/Orders" component={NewOrder}/>
-            <Route path ="/Clients" component={Clients}/>
+          <Route exact path = {"/"} component = {SignIn}/>  
+          <Route path ={"/Home"} component = {Home}/>
+          <Route path ={"/Orders"} component = {NewOrder}/>
+          <Route path ={"/Clients"} component = {Clients}/>
+          <Route path={"/Assets"} component = {Assets}/>
+          <Route path={"/Integrations"} component = {Integrations}/>
+          <Route path={"/Login"} component = {Login}/>
         </Switch>
 
       </BrowserRouter>
-    
-      {/* <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Typography variant="h4" gutterBottom component="h2">
-            Orders
-          </Typography>
-          <Typography component="div" className={classes.chartContainer}>
-            <SimpleLineChart />
-          </Typography>
-          <Typography variant="h4" gutterBottom component="h2">
-            Assets
-          </Typography>
-          <div className={classes.tableContainer}>
-            <SimpleTable />
-          </div>
-        </main> */}
-
-      
         
     </div>
     
   );
 }
+
+export default App; 
