@@ -20,10 +20,9 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
-import AssignmentIcon from "@material-ui/icons/Assignment";
 import { BrowserRouter, Route, Link, Switch, Redirect} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import NewOrder from "./components/Orders";
+import Order from "./components/Orders1";
 import Home from "./components/Home/Home";
 import Clients from "./components/Clients";
 import SignIn from "./components/SignIn";
@@ -119,7 +118,6 @@ const App = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -136,41 +134,24 @@ const App = () => {
     
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
+      <AppBar position="fixed" style={{backgroundColor:"#2481ba"}} className={clsx(classes.appBar, {
+        [classes.appBarShift]: open, })}>
 
         <Toolbar>
-          <IconButton
-            color="inherit"
-            
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
-            })}
-          >
+          <IconButton color="inherit" aria-label="open drawer" onClick={handleDrawerOpen} edge="start"
+            className={clsx(classes.menuButton, { [classes.hide]: open, })}>
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
             I.T Ventory
           </Typography>
+
         </Toolbar>
       </AppBar>
 
       <BrowserRouter>
-      <Drawer
-      
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        classes={{
+        <Drawer variant="permanent" className={clsx(classes.drawer, { [classes.drawerOpen]: open, [classes.drawerClose]:
+          !open, })} classes={{
           paper: clsx({
             [classes.drawerOpen]: open,
             [classes.drawerClose]: !open,
