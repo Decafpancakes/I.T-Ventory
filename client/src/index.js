@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import MiniDrawer from './App';
+import App from './App';
 
 
 ReactDOM.render(
   <React.StrictMode>
-    <MiniDrawer />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
