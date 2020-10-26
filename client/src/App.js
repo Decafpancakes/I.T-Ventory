@@ -19,15 +19,11 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
-import AssignmentIcon from "@material-ui/icons/Assignment";
 import { BrowserRouter, Route, Link, Switch, Redirect} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Order from "./components/Orders1";
 import Home from "./components/Home/Home";
 import Clients from "./components/Clients";
-
-
-const drawerWidth = 240;
 
 //All Styling
 const useStyles = makeStyles((theme) => ({
@@ -43,8 +39,8 @@ const useStyles = makeStyles((theme) => ({
     }),
   },
   appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    marginLeft: 240,
+    width: `calc(100% - 240px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -57,12 +53,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'none',
   },
   drawer: {
-    width: drawerWidth,
+    width: 240,
     flexShrink: 0,
     whiteSpace: 'nowrap',
   },
   drawerOpen: {
-    width: drawerWidth,
+    width: 240,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -106,9 +102,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   },
 }));
-//End Styling
-
-
 
 //Drawer/Appbar
 export default function MiniDrawer() {
@@ -127,24 +120,13 @@ export default function MiniDrawer() {
     
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar
-        position="fixed" style={{backgroundColor:"#2481ba"}} 
-        className={clsx(classes.appBar, { [classes.appBarShift]: open,
-        })}
-      >
+      <AppBar position="fixed" style={{backgroundColor:"#2481ba"}} className={clsx(classes.appBar, {
+        [classes.appBarShift]: open, })}>
 
         <Toolbar>
-          <IconButton
-            color="inherit"
-            
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
-            })}
-          >
-          <MenuIcon />
+          <IconButton color="inherit" aria-label="open drawer" onClick={handleDrawerOpen} edge="start"
+            className={clsx(classes.menuButton, { [classes.hide]: open, })}>
+            <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
             I.T Ventory
@@ -154,98 +136,74 @@ export default function MiniDrawer() {
       </AppBar>
 
       <BrowserRouter>
-      <Drawer
-      
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        classes={{
+        <Drawer variant="permanent" className={clsx(classes.drawer, { [classes.drawerOpen]: open, [classes.drawerClose]:
+          !open, })} classes={{
           paper: clsx({
             [classes.drawerOpen]: open,
             [classes.drawerClose]: !open,
           }),
-        }}
-      >
-        <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </div>
-
-        
-        <Divider />
-        <Link to="/" className={classes.link}>
-        <ListItem button>
-          <ListItemIcon>
-            <DashboardIcon />
-          </ListItemIcon>
-          <ListItemText primary="Dashboard" />
-        </ListItem>
-        </Link>
-
-        <Link to="/Orders" className={classes.link}>
-        <ListItem button >
-          <ListItemIcon>
-            <ShoppingCartIcon />
-          </ListItemIcon>
-          <ListItemText primary="Orders" />
-        </ListItem>
-        </Link>
-
-      <Link to="/Clients" className={classes.link}>
-      <ListItem button>
-        <ListItemIcon>
-          <PeopleIcon />
-        </ListItemIcon>
-        <ListItemText primary="Clients" />
-      </ListItem>
-      </Link>
-
-      <ListItem button>
-        <ListItemIcon>
-          <BarChartIcon />
-        </ListItemIcon>
-        <ListItemText primary="Assets" />
-      </ListItem>
-
-      <ListItem button>
-        <ListItemIcon>
-          <LayersIcon />
-        </ListItemIcon>
-        <ListItemText primary="Integrations" />
-      </ListItem>
-
-      </Drawer>
+        }}>
+          <div className={classes.toolbar}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'rtl' ?
+              <ChevronRightIcon /> :
+              <ChevronLeftIcon />}
+            </IconButton>
+          </div>
 
 
-      <Switch>
-           <Route exact path ="/" component={Home}/> 
-            <Route path ="/Orders" component={Order}/>
-            <Route path ="/Clients" component={Clients}/>
+          <Divider />
+          <Link to="/" className={classes.link}>
+          <ListItem button>
+            <ListItemIcon>
+              <DashboardIcon />
+            </ListItemIcon>
+            <ListItemText primary="Dashboard" />
+          </ListItem>
+          </Link>
+
+          <Link to="/Orders" className={classes.link}>
+          <ListItem button>
+            <ListItemIcon>
+              <ShoppingCartIcon />
+            </ListItemIcon>
+            <ListItemText primary="Orders" />
+          </ListItem>
+          </Link>
+
+          <Link to="/Clients" className={classes.link}>
+          <ListItem button>
+            <ListItemIcon>
+              <PeopleIcon />
+            </ListItemIcon>
+            <ListItemText primary="Clients" />
+          </ListItem>
+          </Link>
+
+          <ListItem button>
+            <ListItemIcon>
+              <BarChartIcon />
+            </ListItemIcon>
+            <ListItemText primary="Assets" />
+          </ListItem>
+
+          <ListItem button>
+            <ListItemIcon>
+              <LayersIcon />
+            </ListItemIcon>
+            <ListItemText primary="Integrations" />
+          </ListItem>
+
+        </Drawer>
+
+
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/Orders" component={Order} />
+          <Route path="/Clients" component={Clients} />
         </Switch>
 
       </BrowserRouter>
-    
-      {/* <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Typography variant="h4" gutterBottom component="h2">
-            Orders
-          </Typography>
-          <Typography component="div" className={classes.chartContainer}>
-            <SimpleLineChart />
-          </Typography>
-          <Typography variant="h4" gutterBottom component="h2">
-            Assets
-          </Typography>
-          <div className={classes.tableContainer}>
-            <SimpleTable />
-          </div>
-        </main> */}
-
-      
-        
     </div>
     
   );

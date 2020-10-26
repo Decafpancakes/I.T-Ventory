@@ -9,13 +9,12 @@ router.get("/", async (req, res) => {
   const client_orders = db.db("itventory").collection("Client Orders");
 
   try {
-      //Pull documents from database based on "Client Name" text box
-      
+    //Pull documents from database based on "Client Name" text box
   } catch (error) {
-    //Return an error  
+    //Return an error
     res.json({
-          error: error
-      });
+      error: error,
+    });
   }
 });
 

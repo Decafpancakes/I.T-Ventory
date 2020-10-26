@@ -52,11 +52,12 @@ export default function Order(props) {
   //Similar to componentDidMount and componentDidUpdate
   // - reactjs.org
   //"async" is used because I prefer it over a thousand .then() methods
-  useEffect(async () => {
+  /* useEffect(async () => {
     //On page load or update, fetch and update order_table_data from MongoDB
     //The "documents" variable contains the data that is returned
-    let documents = Axios.get("/api/clients_page");
-  });
+    let documents = await Axios.get("/api/orders_page");
+    set_order_table_data(documents.data);
+  }, []); */
 
   const classes = useStyles();
   return (
@@ -106,19 +107,9 @@ export default function Order(props) {
             },
             {
               title: "Amount",
-              field: "amount",
+              field: "orders",
               type: "numeric",
-            },
-            {
-              title: "Cost",
-              field: "cost",
-              type: "numeric",
-            },
-            {
-              title: "Total",
-              field: "total",
-              type: "numeric",
-            },
+            }
           ]}
           data={order_table_data}
           title="Order"
