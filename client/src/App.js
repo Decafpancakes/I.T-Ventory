@@ -30,10 +30,6 @@ import Assets from "./components/Assets";
 import Integrations from "./components/Integrations"; 
 import Login from "./components/Login";
 
-//Test Code for default page
-//import React, { Component } from 'react'; 
-
-
 //Defining 
 const App = () => { 
   const drawerWidth = 240;
@@ -217,7 +213,7 @@ const App = () => {
       <Switch>
           <Route exact path = {"/"} component = {SignIn}/>  
           <Route path ={"/Home"} component = {Home}/>
-          <Route path ={"/Orders"} component = {NewOrder}/>
+          <Route path ={"/Orders"} component = {Order}/>
           <Route path ={"/Clients"} component = {Clients}/>
           <Route path={"/Assets"} component = {Assets}/>
           <Route path={"/Integrations"} component = {Integrations}/>
