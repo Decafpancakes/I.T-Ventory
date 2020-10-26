@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, columns, setColumns } from "react";
 import MaterialTable from "material-table";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SearchIcon from "@material-ui/icons/Search";
@@ -36,15 +36,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Order(props) {
-  /* const [dataStore, setDataStore] = useState([
-    { item: "Keyboard", amount: 3, cost: 20, total: 60 },
-    { item: "Display", amount: 2, cost: 45, total: 90 },
-    { item: "iPad", amount: 5, cost: 100, total: 500 },
-    { item: "Macbook", amount: 4, cost: 200, total: 800 },
-    { item: "Surface", amount: 5, cost: 20, total: 875 },
-  ]); */
-
+export default function Order(props){
+   const { useState } = React;
+   
   //Initializes the order_table_data variable as a blank array
   const [order_table_data, set_order_table_data] = useState([]);
   const [client_name_input, set_client_name_input] = useState("");
@@ -59,11 +53,46 @@ export default function Order(props) {
     set_order_table_data(documents.data);
   }, []); */
 
+  
+
+  const [columns, setColumns] = useState([
+      {
+        title: 'Item',
+        field: 'item',
+      },
+      {
+        title: 'Amount',
+        field: 'amount',
+        type: 'numeric',
+        initialEditValue: '0'
+      },
+      {
+        title: 'Cost',
+        field: 'cost',
+        type: 'numeric',
+      },
+      {
+        title: 'Total',
+        field: 'total',
+        type: 'numeric',
+      },
+    ]);
+
+    const [data, setData] = useState([
+      { name: 'Mehmet', surname: 'Baran', birthYear: 1987, birthCity: 63 },
+      { name: 'Zerya Betül', surname: 'Baran', birthYear: 2017, birthCity: 34 },
+    ]);
+
+
   const classes = useStyles();
+
+
   return (
     <main className={classes.content}>
       <div className={classes.appBarSpacer} />
       <div style={{ maxWidth: "100%", paddingTop: "12px" }}>
+
+        {/* Input to attatch a client */}
         <InputGroup className="w-50">
           <InputGroupAddon addonType="prepend">
             <InputGroupText>
@@ -71,25 +100,13 @@ export default function Order(props) {
             </InputGroupText>
           </InputGroupAddon>
           <Input value={client_name_input} placeholder="Client Name" />
+          <Button variant="contained" color="#2481ba" disableElevation >
+              Search
+         </Button>
         </InputGroup>
-        <br />
 
-        <FormGroup row>
-          <FormControlLabel
-            control={
-              <Checkbox
-                icon={<AlarmIcon fontSize="small" />}
-                checkedIcon={<AlarmIcon fontSize="small" />}
-                style={{
-                  color: "#2481ba",
-                }}
-                name="checkedI"
-              />
-            }
-            label="Urgent?"
-          />
-        </FormGroup>
 
+        {/* //This is to attatch who is making the order */}
         <br />
         <InputGroup className="w-25">
           <Input placeholder="name" />
@@ -99,19 +116,25 @@ export default function Order(props) {
         </InputGroup>
         <br />
 
+
+
+
+
+
+        {/* //Start of the table component  */}
         <MaterialTable
-          columns={[
-            {
-              title: "Item",
-              field: "item",
-            },
-            {
-              title: "Amount",
-              field: "orders",
-              type: "numeric",
-            }
-          ]}
+          
+          //defines the columns, what the title is and its associated value.
+          columns={columns}
           data={order_table_data}
+          cellEditable={{
+            onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
+              return new Promise((resolve, reject) => {
+                console.log('newValue: ' + newValue);
+                setTimeout(resolve, 1000);
+              });
+            }
+          }}
           title="Order"
           icons={{
             Clear: (props) => <DeleteIcon />,
