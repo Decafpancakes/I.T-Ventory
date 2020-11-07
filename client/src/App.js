@@ -1,5 +1,6 @@
 //import React from 'react';
 import React, { Component } from 'react';
+import { BrowserRouter, Router, Route, Link, Switch, Redirect} from "react-router-dom";
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -20,18 +21,19 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import LayersIcon from "@material-ui/icons/Layers";
-import { BrowserRouter, Route, Link, Switch, Redirect} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Order from "./components/Orders1";
 import Home from "./components/Home/Home";
 import Clients from "./components/Clients";
-import SignIn from "./components/SignIn";
+import SignIn from "./components/Signin";
+import SignIn2 from "./components/Signin2";
 import Assets from "./components/Assets"; 
 import Integrations from "./components/Integrations"; 
-import Login from "./components/Login";
+import Login from "./components/Auth/Login";
+import Registration from "./components/Auth/Registration";
 
 //Test Code for default page
-//import React, { Component } from 'react'; 
+
 
 
 //Defining 
@@ -215,13 +217,15 @@ const App = () => {
 
 
       <Switch>
-          <Route exact path = {"/"} component = {SignIn}/>  
+          {/* <Route exact path = {"/"} component = {SignIn}/>  */}
+          <Route exact path = {"/"} component = {SignIn2}/> 
           <Route path ={"/Home"} component = {Home}/>
-          <Route path ={"/Orders"} component = {NewOrder}/>
+          <Route path ={"/Orders"} component = {Order}/>
           <Route path ={"/Clients"} component = {Clients}/>
           <Route path={"/Assets"} component = {Assets}/>
           <Route path={"/Integrations"} component = {Integrations}/>
           <Route path={"/Login"} component = {Login}/>
+          <Route path={"/Register"} component = {Registration}/>
         </Switch>
 
       </BrowserRouter>

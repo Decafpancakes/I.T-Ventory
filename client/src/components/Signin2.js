@@ -1,7 +1,4 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import Login from "./Auth/Login";
-import Registration from "./Auth/Registration";
+import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -16,26 +13,22 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-//this is the "copyright your website" at the bottom (delete?)
-class Copyright extends Component {
-  render() { 
-    return (
-      <Typography variant="body2" color="textSecondary" align="center">
-        {'Copyright © '}
-        <Link color="inherit" href="https://material-ui.com/">
-          Your Website
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    );
-  }
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center">
+      {'Copyright © '}
+      <Link color="inherit" href="https://material-ui.com/">
+        Your Website
+      </Link>{' '}
+      {new Date().getFullYear()}
+      {'.'}
+    </Typography>
+  );
 }
 
-// formating the text boxes 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(10),
+    marginTop: theme.spacing(8),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -53,35 +46,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default class SignIn extends Component {
-  constructor(props){
-    super(props);
-
-    this.handleSuccessfulAuth = this.handleSuccessfulAuth.bind(this);
-    this.handleLogoutClick = this.handleLogoutClick.bind(this);
-  }
-
-  //this is pushing the login status to a different page to show the user is still logged in 
-  handleSuccessfulAuth(data) { 
-    this.props.handleLogin(data);
-    this.props.history.push("/test");
-  }
-
-  //this is logging the user out when "logout" is clicked 
-  handleLogoutClick () { 
-    axios
-    .delete("http://localhost:3001/logout", { withCredentials: true}) 
-    .then(response => {
-        this.props.handleLogout();
-    }) 
-    .catch(error => {
-        console.log("logout error", error); 
-    });
-    //this.props.handleLogoutClick();
-  }
-  
-render() {
+export default function SignIn2() {
   const classes = useStyles();
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -142,6 +109,4 @@ render() {
       </Box>
     </Container>
   );
-}
-  
 }
