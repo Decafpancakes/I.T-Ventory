@@ -1,21 +1,20 @@
-import React, { useState } from "react";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import React, { useEffect, useState, columns, setColumns } from "react";
+import MaterialTable from "material-table";
+import DeleteIcon from "@material-ui/icons/Delete";
+import SearchIcon from "@material-ui/icons/Search";
+//import SaveIcon from "@material-ui/icons/Save";
+import { Button, Checkbox } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import PeopleIcon from "@material-ui/icons/People";
 import { InputGroup, InputGroupAddon, InputGroupText, Input } from "reactstrap";
-
-
-function createData(id, item, ammount, costperitem, total) {
-  return { id, item, ammount, costperitem, total };
-}
-
-const rows = [
-  createData(0, "Keyboard", "3", "20", "60"),
-  createData(1, "Display", "2", "45", "90"),
-  createData(2, "iPad", "5", "100", "500"),
-  createData(3, "Macbook", "4", "200", "800"),
-  createData(4, "Surface", "5", "175", "875"),
-];
+import PeopleIcon from "@material-ui/icons/People";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+//import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+//import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import AlarmIcon from "@material-ui/icons/Alarm";
+import Axios from "axios";
+import PublishIcon from "@material-ui/icons/Publish";
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
@@ -25,8 +24,10 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing.unit * 4,
     height: "100vh",
     overflow: "auto",
+    color: "inherit",
   },
   toolbar: {
+    color: "inherit",
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
@@ -36,58 +37,145 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Order = (props) => {
+export default function Order(props) {
+  const { useState } = React;
+
+  //Initializes the order_table_data variable as a blank array
+  const [order_table_data, set_order_table_data] = useState([]);
+  const [client_name_input, set_client_name_input] = useState("");
+
+  //Similar to componentDidMount and componentDidUpdate
+  // - reactjs.org
+  //"async" is used because I prefer it over a thousand .then() methods
+  useEffect(async () => {
+    //On page load or update, fetch and update order_table_data from MongoDB
+    //The "documents" variable contains the data that is returned
+    let documents = Axios.get("/api/clients_page");
+  });
+
+  const [columns, setColumns] = useState([
+    {
+      title: "Item",
+      field: "item",
+      editable: "never",
+    },
+    {
+      title: "Amount",
+      field: "amount",
+      type: "numeric",
+      initialEditValue: "0",
+      editable: "onAdd",
+    },
+    {
+      title: "Cost",
+      field: "cost",
+      type: "numeric",
+      editable: "never",
+    },
+    {
+      title: "Total",
+      field: "total",
+      type: "numeric",
+      editable: "never",
+    },
+  ]);
+
   const classes = useStyles();
   return (
-    // These 2 lines are needed to maek sure the information is below the app bar
     <main className={classes.content}>
       <div className={classes.appBarSpacer} />
+      <div style={{ maxWidth: "100%", paddingTop: "12px" }}>
 
-      <Typography variant="h4" gutterBottom component="h2">
-        New Order
-      </Typography>
+      <div style={{paddingBottom: "15px" }}>
+        <Typography variant="h4" className={classes.title}>Create a New Order</Typography>
+        </div>
+        
+        {/* Input to attatch a client */}
+        <InputGroup className="w-50">
+          <InputGroupAddon addonType="prepend">
+            <InputGroupText>
+              <PeopleIcon />
+            </InputGroupText>
+          </InputGroupAddon>
+          <Input value={client_name_input} placeholder="Client Name" />
+          <Button variant="contained" color="#2481ba" disableElevation>
+            Search
+          </Button>
+        </InputGroup>
 
-      <InputGroup>
-        <InputGroupAddon addonType="prepend">
-          <InputGroupText>
-            <PeopleIcon />
-          </InputGroupText>
-        </InputGroupAddon>
-        <Input placeholder="Client Name" />
-      </InputGroup>
+        {/* //This is to attatch who is making the order */}
+        <br />
+        <InputGroup className="w-25">
+          <Input placeholder="name" />
+          <InputGroupAddon addonType="append">
+            <InputGroupText>@ntdt.co</InputGroupText>
+          </InputGroupAddon>
+        </InputGroup>
+        <br />
 
-      <br />
-      <InputGroup>
-        <InputGroupAddon addonType="prepend">
-          <InputGroupText>
-            <Input
-              addon
-              type="checkbox"
-              aria-label="Checkbox for following text input"
-            />
-          </InputGroupText>
-        </InputGroupAddon>
-        <Input placeholder="Urgent?" />
-      </InputGroup>
-      <br />
-
-      <InputGroup>
-        <Input placeholder="name" />
-        <InputGroupAddon addonType="append">
-          <InputGroupText>@ntdt.co</InputGroupText>
-        </InputGroupAddon>
-      </InputGroup>
-      <br />
-
-      <InputGroup>
-        <InputGroupAddon addonType="prepend">$</InputGroupAddon>
-        <Input placeholder="Amount" min={0} max={100} type="number" step="1" />
-        <InputGroupAddon addonType="append">.00</InputGroupAddon>
-      </InputGroup>
-
+        {/* //Start of the table component  */}
+        <MaterialTable
+          //defines the columns, what the title is and its associated value.
+          columns={columns}
+          data={order_table_data}
+          //allows the user to edit the cells
+          cellEditable={{
+            onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
+              return new Promise((resolve, reject) => {
+                console.log("newValue: " + newValue);
+                setTimeout(resolve, 1000);
+              });
+            },
+          }}
+          title="Add Items to Order"
+          icons={{
+            Clear: (props) => <DeleteIcon />,
+            Search: (props) => <SearchIcon />,
+            ResetSearch: (props) => <DeleteIcon />,
+          }}
+          actions={[
+            {
+              icon: () => <DeleteIcon />,
+              tooltip: "Delete Item",
+              onClick: (event, rowData) =>
+                alert("You deleted item: " + rowData.item),
+            },
+          ]}
+          components={{
+            Action: (props) => (
+              <Button
+                onClick={(event) => props.action.onClick(event, props.data)}
+                variant="text"
+                style={{ textTransform: "none", color: "#2481ba" }}
+                size="small"
+              >
+                <DeleteIcon />
+              </Button>
+            ),
+          }}
+          options={{
+            headerStyle: {
+              backgroundColor: "#2481ba",
+              color: "#FFF",
+            },
+          }}
+        />
+      </div>
+      <div
+        style={{
+          maxWidth: "100%",
+          paddingTop: "30px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Button type="submit" variant="contained" color="submit">
+          <PublishIcon />
+          Submit Order
+        </Button>
+      </div>
       <div />
     </main>
   );
-};
-
-export default Order;
+}

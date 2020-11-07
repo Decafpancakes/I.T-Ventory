@@ -27,6 +27,10 @@ function Copyright() {
 }
 
 const useStyles = makeStyles((theme) => ({
+  display: 'flex',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -44,6 +48,10 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+  },
 }));
 
 export default function SignIn() {
@@ -53,9 +61,7 @@ export default function SignIn() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+      <Avatar alt="Remy Sharp" src="http://www.ntdt.co/rw_common/images/flatlogo.png" className={classes.large} />
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
@@ -93,11 +99,12 @@ export default function SignIn() {
             color="primary"
             className={classes.submit}
           >
+            
             Sign In
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link href="#" variant="body2" href="https://bit.ly/3ky7jgn">
                 Forgot password?
               </Link>
             </Grid>
