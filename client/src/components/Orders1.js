@@ -1,26 +1,33 @@
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import { ReactDOM, element } from "react-dom";
-import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Button from "@material-ui/core/Button";
-import SaveIcon from "@material-ui/icons/Save";
-import DeleteIcon from "@material-ui/icons/Delete";
-import SearchIcon from "@material-ui/icons/Search";
 import React, { useEffect, useState, columns, setColumns } from "react";
 import MaterialTable from "material-table";
+import DeleteIcon from "@material-ui/icons/Delete";
+import SearchIcon from "@material-ui/icons/Search";
+//import SaveIcon from "@material-ui/icons/Save";
+import { Button, Checkbox } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import { InputGroup, InputGroupAddon, InputGroupText, Input } from "reactstrap";
+import PeopleIcon from "@material-ui/icons/People";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+//import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
+//import CheckBoxIcon from '@material-ui/icons/CheckBox';
+import AlarmIcon from "@material-ui/icons/Alarm";
 import Axios from "axios";
+import PublishIcon from "@material-ui/icons/Publish";
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing.unit * 4,
     height: "100vh",
     overflow: "auto",
+    color: "inherit",
   },
   toolbar: {
+    color: "inherit",
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
@@ -28,25 +35,9 @@ const useStyles = makeStyles((theme) => ({
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   },
-  chartContainer: {
-    marginLeft: -22,
-  },
-  tableContainer: {
-    height: 320,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-  },
-  input: {
-    "& .MuiTextField-root": {
-      margin: theme.spacing(1),
-      width: "25ch",
-    },
-  },
 }));
 
-export default function Assets(props) {
+export default function Order(props) {
   const { useState } = React;
 
   //Initializes the order_table_data variable as a blank array
@@ -69,21 +60,6 @@ export default function Assets(props) {
       editable: "never",
     },
     {
-      title: "Model",
-      field: "model",
-      editable: "never",
-    },
-    {
-      title: "Manufacturer",
-      field: "manufacturer",
-      editable: "never",
-    },
-    {
-      title: "Vendor",
-      field: "vendor",
-      editable: "never",
-    },
-    {
       title: "Amount",
       field: "amount",
       type: "numeric",
@@ -94,63 +70,58 @@ export default function Assets(props) {
       title: "Cost",
       field: "cost",
       type: "numeric",
-      editable: "always",
+      editable: "never",
     },
     {
-      title: "Sell",
-      field: "sell",
+      title: "Total",
+      field: "total",
       type: "numeric",
-      editable: "always",
+      editable: "never",
     },
   ]);
 
   const classes = useStyles();
   return (
-    // These 2 lines are needed to maek sure the information is below the app bar
     <main className={classes.content}>
       <div className={classes.appBarSpacer} />
+      <div style={{ maxWidth: "100%", paddingTop: "12px" }}>
 
-      <div style={{paddingBottom: "8px" }}>
-        <Typography variant="h4" className={classes.title}>Assets</Typography>
+      <div style={{paddingBottom: "15px" }}>
+        <Typography variant="h4" className={classes.title}>Create a New Order</Typography>
         </div>
+        
+        {/* Input to attatch a client */}
+        <InputGroup className="w-50">
+          <InputGroupAddon addonType="prepend">
+            <InputGroupText>
+              <PeopleIcon />
+            </InputGroupText>
+          </InputGroupAddon>
+          <Input value={client_name_input} placeholder="Client Name" />
+          <Button variant="contained" color="#2481ba" disableElevation>
+            Search
+          </Button>
+        </InputGroup>
 
-      <form className={classes.input}>
-        <TextField label="Item Name" type="itemname" />
+        {/* //This is to attatch who is making the order */}
+        <br />
+        <InputGroup className="w-25">
+          <Input placeholder="name" />
+          <InputGroupAddon addonType="append">
+            <InputGroupText>@ntdt.co</InputGroupText>
+          </InputGroupAddon>
+        </InputGroup>
+        <br />
+        <InputGroup className="w-25">
+            <InputGroupAddon addonType="prepend">
+               <InputGroupText>NTDT-O-</InputGroupText>
+           </InputGroupAddon>
+          <Input placeholder="Order Number" />
+        </InputGroup>
+        <br />
 
-        <TextField label="Model Number" type="model" />
-        <TextField label="Manufacturer" type="manufacturer" />
-        <TextField label="Vendor" type="vendor" />
-        <div>
-          <TextField
-            label="Cost"
-            type="cost"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">$</InputAdornment>
-              ),
-            }}
-          />
-          <TextField
-            label="Sell"
-            type="sell"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">$</InputAdornment>
-              ),
-            }}
-          />
-        </div>
-
-        <div style={{ maxWidth: "100%", paddingTop: "12px" }}>
-        <Button type="submit" variant="contained" color="submit">
-          <SaveIcon />
-          Save
-        </Button>
-        </div>
-
-      </form>
-
-      <div style={{ maxWidth: "100%", paddingTop: "25px" }}>
+        <div style={{ maxWidth: "100%", paddingTop: "50px" }}>
+        {/* //Start of the table component  */}
         <MaterialTable
           //defines the columns, what the title is and its associated value.
           columns={columns}
@@ -164,7 +135,7 @@ export default function Assets(props) {
               });
             },
           }}
-          title="Items"
+          title="Add Items to Order"
           icons={{
             Clear: (props) => <DeleteIcon />,
             Search: (props) => <SearchIcon />,
@@ -194,13 +165,29 @@ export default function Assets(props) {
             headerStyle: {
               backgroundColor: "#2481ba",
               color: "#FFF",
+              rowStyle: {
+                borderBottom: '5px solid white',
+              }
             },
           }}
         />
       </div>
+      <div
+        style={{
+          maxWidth: "100%",
+          paddingTop: "30px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        </div>
+        <Button type="submit" variant="contained" color="submit">
+          <PublishIcon />
+          Submit Order
+        </Button>
+      </div>
       <div />
     </main>
   );
-
-  ReactDOM.render(element, document.getElementById("root"));
 }

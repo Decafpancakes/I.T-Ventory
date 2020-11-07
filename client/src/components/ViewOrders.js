@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Order(props) {
+export default function ViewOrders(props) {
   const { useState } = React;
 
   //Initializes the order_table_data variable as a blank array
@@ -47,7 +47,7 @@ export default function Order(props) {
   //Similar to componentDidMount and componentDidUpdate
   // - reactjs.org
   //"async" is used because I prefer it over a thousand .then() methods
-  useEffect(async () => {
+  useEffect( () => {
     //On page load or update, fetch and update order_table_data from MongoDB
     //The "documents" variable contains the data that is returned
     let documents = Axios.get("/api/clients_page");
@@ -55,29 +55,26 @@ export default function Order(props) {
 
   const [columns, setColumns] = useState([
     {
-      title: "Item",
-      field: "item",
+      title: "Client Name",
+      field: "client",
       editable: "never",
     },
     {
-      title: "Amount",
-      field: "amount",
-      type: "numeric",
-      initialEditValue: "0",
-      editable: "onAdd",
-    },
-    {
-      title: "Cost",
-      field: "cost",
-      type: "numeric",
+      title: "Order Date ",
+      field: "date",
       editable: "never",
     },
     {
-      title: "Total",
-      field: "total",
-      type: "numeric",
+      title: "Order Number",
+      field: "ordernumber",
       editable: "never",
     },
+    {
+        title: "Cost",
+        field: "cost",
+        type: "numeric",
+        editable: "never",
+      },
   ]);
 
   const classes = useStyles();
@@ -87,31 +84,9 @@ export default function Order(props) {
       <div style={{ maxWidth: "100%", paddingTop: "12px" }}>
 
       <div style={{paddingBottom: "15px" }}>
-        <Typography variant="h4" className={classes.title}>Create a New Order</Typography>
+        <Typography variant="h4" className={classes.title}>View Existing Orders</Typography>
         </div>
         
-        {/* Input to attatch a client */}
-        <InputGroup className="w-50">
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>
-              <PeopleIcon />
-            </InputGroupText>
-          </InputGroupAddon>
-          <Input value={client_name_input} placeholder="Client Name" />
-          <Button variant="contained" color="#2481ba" disableElevation>
-            Search
-          </Button>
-        </InputGroup>
-
-        {/* //This is to attatch who is making the order */}
-        <br />
-        <InputGroup className="w-25">
-          <Input placeholder="name" />
-          <InputGroupAddon addonType="append">
-            <InputGroupText>@ntdt.co</InputGroupText>
-          </InputGroupAddon>
-        </InputGroup>
-        <br />
 
         {/* //Start of the table component  */}
         <MaterialTable
@@ -127,53 +102,42 @@ export default function Order(props) {
               });
             },
           }}
-          title="Add Items to Order"
+          title="Orders"
           icons={{
             Clear: (props) => <DeleteIcon />,
             Search: (props) => <SearchIcon />,
             ResetSearch: (props) => <DeleteIcon />,
           }}
-          actions={[
-            {
-              icon: () => <DeleteIcon />,
-              tooltip: "Delete Item",
-              onClick: (event, rowData) =>
-                alert("You deleted item: " + rowData.item),
-            },
-          ]}
-          components={{
-            Action: (props) => (
-              <Button
-                onClick={(event) => props.action.onClick(event, props.data)}
-                variant="text"
-                style={{ textTransform: "none", color: "#2481ba" }}
-                size="small"
-              >
-                <DeleteIcon />
-              </Button>
-            ),
-          }}
+        //   actions={[
+        //     {
+        //       icon: () => <DeleteIcon />,
+        //       tooltip: "Delete Item",
+        //       onClick: (event, rowData) =>
+        //         alert("You deleted item: " + rowData.item),
+        //     },
+        //   ]}
+        //   components={{
+        //     Action: (props) => (
+        //       <Button
+        //         onClick={(event) => props.action.onClick(event, props.data)}
+        //         variant="text"
+        //         style={{ textTransform: "none", color: "#2481ba" }}
+        //         size="small"
+        //       >
+        //         <DeleteIcon />
+        //       </Button>
+        //     ),
+        //   }}
           options={{
             headerStyle: {
               backgroundColor: "#2481ba",
               color: "#FFF",
+              rowStyle: {
+                borderBottom: '5px solid white',
+              }
             },
           }}
         />
-      </div>
-      <div
-        style={{
-          maxWidth: "100%",
-          paddingTop: "30px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Button type="submit" variant="contained" color="submit">
-          <PublishIcon />
-          Submit Order
-        </Button>
       </div>
       <div />
     </main>

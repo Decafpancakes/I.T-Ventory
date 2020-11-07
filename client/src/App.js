@@ -15,29 +15,31 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import DashboardIcon from "@material-ui/icons/Dashboard";
+import HomeSharpIcon from '@material-ui/icons/HomeSharp';
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import ComputerIcon from "@material-ui/icons/Computer";
 import PeopleIcon from "@material-ui/icons/People";
-import BarChartIcon from "@material-ui/icons/BarChart";
-import LayersIcon from "@material-ui/icons/Layers";
+import LayersIcon from '@material-ui/icons/Layers';
+import AddShoppingCartSharpIcon from '@material-ui/icons/AddShoppingCartSharp';
+import PersonAddSharpIcon from '@material-ui/icons/PersonAddSharp';
 import { BrowserRouter, Route, Link, Switch, Redirect } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Order from "./components/Orders";
+import Order from "./components/Orders1";
 import Home from "./components/Home/Home";
 import Clients from "./components/Clients";
 import SignIn from "./components/Signin";
 import Assets from "./components/Assets";
-import Integrations from "./components/Integrations";
+import Users from "./components/Users";
+import ViewOrders from "./components/ViewOrders";
 import Button from "@material-ui/core/Button";
 
-// function Display(props) {
-//   const isLoggedIn = props.isLoggedIn;
-//   if (isLoggedIn) {
-//     return <AppBar />;
-//   }
-//   return <SignIn />;
-// }
+function Display(props) {
+  const isLoggedIn = props.isLoggedIn;
+  if (isLoggedIn) {
+    return <AppBar />;
+  }
+  return <SignIn />;
+}
 
 //Defining
 const App = () => {
@@ -197,7 +199,7 @@ const App = () => {
           <Link to="/Home" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
-                <DashboardIcon />
+                <HomeSharpIcon />
               </ListItemIcon>
               <ListItemText primary="Dashboard" />
             </ListItem>
@@ -206,18 +208,18 @@ const App = () => {
           <Link to="/Orders" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
-                <ShoppingCartIcon />
+                <AddShoppingCartSharpIcon />
               </ListItemIcon>
               <ListItemText primary="Orders" />
             </ListItem>
           </Link>
 
-          <Link to="/Clients" className={classes.link}>
+          <Link to="Existing Orders" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
-                <PeopleIcon />
+                <ShoppingCartIcon />
               </ListItemIcon>
-              <ListItemText primary="Clients" />
+              <ListItemText primary="Existing Orders" />
             </ListItem>
           </Link>
 
@@ -230,12 +232,21 @@ const App = () => {
             </ListItem>
           </Link>
 
-          <Link to="Integrations" className={classes.link}>
+          <Link to="/Clients" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
-                <LayersIcon />
+                <PeopleIcon />
               </ListItemIcon>
-              <ListItemText primary="Integrations" />
+              <ListItemText primary="Clients" />
+            </ListItem>
+          </Link>
+          <br/>
+          <Link to="/Users" className={classes.link}>
+            <ListItem button>
+              <ListItemIcon>
+                <PersonAddSharpIcon />
+              </ListItemIcon>
+              <ListItemText primary="Users" />
             </ListItem>
           </Link>
         </Drawer>
@@ -246,8 +257,9 @@ const App = () => {
           <Route path={"/Orders"} component={Order} />
           <Route path={"/Clients"} component={Clients} />
           <Route path={"/Assets"} component={Assets} />
-          <Route path={"/Integrations"} component={Integrations} />
+          <Route path={"/Existing Orders"} component={ViewOrders} />
           <Route path={"/SignIn"} component={SignIn} />
+          <Route path={"/Users"} component={Users} />
         </Switch>
       </BrowserRouter>
     </div>
