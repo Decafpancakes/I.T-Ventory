@@ -2,17 +2,10 @@ import React, { useEffect, useState, columns, setColumns } from "react";
 import MaterialTable from "material-table";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SearchIcon from "@material-ui/icons/Search";
-//import SaveIcon from "@material-ui/icons/Save";
-import { Button, Checkbox } from "@material-ui/core";
+import { Button} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-//import Typography from '@material-ui/core/Typography';
 import { InputGroup, InputGroupAddon, InputGroupText, Input } from "reactstrap";
 import PeopleIcon from "@material-ui/icons/People";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-//import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-//import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import AlarmIcon from "@material-ui/icons/Alarm";
 import Axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -46,12 +39,15 @@ export default function Order(props){
   //Similar to componentDidMount and componentDidUpdate
   // - reactjs.org
   //"async" is used because I prefer it over a thousand .then() methods
-  /* useEffect(async () => {
+  useEffect(() => {
     //On page load or update, fetch and update order_table_data from MongoDB
     //The "documents" variable contains the data that is returned
-    let documents = await Axios.get("/api/orders_page");
-    set_order_table_data(documents.data);
-  }, []); */
+    async function pullDataasync(){
+      let documents = await Axios.get("/api/orders_page");
+      set_order_table_data(documents.data);
+    };
+    pullDataasync();
+  }, []);
 
   
 
@@ -105,7 +101,6 @@ export default function Order(props){
          </Button>
         </InputGroup>
 
-
         {/* //This is to attatch who is making the order */}
         <br />
         <InputGroup className="w-25">
@@ -116,14 +111,8 @@ export default function Order(props){
         </InputGroup>
         <br />
 
-
-
-
-
-
         {/* //Start of the table component  */}
         <MaterialTable
-          
           //defines the columns, what the title is and its associated value.
           columns={columns}
           data={order_table_data}
