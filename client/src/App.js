@@ -13,6 +13,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import "bootstrap/dist/css/bootstrap.min.css";
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -34,6 +35,15 @@ import Login from "./components/Auth/Login";
 import Registration from "./components/Auth/Registration";
 
 //Test Code for default page
+
+
+function Display(props) {
+  const isLoggedIn = props.isLoggedIn;
+  if (isLoggedIn) {
+    return <AppBar />;
+  }
+  return <SignIn2 />;
+}
 
 
 
@@ -115,6 +125,18 @@ const App = () => {
       flexGrow: 1,
       padding: theme.spacing(3),
     },
+    title: {
+      flexGrow: 1,
+    },
+    logout: {
+      marginLeft: 'auto',
+    },
+    logoCenter: {
+      position: 'absolute', 
+      left: '50%', 
+      top: '50%',
+      transform: 'translate(-50%, -50%)',
+    },
   }));
   //End Styling
 
@@ -134,22 +156,37 @@ const App = () => {
   
 
   return (
-    
+    // <Display className="App" isLoggedIn={false}>
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="fixed" style={{backgroundColor:"#2481ba"}} className={clsx(classes.appBar, {
-        [classes.appBarShift]: open, })}>
+        <AppBar position="fixed" style={{backgroundColor:"#2481ba"}} className={clsx(classes.appBar, {
+          [classes.appBarShift]: open, })}>
 
-        <Toolbar>
-          <IconButton color="inherit" aria-label="open drawer" onClick={handleDrawerOpen} edge="start"
-            className={clsx(classes.menuButton, { [classes.hide]: open, })}>
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" noWrap>
-            I.T Ventory
-          </Typography>
-        </Toolbar>
-      </AppBar>
+              <Toolbar>
+
+                <IconButton color="inherit" aria-label="open drawer" onClick={handleDrawerOpen} edge="start"
+                  className={clsx(classes.menuButton, { [classes.hide]: open, })}>
+                  <MenuIcon />
+                </IconButton>
+                
+                <Typography variant="h6" noWrap>
+                  I.T Ventory
+                </Typography>
+
+                <div className={classes.logoCenter}>
+                <img style={{width: 60, height: 'auto', verticalAlign: 'middle'}} src="http://www.ntdt.co/rw_common/images/flatlogo.png" alt="Nortech"/>
+                </div>
+
+                <div className={classes.logout} >
+                  <Button type="submit" variant="contained" color="secondary">
+                    Logout
+                  </Button>
+                </div>
+
+              </Toolbar>
+          
+        </AppBar>
+
 
       <BrowserRouter>
         <Drawer variant="permanent" className={clsx(classes.drawer, { [classes.drawerOpen]: open, [classes.drawerClose]:
@@ -250,7 +287,7 @@ const App = () => {
       </BrowserRouter>
         
     </div>
-    
+    // </Display>
   );
 }
 

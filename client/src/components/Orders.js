@@ -90,6 +90,7 @@ export default function Order(props) {
         <Typography variant="h4" className={classes.title}>Create a New Order</Typography>
         </div>
         
+        
         {/* Input to attatch a client */}
         <InputGroup className="w-50">
           <InputGroupAddon addonType="prepend">
@@ -119,6 +120,7 @@ export default function Order(props) {
           <Input placeholder="Order Number" />
         </InputGroup>
         <br />
+        
 
         <div style={{ maxWidth: "100%", paddingTop: "50px" }}>
         {/* //Start of the table component  */}

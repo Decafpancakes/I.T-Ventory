@@ -69,6 +69,12 @@ export default function Clients(props) {
       editable: "never",
     },
     {
+      title: "Phone Number",
+      field: "phonenumber",
+      editable: "always",
+      type: "numberic",
+    },
+    {
       title: "City",
       field: "city",
       editable: "always",
