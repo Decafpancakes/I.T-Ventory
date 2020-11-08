@@ -23,7 +23,7 @@ class Copyright extends Component {
       <Typography variant="body2" color="textSecondary" align="center">
         {'Copyright © '}
         <Link color="inherit" href="https://material-ui.com/">
-          Your Website
+          I.T Ventory 
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}

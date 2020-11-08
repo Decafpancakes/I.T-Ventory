@@ -18,7 +18,7 @@ function Copyright() {
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       <Link color="inherit" href="https://material-ui.com/">
-        Your Website
+        I.T Ventory 
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -53,9 +53,7 @@ export default function SignIn2() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+      <Avatar alt="Remy Sharp" src="http://www.ntdt.co/rw_common/images/flatlogo.png" className={classes.large} />
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
@@ -97,7 +95,7 @@ export default function SignIn2() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+               <Link href="#" variant="body2" href="https://bit.ly/3ky7jgn">
                 Forgot password?
               </Link>
             </Grid>
