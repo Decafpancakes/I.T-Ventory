@@ -87,20 +87,17 @@ export default function Assets() {
     {
       title: "Stock",
       field: "stock",
-      type: "numeric",
       initialEditValue: "0",
       editable: "onAdd",
     },
     {
       title: "Cost",
       field: "cost",
-      type: "numeric",
       editable: "always",
     },
     {
       title: "Sell",
       field: "sellPrice",
-      type: "numeric",
       editable: "always",
     },
   ]);
