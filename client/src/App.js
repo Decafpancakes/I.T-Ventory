@@ -28,10 +28,15 @@ import Order from "./components/Orders1";
 import Home from "./components/Home/Home";
 import Clients from "./components/Clients";
 import SignIn from "./components/Signin";
-import Assets from "./components/Assets";
-import Users from "./components/Users";
-import ViewOrders from "./components/ViewOrders";
-import Button from "@material-ui/core/Button";
+import SignIn2 from "./components/Signin2";
+import Assets from "./components/Assets"; 
+import Integrations from "./components/Integrations"; 
+import Login from "./components/Auth/Login";
+import Registration from "./components/Auth/Registration";
+
+//Test Code for default page
+
+
 
 function Display(props) {
   const isLoggedIn = props.isLoggedIn;
@@ -177,51 +182,76 @@ const App = () => {
           className={clsx(classes.drawer, {
             [classes.drawerOpen]: open,
             [classes.drawerClose]: !open,
-          })}
-          classes={{
-            paper: clsx({
-              [classes.drawerOpen]: open,
-              [classes.drawerClose]: !open,
-            }),
-          }}
-        >
-          <div className={classes.toolbar}>
-            <IconButton onClick={handleDrawerClose}>
-              {theme.direction === "rtl" ? (
-                <ChevronRightIcon />
-              ) : (
-                <ChevronLeftIcon />
-              )}
-            </IconButton>
-          </div>
+          }),
+        }}
+      >
+        <div className={classes.toolbar}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          </IconButton>
+        </div>
 
-          <Divider />
-          <Link to="/Home" className={classes.link}>
-            <ListItem button>
-              <ListItemIcon>
-                <HomeSharpIcon />
-              </ListItemIcon>
-              <ListItemText primary="Dashboard" />
-            </ListItem>
-          </Link>
+        
+        <Divider />
+        <Link to="/Home" className={classes.link}>
+        <ListItem button>
+          <ListItemIcon>
+            <DashboardIcon />
+          </ListItemIcon>
+          <ListItemText primary="Dashboard" />
+        </ListItem>
+        </Link>
 
-          <Link to="/Orders" className={classes.link}>
-            <ListItem button>
-              <ListItemIcon>
-                <AddShoppingCartSharpIcon />
-              </ListItemIcon>
-              <ListItemText primary="Orders" />
-            </ListItem>
-          </Link>
+        <Link to="/Orders" className={classes.link}>
+        <ListItem button >
+          <ListItemIcon>
+            <ShoppingCartIcon />
+          </ListItemIcon>
+          <ListItemText primary="Orders" />
+        </ListItem>
+        </Link>
 
-          <Link to="Existing Orders" className={classes.link}>
-            <ListItem button>
-              <ListItemIcon>
-                <ShoppingCartIcon />
-              </ListItemIcon>
-              <ListItemText primary="Existing Orders" />
-            </ListItem>
-          </Link>
+      <Link to="/Clients" className={classes.link}>
+      <ListItem button>
+        <ListItemIcon>
+          <PeopleIcon />
+        </ListItemIcon>
+        <ListItemText primary="Clients" />
+      </ListItem>
+      </Link>
+
+      <Link to="/Assets" className={classes.link}>
+      <ListItem button>
+        <ListItemIcon>
+          <BarChartIcon />
+        </ListItemIcon>
+        <ListItemText primary="Assets" />
+      </ListItem>
+      </Link>
+
+      <Link to="Integrations" className={classes.link}>
+      <ListItem button>
+        <ListItemIcon>
+          <LayersIcon />
+        </ListItemIcon>
+        <ListItemText primary="Integrations" />
+      </ListItem>
+      </Link>
+
+      </Drawer>
+
+
+      <Switch>
+          {/* <Route exact path = {"/"} component = {SignIn}/>  */}
+          <Route exact path = {"/"} component = {SignIn2}/> 
+          <Route path ={"/Home"} component = {Home}/>
+          <Route path ={"/Orders"} component = {Order}/>
+          <Route path ={"/Clients"} component = {Clients}/>
+          <Route path={"/Assets"} component = {Assets}/>
+          <Route path={"/Integrations"} component = {Integrations}/>
+          <Route path={"/Login"} component = {Login}/>
+          <Route path={"/Register"} component = {Registration}/>
+        </Switch>
 
           <Link to="/Assets" className={classes.link}>
             <ListItem button>

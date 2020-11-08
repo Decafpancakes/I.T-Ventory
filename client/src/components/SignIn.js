@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
+import axios from 'axios';
+import Login from "./Auth/Login";
+import Registration from "./Auth/Registration";
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
