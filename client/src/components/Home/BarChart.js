@@ -1,9 +1,15 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react";
 import ResponsiveContainer from "recharts/lib/component/ResponsiveContainer";
 import {
-  BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-} from 'recharts';
-import Axios from 'axios';
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+} from "recharts";
+import Axios from "axios";
 
 /* const data = [
   {
@@ -30,27 +36,26 @@ import Axios from 'axios';
 ]; */
 
 export default class SimpleBarChart extends PureComponent {
-
-  constructor(props){
+  constructor(props) {
     super(props);
-    
+
     this.state = {
-      client_orders: []
+      client_orders: [],
     };
   }
 
   async componentDidMount() {
-    let data = await Axios.get('/api/home_page/getBarChartData');
+    let data = await Axios.get("/api/home_page/getBarChartData");
     let array = [];
-    data.data.forEach(document => {
+    data.data.forEach((document) => {
       array.push({
         name: document.client_name,
-        Orders: document.orders
+        Orders: document.orders,
       });
     });
-    this.setState(state => {
+    this.setState((state) => {
       return {
-        client_orders: array
+        client_orders: array,
       };
     });
   }
@@ -58,21 +63,24 @@ export default class SimpleBarChart extends PureComponent {
   render() {
     return (
       <ResponsiveContainer width="99%" height={320}>
-      <BarChart
-        width={500}
-        height={300}
-        data={this.state.client_orders}
-        margin={{
-          top: 5, right: 30, left: 20, bottom: 5,
-        }}
-      >
-        <CartesianGrid vertical={false} strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar dataKey="Orders" fill="primary" />
-      </BarChart>
+        <BarChart
+          width={500}
+          height={300}
+          data={this.state.client_orders}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
+        >
+          <CartesianGrid vertical={false} strokeDasharray="3 3" />
+          <XAxis dataKey="name" />
+          <YAxis />
+          <Tooltip />
+          <Legend />
+          <Bar dataKey="Orders" fill="#2481ba" />
+        </BarChart>
       </ResponsiveContainer>
     );
   }

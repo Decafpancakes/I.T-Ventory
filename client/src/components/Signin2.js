@@ -15,12 +15,12 @@ import Container from '@material-ui/core/Container';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
+      {"Copyright © "}
       <Link color="inherit" href="https://material-ui.com/">
-        I.T Ventory 
-      </Link>{' '}
+        I.T Ventory
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
@@ -28,16 +28,16 @@ function Copyright() {
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
   },
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', 
+    width: "100%",
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -52,7 +52,11 @@ export default function SignIn2() {
     <Container component="main" maxWidth="xs" Position="center">
       <CssBaseline />
       <div className={classes.paper}>
-      <Avatar alt="Remy Sharp" src="http://www.ntdt.co/rw_common/images/flatlogo.png" className={classes.large} />
+        <Avatar
+          alt="Remy Sharp"
+          src="http://www.ntdt.co/rw_common/images/flatlogo.png"
+          className={classes.large}
+        />
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
@@ -94,7 +98,7 @@ export default function SignIn2() {
           </Button>
           <Grid container>
             <Grid item xs>
-               <Link href="#" variant="body2" href="https://bit.ly/3ky7jgn">
+              <Link href="#" variant="body2" href="https://bit.ly/3ky7jgn">
                 Forgot password?
               </Link>
             </Grid>

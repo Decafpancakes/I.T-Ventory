@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 4,
+    padding: theme.spacing(4),
     height: "100vh",
     overflow: "auto",
     color: "inherit",
@@ -47,7 +47,7 @@ export default function ViewOrders(props) {
   //Similar to componentDidMount and componentDidUpdate
   // - reactjs.org
   //"async" is used because I prefer it over a thousand .then() methods
-  useEffect( () => {
+  useEffect(() => {
     //On page load or update, fetch and update order_table_data from MongoDB
     //The "documents" variable contains the data that is returned
     let documents = Axios.get("/api/clients_page");
@@ -70,11 +70,11 @@ export default function ViewOrders(props) {
       editable: "never",
     },
     {
-        title: "Cost",
-        field: "cost",
-        type: "numeric",
-        editable: "never",
-      },
+      title: "Cost",
+      field: "cost",
+      type: "numeric",
+      editable: "never",
+    },
   ]);
 
   const classes = useStyles();
@@ -82,11 +82,11 @@ export default function ViewOrders(props) {
     <main className={classes.content}>
       <div className={classes.appBarSpacer} />
       <div style={{ maxWidth: "100%", paddingTop: "12px" }}>
-
-      <div style={{paddingBottom: "15px" }}>
-        <Typography variant="h4" className={classes.title}>View Existing Orders</Typography>
+        <div style={{ paddingBottom: "15px" }}>
+          <Typography variant="h4" className={classes.title}>
+            View Existing Orders
+          </Typography>
         </div>
-        
 
         {/* //Start of the table component  */}
         <MaterialTable
@@ -108,33 +108,33 @@ export default function ViewOrders(props) {
             Search: (props) => <SearchIcon />,
             ResetSearch: (props) => <DeleteIcon />,
           }}
-        //   actions={[
-        //     {
-        //       icon: () => <DeleteIcon />,
-        //       tooltip: "Delete Item",
-        //       onClick: (event, rowData) =>
-        //         alert("You deleted item: " + rowData.item),
-        //     },
-        //   ]}
-        //   components={{
-        //     Action: (props) => (
-        //       <Button
-        //         onClick={(event) => props.action.onClick(event, props.data)}
-        //         variant="text"
-        //         style={{ textTransform: "none", color: "#2481ba" }}
-        //         size="small"
-        //       >
-        //         <DeleteIcon />
-        //       </Button>
-        //     ),
-        //   }}
+          //   actions={[
+          //     {
+          //       icon: () => <DeleteIcon />,
+          //       tooltip: "Delete Item",
+          //       onClick: (event, rowData) =>
+          //         alert("You deleted item: " + rowData.item),
+          //     },
+          //   ]}
+          //   components={{
+          //     Action: (props) => (
+          //       <Button
+          //         onClick={(event) => props.action.onClick(event, props.data)}
+          //         variant="text"
+          //         style={{ textTransform: "none", color: "#2481ba" }}
+          //         size="small"
+          //       >
+          //         <DeleteIcon />
+          //       </Button>
+          //     ),
+          //   }}
           options={{
             headerStyle: {
               backgroundColor: "#2481ba",
               color: "#FFF",
               rowStyle: {
-                borderBottom: '5px solid white',
-              }
+                borderBottom: "5px solid white",
+              },
             },
           }}
         />
