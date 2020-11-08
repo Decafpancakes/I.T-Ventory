@@ -2,7 +2,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { ReactDOM, element } from "react-dom";
 import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -16,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     height: "100vh",
     overflow: "auto",
   },
@@ -56,7 +55,7 @@ export default function Clients(props) {
   //Similar to componentDidMount and componentDidUpdate
   // - reactjs.org
   //"async" is used because I prefer it over a thousand .then() methods
-  useEffect( () => {
+  useEffect(() => {
     //On page load or update, fetch and update order_table_data from MongoDB
     //The "documents" variable contains the data that is returned
     let documents = Axios.get("/api/clients_page");
@@ -87,7 +86,7 @@ export default function Clients(props) {
       title: "PO",
       field: "po",
       editable: "always",
-    }
+    },
   ]);
 
   const classes = useStyles();
@@ -96,9 +95,11 @@ export default function Clients(props) {
     <main className={classes.content}>
       <div className={classes.appBarSpacer} />
 
-      <div style={{paddingBottom: "8px" }}>
-        <Typography variant="h4" className={classes.title}>Add a Client</Typography>
-        </div>
+      <div style={{ paddingBottom: "8px" }}>
+        <Typography variant="h4" className={classes.title}>
+          Add a Client
+        </Typography>
+      </div>
 
       <form className={classes.input}>
         <TextField label="Client Name" type="clientname" />
@@ -108,10 +109,10 @@ export default function Clients(props) {
         <TextField label="Phone number" type="phonenumber" />
         <TextField label="PO Number" type="ponumber" />
         <div style={{ maxWidth: "100%", paddingTop: "12px" }}>
-        <Button type="submit" variant="contained" color="submit">
-          <SaveIcon />
-          Save
-        </Button>
+          <Button type="submit" variant="contained" color="submit">
+            <SaveIcon />
+            Save
+          </Button>
         </div>
       </form>
 

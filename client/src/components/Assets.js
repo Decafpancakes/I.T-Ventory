@@ -1,13 +1,12 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { ReactDOM, element } from "react-dom";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SearchIcon from "@material-ui/icons/Search";
-import React, { useEffect, useState, columns, setColumns } from "react";
+import React, { useEffect, useState } from "react";
 import MaterialTable from "material-table";
 import Axios from "axios";
 
@@ -16,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     height: "100vh",
     overflow: "auto",
   },
@@ -46,22 +45,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Assets(props) {
-  const { useState } = React;
-
+export default function Assets() {
   //Initializes the order_table_data variable as a blank array
-  const [order_table_data, set_order_table_data] = useState([]);
-  const [client_name_input, set_client_name_input] = useState("");
+  const [itemsTableData, setItemsTableData] = useState([]);
 
-  //Similar to componentDidMount and componentDidUpdate
-  // - reactjs.org
-  //"async" is used because I prefer it over a thousand .then() methods
-  useEffect( () => {
-    //On page load or update, fetch and update order_table_data from MongoDB
-    //The "documents" variable contains the data that is returned
-    let documents = Axios.get("/api/clients_page");
-  });
+  //Runs on page load, populates Items Table
+  useEffect(() => {
+    fetchItemsTableData();
+  }, []);
 
+  //Text field state values
+  const [itemNameTextBoxValue, setItemNameTextBoxValue] = useState("");
+  const [modelNumberTextBoxValue, setModelNumberTextBoxValue] = useState("");
+  const [manufacturerTextBoxValue, setManufacturerTextBoxValue] = useState("");
+  const [vendorTextBoxValue, setVendorTextBoxValue] = useState("");
+  const [costTextBoxValue, setCostTextBoxValue] = useState("");
+  const [sellTextBoxValue, setSellTextBoxValue] = useState("");
+
+  //Determines the columns for the Items table
   const [columns, setColumns] = useState([
     {
       title: "Item",
@@ -70,7 +71,7 @@ export default function Assets(props) {
     },
     {
       title: "Model",
-      field: "model",
+      field: "modelNumber",
       editable: "never",
     },
     {
@@ -84,8 +85,8 @@ export default function Assets(props) {
       editable: "never",
     },
     {
-      title: "Amount",
-      field: "amount",
+      title: "Stock",
+      field: "stock",
       type: "numeric",
       initialEditValue: "0",
       editable: "onAdd",
@@ -98,11 +99,59 @@ export default function Assets(props) {
     },
     {
       title: "Sell",
-      field: "sell",
+      field: "sellPrice",
       type: "numeric",
       editable: "always",
     },
   ]);
+
+  function resetTextValues() {
+    setItemNameTextBoxValue("");
+    setModelNumberTextBoxValue("");
+    setManufacturerTextBoxValue("");
+    setVendorTextBoxValue("");
+    setCostTextBoxValue("");
+    setSellTextBoxValue("");
+  }
+
+  function handleSaveButtonClicked() {
+    //Add the asset to the "Assets" MongoDB collection, also add an "allocated" field
+    Axios.post("/api/assets_page/post", {
+      item: itemNameTextBoxValue,
+      modelNumber: modelNumberTextBoxValue,
+      manufacturer: manufacturerTextBoxValue,
+      vendor: vendorTextBoxValue,
+      cost: costTextBoxValue,
+      sellPrice: sellTextBoxValue,
+      stock: 0,
+    }).then(() => {
+      resetTextValues();
+      fetchItemsTableData();
+    });
+  }
+
+  async function fetchItemsTableData() {
+    //Pull all assets from "Assets" MongoDB collection
+    let documents = await Axios.get("/api/assets_page/get");
+    setItemsTableData(documents.data);
+  }
+
+  function updateItemData(newValue, rowData, columnDef) {
+    //Sends the info it needs to update the database with
+    Axios.post("/api/assets_page/update", {
+      item: rowData.item,
+      infoToUpdate: columnDef.field,
+      valueToUpdateWith: newValue
+    })
+      .then(() => {
+        fetchItemsTableData();
+        return true;
+      })
+      .catch(() => {
+        fetchItemsTableData();
+        return false;
+      });
+  }
 
   const classes = useStyles();
   return (
@@ -110,72 +159,105 @@ export default function Assets(props) {
     <main className={classes.content}>
       <div className={classes.appBarSpacer} />
 
-      <div style={{paddingBottom: "8px" }}>
-        <Typography variant="h4" className={classes.title}>Assets</Typography>
-        </div>
+      <div style={{ paddingBottom: "8px" }}>
+        <Typography variant="h4" className={classes.title}>
+          Assets
+        </Typography>
+      </div>
 
       <form className={classes.input}>
-        <TextField label="Item Name" type="itemname" />
+        <TextField
+          label="Item Name"
+          value={itemNameTextBoxValue}
+          onChange={(e) => setItemNameTextBoxValue(e.target.value)}
+        />
 
-        <TextField label="Model Number" type="model" />
-        <TextField label="Manufacturer" type="manufacturer" />
-        <TextField label="Vendor" type="vendor" />
+        <TextField
+          label="Model Number"
+          value={modelNumberTextBoxValue}
+          onChange={(e) => setModelNumberTextBoxValue(e.target.value)}
+        />
+        <TextField
+          label="Manufacturer"
+          value={manufacturerTextBoxValue}
+          onChange={(e) => setManufacturerTextBoxValue(e.target.value)}
+        />
+        <TextField
+          label="Vendor"
+          value={vendorTextBoxValue}
+          onChange={(e) => setVendorTextBoxValue(e.target.value)}
+        />
         <div>
           <TextField
             label="Cost"
-            type="cost"
+            type="number"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">$</InputAdornment>
               ),
             }}
+            value={costTextBoxValue}
+            onChange={(e) => setCostTextBoxValue(e.target.value)}
           />
           <TextField
-            label="Sell"
-            type="sell"
+            label="Sell Price"
+            type="number"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">$</InputAdornment>
               ),
             }}
+            value={sellTextBoxValue}
+            onChange={(e) => setSellTextBoxValue(e.target.value)}
           />
         </div>
 
         <div style={{ maxWidth: "100%", paddingTop: "12px" }}>
-        <Button type="submit" variant="contained" color="submit">
-          <SaveIcon />
-          Save
-        </Button>
+          <Button
+            variant="contained"
+            color="inherit"
+            onClick={handleSaveButtonClicked}
+          >
+            <SaveIcon />
+            Save
+          </Button>
         </div>
-
       </form>
 
+      {/* Items Table */}
       <div style={{ maxWidth: "100%", paddingTop: "25px" }}>
         <MaterialTable
           //defines the columns, what the title is and its associated value.
           columns={columns}
-          data={order_table_data}
+          data={itemsTableData}
           //allows the user to edit the cells
           cellEditable={{
             onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
-              return new Promise((resolve, reject) => {
-                console.log("newValue: " + newValue);
-                setTimeout(resolve, 1000);
+              return new Promise(async (resolve, reject) => {
+                let result = updateItemData(
+                  newValue,
+                  rowData,
+                  columnDef
+                );
+                if (result === true) {
+                  resolve(true);
+                } else {
+                  reject(true);
+                }
               });
             },
           }}
           title="Items"
           icons={{
-            Clear: (props) => <DeleteIcon />,
-            Search: (props) => <SearchIcon />,
-            ResetSearch: (props) => <DeleteIcon />,
+            Clear: () => <DeleteIcon />,
+            Search: () => <SearchIcon />,
+            ResetSearch: () => <DeleteIcon />,
           }}
           actions={[
             {
               icon: () => <DeleteIcon />,
               tooltip: "Delete Item",
-              onClick: (event, rowData) =>
-                alert("You deleted item: " + rowData.item),
+              onClick: (rowData) => alert("You deleted item: " + rowData.item),
             },
           ]}
           components={{
@@ -201,6 +283,4 @@ export default function Assets(props) {
       <div />
     </main>
   );
-
-  ReactDOM.render(element, document.getElementById("root"));
 }

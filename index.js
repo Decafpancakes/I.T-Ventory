@@ -1,12 +1,12 @@
 //This is the primary backend file.
 //All other backend files are within the "backend-files" folder
 //See "Things to remember" if the app is not working for you
-//-------------------------------------------------------------------------------------//
 
 //Required imports
 const express = require("express");
 const app = express();
 const path = require("path");
+//const cookieParser = require('cookie-parser');
 
 //Establishes a variable "client" with the database connection info
 //Login information is in Secret.js, which is in the .gitignore so it must be locally created on each machine
@@ -17,13 +17,15 @@ let client = new MongoClient(getSecret("uri"), {
   useUnifiedTopology: true,
 });
 
+//Allows the app to read JSON data
+app.use(express.json());
+
 //Routes to each page's respective backend file, does not need .js for the file
-//Any strange formatting for these is due to the Prettier extension
 app.use("/api/clients_page", require("./routes/Clients Page/Clients_Main"));
 app.use("/api/home_page", require("./routes/Home Page/Home_Main"));
 app.use(
-  "/api/integrations_page",
-  require("./routes/Integrations Page/Integrations_Main")
+  "/api/assets_page",
+  require("./routes/Assets Page/Assets_Main")
 );
 app.use("/api/orders_page", require("./routes/Orders Page/Orders_Main"));
 app.use("/api/reports_page", require("./routes/Reports Page/Reports_Main"));
