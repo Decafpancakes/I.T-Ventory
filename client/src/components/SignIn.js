@@ -16,26 +16,30 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
+//this is the "copyright your website" at the bottom (delete?)
+class Copyright extends Component {
+  render() { 
+    return (
+      <Typography variant="body2" color="textSecondary" align="center">
+        {'Copyright © '}
+        <Link color="inherit" href="https://material-ui.com/">
+          Your Website
+        </Link>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </Typography>
+    );
+  }
 }
 
+// formating the text boxes 
 const useStyles = makeStyles((theme) => ({
   display: 'flex',
     '& > *': {
       margin: theme.spacing(1),
     },
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(10),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -57,9 +61,35 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
-  const classes = useStyles();
+export default class SignIn extends Component {
+  constructor(props){
+    super(props);
 
+    this.handleSuccessfulAuth = this.handleSuccessfulAuth.bind(this);
+    this.handleLogoutClick = this.handleLogoutClick.bind(this);
+  }
+
+  //this is pushing the login status to a different page to show the user is still logged in 
+  handleSuccessfulAuth(data) { 
+    this.props.handleLogin(data);
+    this.props.history.push("/test");
+  }
+
+  //this is logging the user out when "logout" is clicked 
+  handleLogoutClick () { 
+    axios
+    .delete("http://localhost:3001/logout", { withCredentials: true}) 
+    .then(response => {
+        this.props.handleLogout();
+    }) 
+    .catch(error => {
+        console.log("logout error", error); 
+    });
+    //this.props.handleLogoutClick();
+  }
+  
+render() {
+  const classes = useStyles();
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -119,4 +149,6 @@ export default function SignIn() {
       </Box>
     </Container>
   );
+}
+  
 }
