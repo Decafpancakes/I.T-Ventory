@@ -93,7 +93,7 @@ export default function Order(props) {
             </InputGroupText>
           </InputGroupAddon>
           <Input value={client_name_input} placeholder="Client Name" />
-          <Button variant="contained" color="#2481ba" disableElevation>
+          <Button variant="contained" color="primary" disableElevation>
             Search
           </Button>
         </InputGroup>
@@ -111,8 +111,7 @@ export default function Order(props) {
           <InputGroupAddon addonType="prepend">
             <InputGroupText>NTDT-O-</InputGroupText>
           </InputGroupAddon>
-               <InputGroupText>NTDT-O-</InputGroupText>
-          <Input placeholder="Order Number" />
+          <Input placeholder="Order Number"/>
         </InputGroup>
         <br />
         
