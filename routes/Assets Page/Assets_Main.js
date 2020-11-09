@@ -42,7 +42,7 @@ router.post("/update", async (req, res) => {
   const assets = req.app.get("db").db("itventory").collection("Assets");
 
   let response = await assets.updateOne(
-    { "item": req.body.item },
+    { item: req.body.item },
     {
       $set: {
         [req.body.infoToUpdate]: req.body.valueToUpdateWith,
@@ -51,6 +51,16 @@ router.post("/update", async (req, res) => {
   );
   res.json({
     status: 200,
+  });
+});
+
+//Recieves HTTP POST requests at http://localhost:3000/api/assets_page/delete
+router.post("/delete", async (req, res) => {
+  const assets = req.app.get("db").db("itventory").collection("Assets");
+
+  let documents = await assets.deleteOne({ item: req.body.item });
+  res.json({
+    message: "woo"
   });
 });
 

@@ -138,7 +138,7 @@ export default function Assets() {
     Axios.post("/api/assets_page/update", {
       item: rowData.item,
       infoToUpdate: columnDef.field,
-      valueToUpdateWith: newValue
+      valueToUpdateWith: newValue,
     })
       .then(() => {
         fetchItemsTableData();
@@ -148,6 +148,14 @@ export default function Assets() {
         fetchItemsTableData();
         return false;
       });
+  }
+
+  function deleteItem(item) {
+    Axios.post("/api/assets_page/delete", {
+      item: item,
+    }).then(() => {
+      fetchItemsTableData();
+    });
   }
 
   const classes = useStyles();
@@ -231,11 +239,7 @@ export default function Assets() {
           cellEditable={{
             onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
               return new Promise(async (resolve, reject) => {
-                let result = updateItemData(
-                  newValue,
-                  rowData,
-                  columnDef
-                );
+                let result = updateItemData(newValue, rowData, columnDef);
                 if (result === true) {
                   resolve(true);
                 } else {
@@ -254,7 +258,7 @@ export default function Assets() {
             {
               icon: () => <DeleteIcon />,
               tooltip: "Delete Item",
-              onClick: (rowData) => alert("You deleted item: " + rowData.item),
+              onClick: (event, rowData) => deleteItem(rowData.item),
             },
           ]}
           components={{
