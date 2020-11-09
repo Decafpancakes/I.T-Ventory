@@ -222,7 +222,7 @@ const App = () => {
 
       <Divider />
 
-      <Link to="/Register" className={classes.link}>
+      <Link to="/Users" className={classes.link}>
       <ListItem button>
         <ListItemIcon>
           <PersonAddIcon />
@@ -244,7 +244,7 @@ const App = () => {
           <Route path ={"/Users"} component = {Users}/>
           <Route path={"/Assets"} component = {Assets}/>
           <Route path={"/Login"} component = {Login}/>
-          <Route path={"/Register"} component = {Registration}/>
+          <Route path={"/Registration"} component = {Registration}/>
         </Switch>
 
       </BrowserRouter>
