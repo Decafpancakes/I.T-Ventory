@@ -6,7 +6,6 @@ import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SearchIcon from "@material-ui/icons/Search";
-import ClearIcon from '@material-ui/icons/Clear';
 import React, { useEffect, useState } from "react";
 import MaterialTable from "material-table";
 import Axios from "axios";
@@ -121,7 +120,7 @@ export default function Assets() {
       vendor: vendorTextBoxValue,
       cost: costTextBoxValue,
       sellPrice: sellTextBoxValue,
-      stock: 0,
+      stock: "0",
     }).then(() => {
       resetTextValues();
       fetchItemsTableData();
@@ -251,34 +250,15 @@ export default function Assets() {
           }}
           title="Items"
           icons={{
-            Clear: () => <ClearIcon />,
+            Clear: () => <DeleteIcon />,
             Search: () => <SearchIcon />,
             ResetSearch: () => <DeleteIcon />,
           }}
-          // actions={[
-          //   {
-          //     icon: () => <DeleteIcon />,
-          //     tooltip: "Delete Item",
-          //     onClick: (rowData) => alert("You deleted item: " + rowData.item),
-          //   },
-          // ]}
-          // components={{
-          //   Action: (props) => (
-          //     <Button
-          //       onClick={(event) => props.action.onClick(event, props.data)}
-          //       variant="text"
-          //       style={{ textTransform: "none", color: "#2481ba" }}
-          //       size="small"
-          //     >
-          //       <DeleteIcon />
-          //     </Button>
-          //   ),
-          // }}
           actions={[
             {
               icon: "delete",
               tooltip: "Delete Item",
-              onClick: (event, rowData) => alert("You deleted Item " + rowData.item)
+              onClick: (event, rowData) => deleteItem(rowData.item)
             }
           ]}
           options={{

@@ -16,6 +16,7 @@ router.post("/post", (req, res) => {
       cost: req.body.cost,
       sellPrice: req.body.sellPrice,
       stock: req.body.stock,
+      allocated: "0",
     },
     (err, res) => {
       if (err) throw err;
@@ -60,7 +61,7 @@ router.post("/delete", async (req, res) => {
 
   let documents = await assets.deleteOne({ item: req.body.item });
   res.json({
-    message: "woo"
+    message: "woo",
   });
 });
 
