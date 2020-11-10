@@ -13,6 +13,17 @@ router.get("/getAssets", async (req, res) => {
   res.json(documents);
 });
 
+//Recieves HTTP GET requests at http://localhost:3000/api/orders_page/getClientOrders
+//For populating Client Order Table
+router.get("/getClientOrders", async (req, res) => {
+  //Establish a database connection
+  const clientOrders = req.app.get("db").db("itventory").collection("Client Orders");
+
+  let documents = await clientOrders.find({}).toArray();
+
+  res.json(documents);
+});
+
 //Recieves HTTP GET requests at http://localhost:3000/api/orders_page/getOrderNumber
 //For filling the order number text box
 router.get("/getOrderNumber", async (req, res) => {

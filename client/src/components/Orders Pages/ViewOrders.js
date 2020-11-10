@@ -1,20 +1,10 @@
-import React, { useEffect, useState, columns, setColumns } from "react";
+import React, { useEffect, useState } from "react";
 import MaterialTable from "material-table";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SearchIcon from "@material-ui/icons/Search";
-//import SaveIcon from "@material-ui/icons/Save";
-import { Button, Checkbox } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { InputGroup, InputGroupAddon, InputGroupText, Input } from "reactstrap";
-import PeopleIcon from "@material-ui/icons/People";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-//import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
-//import CheckBoxIcon from '@material-ui/icons/CheckBox';
-import AlarmIcon from "@material-ui/icons/Alarm";
 import Axios from "axios";
-import PublishIcon from "@material-ui/icons/Publish";
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
@@ -37,42 +27,50 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ViewOrders(props) {
-  const { useState } = React;
+export default function ViewOrders() {
 
-  //Initializes the order_table_data variable as a blank array
-  const [order_table_data, set_order_table_data] = useState([]);
-  const [client_name_input, set_client_name_input] = useState("");
+  //Initializes the orderTableData variable as a blank array
+  const [orderTableData, setOrderTableData] = useState([]);
 
-  //Similar to componentDidMount and componentDidUpdate
-  // - reactjs.org
-  //"async" is used because I prefer it over a thousand .then() methods
-  useEffect(() => {
-    //On page load or update, fetch and update order_table_data from MongoDB
-    //The "documents" variable contains the data that is returned
-    let documents = Axios.get("/api/clients_page");
-  });
+  useEffect(()=>{
+    getOrderTableData();
+  },[]);
+
+  function getOrderTableData(){
+    Axios.get("/api/orders_page/getClientOrders").then((documents)=>{
+      setOrderTableData(documents.data);
+    });;
+  }
 
   const [columns, setColumns] = useState([
     {
-      title: "Client Name",
-      field: "client",
+      title: "Item",
+      field: "item",
       editable: "never",
     },
     {
-      title: "Order Date ",
-      field: "date",
+      title: "Allocated",
+      field: "allocated",
+      editable: "never",
+    },
+    {
+      title: "Client Name",
+      field: "clientName",
       editable: "never",
     },
     {
       title: "Order Number",
-      field: "ordernumber",
+      field: "orderNumber",
       editable: "never",
     },
     {
-      title: "Cost",
-      field: "cost",
-      type: "numeric",
+      title: "Notes",
+      field: "notes",
+      editable: "never",
+    },
+    {
+      title: "Rush",
+      field: "rush",
       editable: "never",
     },
   ]);
@@ -92,7 +90,7 @@ export default function ViewOrders(props) {
         <MaterialTable
           //defines the columns, what the title is and its associated value.
           columns={columns}
-          data={order_table_data}
+          data={orderTableData}
           //allows the user to edit the cells
           cellEditable={{
             onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
@@ -104,30 +102,10 @@ export default function ViewOrders(props) {
           }}
           title="Orders"
           icons={{
-            Clear: (props) => <DeleteIcon />,
-            Search: (props) => <SearchIcon />,
-            ResetSearch: (props) => <DeleteIcon />,
+            Clear: () => <DeleteIcon />,
+            Search: () => <SearchIcon />,
+            ResetSearch: () => <DeleteIcon />,
           }}
-          //   actions={[
-          //     {
-          //       icon: () => <DeleteIcon />,
-          //       tooltip: "Delete Item",
-          //       onClick: (event, rowData) =>
-          //         alert("You deleted item: " + rowData.item),
-          //     },
-          //   ]}
-          //   components={{
-          //     Action: (props) => (
-          //       <Button
-          //         onClick={(event) => props.action.onClick(event, props.data)}
-          //         variant="text"
-          //         style={{ textTransform: "none", color: "#2481ba" }}
-          //         size="small"
-          //       >
-          //         <DeleteIcon />
-          //       </Button>
-          //     ),
-          //   }}
           options={{
             headerStyle: {
               backgroundColor: "#2481ba",
