@@ -11,30 +11,6 @@ import {
 } from "recharts";
 import Axios from "axios";
 
-/* const data = [
-  {
-    name: 'Client A', Orders: 2, amt: 2400,
-  },
-  {
-    name: 'Client B',  Orders: 5, amt: 2210,
-  },
-  {
-    name: 'Client C',  Orders: 9, amt: 2290,
-  },
-  {
-    name: 'Client D',  Orders: 4, amt: 2000,
-  },
-  {
-    name: 'Client E',  Orders: 1, amt: 2181,
-  },
-  {
-    name: 'Client F', Orders: 4, amt: 2500,
-  },
-  {
-    name: 'Client G', Orders: 7, amt: 2100,
-  },
-]; */
-
 export default class SimpleBarChart extends PureComponent {
   constructor(props) {
     super(props);
@@ -45,17 +21,33 @@ export default class SimpleBarChart extends PureComponent {
   }
 
   async componentDidMount() {
-    let data = await Axios.get("/api/home_page/getBarChartData");
-    let array = [];
-    data.data.forEach((document) => {
-      array.push({
-        name: document.client_name,
-        Orders: document.orders,
-      });
+    let documents = await Axios.get("/api/home_page/getBarChartData");
+    let documentData = documents.data;
+    let clientNameArray = [];
+    let tableData = [];
+
+    //pull clients with an order
+    documentData.forEach((document) => {
+      if (clientNameArray.includes(document.clientName) === false) {
+        clientNameArray.push(document.clientName);
+      }
     });
-    this.setState((state) => {
+
+    //count how many orders each client has
+    clientNameArray.forEach((client) => {
+      let count = 0;
+      documentData.forEach((document) => {
+        if (document.clientName === client) {
+          count++;
+        }
+      });
+      tableData.push({ name: client, count: count });
+    });
+
+    //populate the table with
+    this.setState(() => {
       return {
-        client_orders: array,
+        client_orders: tableData,
       };
     });
   }
@@ -79,7 +71,7 @@ export default class SimpleBarChart extends PureComponent {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="Orders" fill="#2481ba" />
+          <Bar dataKey="count" fill="#2481ba" />
         </BarChart>
       </ResponsiveContainer>
     );
