@@ -1,21 +1,11 @@
-import React, { useEffect, useState, columns, setColumns } from "react";
+import React, { useEffect, useState } from "react";
 import MaterialTable from "material-table";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SearchIcon from "@material-ui/icons/Search";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupText,
-  Input,
-  Form,
-  FormGroup,
-  Label,
-  FormText,
-} from "reactstrap";
-import PeopleIcon from "@material-ui/icons/People";
+import { Input, Form, FormGroup, Label } from "reactstrap";
 import Axios from "axios";
 import PublishIcon from "@material-ui/icons/Publish";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
@@ -55,7 +45,6 @@ const theme = createMuiTheme({
 export default function Order() {
   const [orderTableData, setOrderTableData] = useState([]);
   const [clientNameTextBoxInput, setClientNameTextBoxInput] = useState("");
-  const [nameTextBoxInput, setNameTextBoxInput] = useState("");
   const [orderNumberTextBoxInput, setOrderNumberTextBoxInput] = useState("");
   const [
     additionalOrderNotesTextBoxInput,
@@ -83,11 +72,7 @@ export default function Order() {
   }
 
   function handleSubmitOrder() {
-    if (
-      clientNameTextBoxInput === "" ||
-      nameTextBoxInput === "" ||
-      orderNumberTextBoxInput === ""
-    ) {
+    if (clientNameTextBoxInput === "" || orderNumberTextBoxInput === "") {
       alert("You have not entered all of the required information");
     } else {
       //check if they have allocated stock to the client (don't allow nothing to be allocated)
@@ -99,13 +84,15 @@ export default function Order() {
           somethingAllocated = true;
 
           //make sure allocated is not more than stock
-          if (element.allocated > element.stock) {
+          console.log(element.stock);
+          if (Number(element.allocated) > Number(element.stock)) {
             alert(
               "You have allocated more than is in stock for: " + element.item
             );
             incorrectAllocation = true;
             return false;
-          } else if (element.allocated < 0) {
+          } else if (Number(element.allocated) < 0) {
+            //make sure allocated is not less than 0
             alert("You cannot set a value less than 0 for: " + element.item);
             incorrectAllocation = true;
             return false;
@@ -131,15 +118,25 @@ export default function Order() {
             item: element.item,
             allocated: element.allocated,
             clientName: clientNameTextBoxInput,
-            technician: nameTextBoxInput + "@ntdt.co",
             orderNumber: orderNumberTextBoxInput,
+            notes: additionalOrderNotesTextBoxInput,
+            rush: rushOrderCheckBox,
           }).then((response) => {
             console.log(response.status);
           });
         });
 
         //Subtract allocated from stock of each item
-        //Axios.post();
+        allocatedItemsArray.forEach((element) => {
+          Axios.post("/api/orders_page/update", {
+            item: element.item,
+            allocated: element.allocated,
+          }).then((result) => {
+            console.log(result.status);
+          });
+        });
+
+        window.location.reload();
       } else if (somethingAllocated === false) {
         alert("Please do not submit an order without allocating anything.");
       }
@@ -237,7 +234,7 @@ export default function Order() {
             <Label check>
               <Input
                 value={rushOrderCheckBox}
-                onChange={(e) => setRushOrderCheckBox(e.target.value)}
+                onChange={() => setRushOrderCheckBox(!rushOrderCheckBox)}
                 type="checkbox"
               />{" "}
               Rush Order?

@@ -45,8 +45,9 @@ router.post("/post", async (req, res) => {
     item: req.body.item,
     allocated: req.body.allocated,
     clientName: req.body.clientName,
-    technician: req.body.technician,
     orderNumber: req.body.orderNumber,
+    notes: req.body.notes,
+    rush: req.body.rush,
   });
 
   res.json(response);
@@ -57,8 +58,15 @@ router.post("/post", async (req, res) => {
 router.post("/update", async (req, res) => {
   //Establish a database connection
   const assets = req.app.get("db").db("itventory").collection("Assets");
+
+  let document = await assets.find({ item: req.body.item }).toArray();
+  let newValue = document[0].stock - req.body.allocated;
+  let result = await assets.updateOne(
+    { item: req.body.item },
+    { $set: { stock: newValue.toString() } }
+  );
+
+  res.json(result);
 });
 
-//DO NOT EVER FORGET THIS LINE
-//OTHERWISE YOU WILL GET ERROR MESSAGES ABOUT MISSING MIDDLEWARE
 module.exports = router;
