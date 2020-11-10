@@ -12,7 +12,7 @@ const theme = createMuiTheme({
     secondary: {
       main: "#F21D1D",
     },
-    submit: {
+    success: {
       main: "#00e676",
     },
   },

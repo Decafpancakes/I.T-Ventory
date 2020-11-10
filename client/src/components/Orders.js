@@ -5,10 +5,11 @@ import SearchIcon from "@material-ui/icons/Search";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { InputGroup, InputGroupAddon, InputGroupText, Input } from "reactstrap";
+import { InputGroup, InputGroupAddon, InputGroupText, Input, Form, FormGroup, Label, FormText } from "reactstrap";
 import PeopleIcon from "@material-ui/icons/People";
 import Axios from "axios";
 import PublishIcon from "@material-ui/icons/Publish";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
@@ -30,6 +31,17 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
   },
 }));
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: "#2481ba", // This is the "Nortech Blue"
+    },
+    secondary: {
+      main: "#00e676",
+    },
+  },
+});
 
 export default function Order(props) {
   const { useState } = React;
@@ -83,37 +95,32 @@ export default function Order(props) {
           <Typography variant="h4" className={classes.title}>
             Create a New Order
           </Typography>
-        </div>
+      </div>
+          <Form>
+          {/* Input to attatch a client */}
+          <FormGroup className="w-50">
+            <Label for="clientName">Client:</Label>
+            <Input value={client_name_input} type="client" name="client" id="clientName" placeholder="Client Name" /> 
+          </FormGroup>
+          {/* //This is to attatch who is making the order */}
+          <FormGroup className="w-50">
+            <Label for="orderNumber">Order #:</Label>
+            <Input type="order" name="order" id="orderNumber" placeholder="NTDT-O-" addonType="prepend" />
+          </FormGroup>
+          {/* This is so you can attatch which employee is making the order */}
+          <FormGroup className="w-50">
+            <Label for="exampleText">Additional Order Notes:</Label>
+            <Input type="textarea" name="text" id="exampleText" />
+          </FormGroup>
+          <br/>
+          <FormGroup check>
+            <Label check>
+              <Input type="checkbox" />{' '}
+              Rush Order?
+            </Label>
+          </FormGroup>
+        </Form>
 
-        {/* Input to attatch a client */}
-        <InputGroup className="w-50">
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>
-              <PeopleIcon />
-            </InputGroupText>
-          </InputGroupAddon>
-          <Input value={client_name_input} placeholder="Client Name" />
-          <Button variant="contained" color="primary" disableElevation>
-            Search
-          </Button>
-        </InputGroup>
-
-        {/* //This is to attatch who is making the order */}
-        <br />
-        <InputGroup className="w-25">
-          <Input placeholder="name" />
-          <InputGroupAddon addonType="append">
-            <InputGroupText>@ntdt.co</InputGroupText>
-          </InputGroupAddon>
-        </InputGroup>
-        <br />
-        <InputGroup className="w-25">
-          <InputGroupAddon addonType="prepend">
-            <InputGroupText>NTDT-O-</InputGroupText>
-          </InputGroupAddon>
-          <Input placeholder="Order Number"/>
-        </InputGroup>
-        <br />
         
 
         <div style={{ maxWidth: "100%", paddingTop: "50px" }}>
@@ -177,10 +184,14 @@ export default function Order(props) {
             alignItems: "center",
           }}
         ></div>
-        <Button type="submit" variant="contained" color="submit">
-          <PublishIcon />
-          Submit Order
-        </Button>
+  
+      <ThemeProvider theme={theme}>
+          <Button type="submit" variant="contained" color="secondary">
+            <PublishIcon />
+            Submit Order
+          </Button>
+      </ThemeProvider>    
+
       </div>
       <div />
     </main>
