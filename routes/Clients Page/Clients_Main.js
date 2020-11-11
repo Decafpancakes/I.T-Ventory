@@ -9,12 +9,11 @@ router.get("/clientInfo", async (req, res) => {
   const clients = req.app.get("db").db("itventory").collection("Clients");
 
   let documents = await clients.find({}).toArray();
-  console.log(documents);
   res.json(documents);
 });
 
 //Recieves HTTP POST requests at http://localhost:3000/api/clients_page/postInfo
-//Used to get all client data
+//Used to post client info
 router.post("/postInfo", async (req, res) => {
   //Establish a database connection
   const clients = req.app.get("db").db("itventory").collection("Clients");
@@ -27,6 +26,26 @@ router.post("/postInfo", async (req, res) => {
     address: req.body.address,
     po: req.body.po,
   });
+  res.json(response);
+});
+
+//Recieves HTTP POST requests at http://localhost:3000/api/clients_page/updateInfo
+//Used to update client info
+router.post("/updateInfo", async (req, res) => {
+  //Establish a database connection
+  const clients = req.app.get("db").db("itventory").collection("Clients");
+
+  let response = await clients.updateOne(
+    {
+      client: req.body.client,
+    },
+    {
+      $set: {
+        [req.body.infoToUpdate]: req.body.valueToUpdateWith,
+      },
+    }
+  );
+
   res.json(response);
 });
 

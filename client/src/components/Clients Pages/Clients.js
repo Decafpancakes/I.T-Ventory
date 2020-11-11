@@ -62,7 +62,7 @@ export default function Clients() {
     {
       title: "Phone Number",
       field: "phoneNumber",
-      editable: "never",
+      editable: "always",
     },
     {
       title: "City",
@@ -175,8 +175,20 @@ export default function Clients() {
           cellEditable={{
             onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
               return new Promise((resolve, reject) => {
-                console.log("newValue: " + newValue);
-                setTimeout(resolve, 1000);
+                //Sends the info it needs to update the database with
+                Axios.post("/api/clients_page/updateInfo", {
+                  client: rowData.client,
+                  infoToUpdate: columnDef.field,
+                  valueToUpdateWith: newValue,
+                })
+                  .then(() => {
+                    getClientData();
+                    resolve(true);
+                  })
+                  .catch(() => {
+                    getClientData();
+                    resolve(false);
+                  });
               });
             },
           }}
