@@ -1,12 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { ReactDOM, element } from "react-dom";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SearchIcon from "@material-ui/icons/Search";
-import React, { useEffect, useState, columns, setColumns } from "react";
+import React, { useEffect, useState } from "react";
 import MaterialTable from "material-table";
 import Axios from "axios";
 
@@ -45,38 +44,30 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Clients(props) {
-  const { useState } = React;
-
-  //Initializes the order_table_data variable as a blank array
-  const [order_table_data, set_order_table_data] = useState([]);
-  const [client_name_input, set_client_name_input] = useState("");
-
-  //Similar to componentDidMount and componentDidUpdate
-  // - reactjs.org
-  //"async" is used because I prefer it over a thousand .then() methods
-  useEffect(() => {
-    //On page load or update, fetch and update order_table_data from MongoDB
-    //The "documents" variable contains the data that is returned
-    let documents = Axios.get("/api/clients_page");
-  });
+export default function Clients() {
+  const [clientsTableData, setClientsTableData] = useState([]);
+  const [clientNameTextField, setClientNameTextField] = useState("");
+  const [addressTextField, setAddressTextField] = useState("");
+  const [cityTextField, setCityTextField] = useState("");
+  const [stateTextField, setStateTextField] = useState("");
+  const [phoneNumberTextField, setPhoneNumberTextField] = useState("");
+  const [poNumberTextField, setPONumberTextField] = useState("");
 
   const [columns, setColumns] = useState([
     {
       title: "Client ",
-      field: "item",
+      field: "client",
       editable: "never",
     },
     {
       title: "Phone Number",
-      field: "phonenumber",
-      editable: "always",
-      type: "numberic",
+      field: "phoneNumber",
+      editable: "never",
     },
     {
       title: "City",
       field: "city",
-      editable: "always",
+      editable: "never",
     },
     {
       title: "State",
@@ -86,14 +77,38 @@ export default function Clients(props) {
     {
       title: "Address",
       field: "address",
-      editable: "always",
+      editable: "never",
     },
     {
       title: "PO",
       field: "po",
-      editable: "always",
+      editable: "never",
     },
   ]);
+
+  useEffect(() => {
+    getClientData();
+  }, []);
+
+  function getClientData() {
+    Axios.get("/api/clients_page/clientInfo").then((documents) => {
+      setClientsTableData(documents.data);
+    });
+  }
+
+  function handleSaveButton() {
+    Axios.post("/api/clients_page/postInfo", {
+      client: clientNameTextField,
+      phoneNumber: phoneNumberTextField,
+      city: cityTextField,
+      state: stateTextField,
+      address: addressTextField,
+      po: poNumberTextField,
+    }).then((response) => {
+      console.log(response.status);
+      getClientData();
+    });
+  }
 
   const classes = useStyles();
   return (
@@ -108,14 +123,43 @@ export default function Clients(props) {
       </div>
 
       <form className={classes.input}>
-        <TextField label="Client Name" type="clientname" />
-        <TextField label="Address" type="address" />
-        <TextField label="City" type="city" />
-        <TextField label="State" type="state" />
-        <TextField label="Phone number" type="phonenumber" />
-        <TextField label="PO Number" type="ponumber" />
+        <TextField
+          label="Client Name"
+          value={clientNameTextField}
+          onChange={(e) => setClientNameTextField(e.target.value)}
+        />
+        <TextField
+          label="Address"
+          value={addressTextField}
+          onChange={(e) => setAddressTextField(e.target.value)}
+        />
+        <TextField
+          label="City"
+          value={cityTextField}
+          onChange={(e) => setCityTextField(e.target.value)}
+        />
+        <TextField
+          label="State"
+          value={stateTextField}
+          onChange={(e) => setStateTextField(e.target.value)}
+        />
+        <TextField
+          label="Phone number"
+          value={phoneNumberTextField}
+          onChange={(e) => setPhoneNumberTextField(e.target.value)}
+        />
+        <TextField
+          label="PO Number"
+          value={poNumberTextField}
+          onChange={(e) => setPONumberTextField(e.target.value)}
+        />
         <div style={{ maxWidth: "100%", paddingTop: "12px" }}>
-          <Button type="submit" variant="contained" color="submit">
+          <Button
+            onClick={handleSaveButton}
+            type="submit"
+            variant="contained"
+            color="submit"
+          >
             <SaveIcon />
             Save
           </Button>
@@ -126,7 +170,7 @@ export default function Clients(props) {
         <MaterialTable
           //defines the columns, what the title is and its associated value.
           columns={columns}
-          data={order_table_data}
+          data={clientsTableData}
           //allows the user to edit the cells
           cellEditable={{
             onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
@@ -138,30 +182,10 @@ export default function Clients(props) {
           }}
           title="View Clients"
           icons={{
-            Clear: (props) => <DeleteIcon />,
-            Search: (props) => <SearchIcon />,
-            ResetSearch: (props) => <DeleteIcon />,
+            Clear: () => <DeleteIcon />,
+            Search: () => <SearchIcon />,
+            ResetSearch: () => <DeleteIcon />,
           }}
-          // actions={[
-          //   {
-          //     icon: () => <DeleteIcon />,
-          //     tooltip: "Delete Item",
-          //     onClick: (event, rowData) =>
-          //       alert("You deleted item: " + rowData.item),
-          //   },
-          // ]}
-          // components={{
-          //   Action: (props) => (
-          //     <Button
-          //       onClick={(event) => props.action.onClick(event, props.data)}
-          //       variant="text"
-          //       style={{ textTransform: "none", color: "#2481ba" }}
-          //       size="small"
-          //     >
-          //       <DeleteIcon />
-          //     </Button>
-          //   ),
-          // }}
           options={{
             headerStyle: {
               backgroundColor: "#2481ba",
@@ -173,6 +197,4 @@ export default function Clients(props) {
       <div />
     </main>
   );
-
-  ReactDOM.render(element, document.getElementById("root"));
 }
