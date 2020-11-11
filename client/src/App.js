@@ -54,7 +54,7 @@ function Display(props) {
 
 
 //Defining 
-const App = () => { 
+const App = (props) => { 
   const drawerWidth = 240;
   const useStyles = makeStyles((theme) => ({
     root: {
