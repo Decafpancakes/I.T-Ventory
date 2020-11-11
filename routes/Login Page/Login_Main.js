@@ -6,8 +6,8 @@ const session = require("express-session");
 //Recieves HTTP POST requests at http://localhost:3000/api/login_page/signup
 //Used for adding users to the database
 router.post("/signup", (req, res) => {
-  let username = "reece"; /* req.body.username; */
-  let password = "reece"; /* req.body.password; */
+  let username = req.body.username;
+  let password = req.body.password;
 
   const users = req.app.get("db").db("itventory").collection("Users");
 
@@ -30,8 +30,8 @@ router.post("/signup", (req, res) => {
 //Used for logging users in
 router.get("/login", async (req, res) => {
   const users = req.app.get("db").db("itventory").collection("Users");
-  let username = "reece"; /* req.body.username; */
-  let password = "reece"; /* req.body.password; */
+  let username = req.body.username;
+  let password = req.body.password;
 
   //Get user information from db
   let user = await users.findOne({ username: username });
