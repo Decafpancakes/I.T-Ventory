@@ -25,7 +25,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import HomeIcon from '@material-ui/icons/Home';
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import SearchIcon from '@material-ui/icons/Search';
 import ComputerIcon from "@material-ui/icons/Computer";
 import AddIcon from "@material-ui/icons/Add";
 import PeopleIcon from "@material-ui/icons/People";
@@ -240,7 +240,7 @@ const App = () => {
           <Link to="/View Orders" className={classes.link}>
             <ListItem button>
               <ListItemIcon>
-                <ShoppingCartIcon />
+                <SearchIcon />
               </ListItemIcon>
               <ListItemText primary="View Orders" />
             </ListItem>

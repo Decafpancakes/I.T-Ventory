@@ -69,8 +69,8 @@ export default function ViewOrders() {
       editable: "never",
     },
     {
-      title: "Rush",
-      field: "rush",
+      title: "Asset ID",
+      field: "asset",
       editable: "never",
     },
   ]);

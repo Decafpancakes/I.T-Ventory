@@ -80,11 +80,11 @@ export default function Assets() {
       field: "manufacturer",
       editable: "never",
     },
-    {
-      title: "Vendor",
-      field: "vendor",
-      editable: "never",
-    },
+    // {
+    //   title: "Vendor",
+    //   field: "vendor",
+    //   editable: "never",
+    // },
     {
       title: "Stock",
       field: "stock",
@@ -188,11 +188,11 @@ export default function Assets() {
           value={manufacturerTextBoxValue}
           onChange={(e) => setManufacturerTextBoxValue(e.target.value)}
         />
-        <TextField
+        {/* <TextField
           label="Vendor"
           value={vendorTextBoxValue}
           onChange={(e) => setVendorTextBoxValue(e.target.value)}
-        />
+        /> */}
         <TextField
           label="Asset ID:"
           // value={vendorTextBoxValue}
