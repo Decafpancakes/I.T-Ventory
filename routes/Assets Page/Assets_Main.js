@@ -49,7 +49,8 @@ router.post("/update", async (req, res) => {
   lastAssetTag = lastAssetTag[0].lastAsset + 1;
 
   //While req.body.valueToUpdateWith > 0, insert an item into the Individual Assets collection with a unique asset tag
-  let loopVar = Number(req.body.valueToUpdateWith);
+  //Subtract the current stock from the new to prevent more from being added than you already have
+  let loopVar = Number(req.body.valueToUpdateWith) - Number(req.body.oldValue);
   console.log(loopVar);
   while(loopVar > 0){
     response = await indivAssets.insertOne({

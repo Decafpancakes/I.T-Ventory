@@ -106,10 +106,11 @@ export default function Assets() {
     setItemsTableData(documents.data);
   }
 
-  function updateItemData(newValue, rowData, columnDef) {
+  function updateItemData(newValue, oldValue, rowData, columnDef) {
     //Sends the info it needs to update the database with
     Axios.post("/api/assets_page/update", {
       item: rowData.item,
+      oldValue: oldValue,
       infoToUpdate: columnDef.field,
       valueToUpdateWith: newValue,
     })
@@ -184,7 +185,7 @@ export default function Assets() {
           cellEditable={{
             onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
               return new Promise(async (resolve, reject) => {
-                let result = updateItemData(newValue, rowData, columnDef);
+                let result = updateItemData(newValue, oldValue, rowData, columnDef);
                 if (result === true) {
                   resolve(true);
                 } else {
