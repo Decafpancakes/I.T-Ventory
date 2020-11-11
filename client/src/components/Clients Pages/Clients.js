@@ -82,7 +82,7 @@ export default function Clients() {
     {
       title: "PO",
       field: "po",
-      editable: "never",
+      editable: "always",
     },
   ]);
 
