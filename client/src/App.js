@@ -1,5 +1,6 @@
 //import React from 'react';
-import React, { Component } from "react";
+import React, { Component, useEffect, useState} from "react";
+import axios from 'axios';
 import {
   BrowserRouter,
   Router,
@@ -53,8 +54,13 @@ function Display(props) {
 
 
 
+
 //Defining 
 const App = (props) => { 
+
+  const [loggedInStatus, setLoggedInStatus] = useState("NOT_LOGGED_IN");
+  const [user, setUser] = useState({});
+
   const drawerWidth = 240;
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -144,6 +150,51 @@ const App = (props) => {
     },
   }));
   //End Styling
+
+  function checkLoginStatus() {
+    axios
+      .get("http://localhost:3001/logged_in", { withCredentials: true })
+      .then(response => {
+        if (response.data.logged_in && loggedInStatus === "NOT_LOGGED_IN") {
+          /* this.setState({
+            loggedInStatus: "LOGGED_IN",
+            user: response.data.user
+          }) */
+          setLoggedInStatus("LOGGED_IN");
+          setUser(response.data.user);
+        } else if (!response.data.logged_in & loggedInStatus === "LOGGED_IN") {
+          /* this.setState({
+            loggedInStatus: "NOT_LOGGED_IN",
+            user: {}
+          }) */
+          setLoggedInStatus("NOT_LOGGED_IN");
+          setUser({});
+        }
+      })
+    
+      .catch(error => {
+        console.log("check login error", error);
+      });
+  }
+
+  useEffect(()=>{
+    checkLoginStatus();
+  }, []);
+
+  function handleLogout() { 
+    setLoggedInStatus("NOT_LOGGED_IN");
+    setUser({});
+  }
+
+  function handleLogin(data) {
+    /* this.setState({
+      loggedInStatus: "LOGGED_IN",
+      user: data
+    }); */
+    setLoggedInStatus("LOGGED_IN");
+    setUser(data);
+  }
+
 
   const classes = useStyles();
   const theme = useTheme();

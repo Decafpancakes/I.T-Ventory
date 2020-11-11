@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState  }from 'react';
+import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -11,6 +12,8 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Login from "./Auth/Login";
+import Registration from "./Auth/Registration";
 
 function Copyright() {
   return (
@@ -45,8 +48,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn2() {
+export default function SignIn2({handleLogin, handleLogout}) {
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const classes = useStyles();
+
+  function handleSuccessfulAuth(data){
+    handleLogin(data);
+  }
+
+  function handleLogoutClick(){
+    axios
+    .delete("http://localhost:3001/logout", { withCredentials: true}) 
+    .then(response => {
+        handleLogout();
+    }) 
+    .catch(error => {
+        console.log("logout error", error); 
+    });
+}
 
   return (
     <Container component="main" maxWidth="xs" Position="center">
@@ -62,6 +83,8 @@ export default function SignIn2() {
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             variant="outlined"
             margin="normal"
             required
@@ -73,6 +96,8 @@ export default function SignIn2() {
             autoFocus
           />
           <TextField
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)}
             variant="outlined"
             margin="normal"
             required
@@ -87,7 +112,8 @@ export default function SignIn2() {
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Button
+          <Button 
+            onClick={handleLogoutClick}
             type="submit"
             fullWidth
             variant="contained"
@@ -96,6 +122,8 @@ export default function SignIn2() {
           >
             Sign In
           </Button>
+          <Registration handleSuccessfulAuth={(data)=> handleSuccessfulAuth(data)} />
+          <Login handleSuccessfulAuth={(data)=> handleSuccessfulAuth(data)} />
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2" href="https://bit.ly/3ky7jgn">
