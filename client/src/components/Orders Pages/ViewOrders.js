@@ -38,8 +38,19 @@ export default function ViewOrders() {
 
   function getOrderTableData(){
     Axios.get("/api/orders_page/getClientOrders").then((documents)=>{
+      //This is a stupid work around for bad formatting in the table
+      documents.data.forEach((document)=>{
+        let newAssetArray = [];
+        document.assets.forEach((assetTag)=>{
+          assetTag = assetTag.toString() + ", ";
+          newAssetArray.push(assetTag);
+        });
+        Object.assign(document, {assets: newAssetArray});
+      });
+
+      //Populates the table
       setOrderTableData(documents.data);
-    });;
+    });
   }
 
   const [columns, setColumns] = useState([
@@ -69,8 +80,8 @@ export default function ViewOrders() {
       editable: "never",
     },
     {
-      title: "Rush",
-      field: "rush",
+      title: "Asset ID",
+      field: "assets",
       editable: "never",
     },
   ]);

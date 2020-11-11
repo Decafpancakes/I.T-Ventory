@@ -17,9 +17,34 @@ router.get("/getAssets", async (req, res) => {
 //For populating Client Order Table
 router.get("/getClientOrders", async (req, res) => {
   //Establish a database connection
-  const clientOrders = req.app.get("db").db("itventory").collection("Client Orders");
+  const clientOrders = req.app
+    .get("db")
+    .db("itventory")
+    .collection("Client Orders");
+  const indivAssets = req.app
+    .get("db")
+    .db("itventory")
+    .collection("Individual Assets");
 
   let documents = await clientOrders.find({}).toArray();
+
+  //Pull all Asset ID's for said client
+  let indivAssetsData = await indivAssets.find({}).toArray();
+  //For each client order
+  documents.forEach((document) => {
+    //pull the asset tags of what items are associated with said client
+    let assetTagsForClient = [];
+    indivAssetsData.forEach((item) => {
+      if (
+        document.clientName === item.allocated.client &&
+        document.item === item.item
+      ) {
+        assetTagsForClient.push(item.asset);
+      }
+    });
+    //Add those assets to the order they are associated with
+    Object.assign(document, {assets: assetTagsForClient});
+  });
 
   res.json(documents);
 });
@@ -51,15 +76,41 @@ router.post("/post", async (req, res) => {
     .get("db")
     .db("itventory")
     .collection("Client Orders");
+  const indivAssets = req.app
+    .get("db")
+    .db("itventory")
+    .collection("Individual Assets");
 
+  //Insert an order
   let response = clientOrders.insertOne({
     item: req.body.item,
     allocated: req.body.allocated,
     clientName: req.body.clientName,
     orderNumber: req.body.orderNumber,
     notes: req.body.notes,
-    rush: req.body.rush,
+    technician: req.body.technician,
+    poNumber: req.body.poNumber,
   });
+
+  //While numAllocated > 0, set allocated: the client that the item
+  //is allocated to in Individual Assets
+  let numAllocated = Number(req.body.allocated);
+  while (numAllocated > 0) {
+    response = await indivAssets.updateOne(
+      {
+        item: req.body.item,
+        allocated: false,
+      },
+      {
+        $set: {
+          allocated: {
+            client: req.body.clientName,
+          },
+        },
+      }
+    );
+    numAllocated--;
+  }
 
   res.json(response);
 });

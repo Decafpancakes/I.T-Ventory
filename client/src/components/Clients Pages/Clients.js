@@ -51,7 +51,7 @@ export default function Clients() {
   const [cityTextField, setCityTextField] = useState("");
   const [stateTextField, setStateTextField] = useState("");
   const [phoneNumberTextField, setPhoneNumberTextField] = useState("");
-  const [poNumberTextField, setPONumberTextField] = useState("");
+  const [emailTextField, setEmailTextField] = useState("");
 
   const [columns, setColumns] = useState([
     {
@@ -62,6 +62,11 @@ export default function Clients() {
     {
       title: "Phone Number",
       field: "phoneNumber",
+      editable: "always",
+    },
+    {
+      title: "Email",
+      field: "email",
       editable: "always",
     },
     {
@@ -77,11 +82,6 @@ export default function Clients() {
     {
       title: "Address",
       field: "address",
-      editable: "never",
-    },
-    {
-      title: "PO",
-      field: "po",
       editable: "never",
     },
   ]);
@@ -103,7 +103,7 @@ export default function Clients() {
       city: cityTextField,
       state: stateTextField,
       address: addressTextField,
-      po: poNumberTextField,
+      email: emailTextField,
     }).then((response) => {
       console.log(response.status);
       getClientData();
@@ -149,9 +149,9 @@ export default function Clients() {
           onChange={(e) => setPhoneNumberTextField(e.target.value)}
         />
         <TextField
-          label="PO Number"
-          value={poNumberTextField}
-          onChange={(e) => setPONumberTextField(e.target.value)}
+          label="Email"
+          value={emailTextField}
+          onChange={(e) => setEmailTextField(e.target.value)}
         />
         <div style={{ maxWidth: "100%", paddingTop: "12px" }}>
           <Button

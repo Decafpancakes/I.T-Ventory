@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import MaterialTable from "material-table";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SearchIcon from "@material-ui/icons/Search";
+import ClearIcon from "@material-ui/icons/Clear";
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -50,10 +51,18 @@ export default function Order() {
     additionalOrderNotesTextBoxInput,
     setAdditionalOrderNotesTextBoxInput,
   ] = useState("");
-  const [rushOrderCheckBox, setRushOrderCheckBox] = useState(false);
+  const [poNumberTextBox, setPOOrderTextBox] = useState("");
+  const [technicianTextBox, setTechnicianTextBox] = useState("");
 
   useEffect(() => {
     searchAvailableData();
+  }, []);
+
+  function searchAvailableData() {
+    //get all available assets
+    Axios.get("/api/orders_page/getAssets").then((documents) => {
+      setOrderTableData(documents.data);
+    });
     //set order number value
     Axios.get("/api/orders_page/getOrderNumber").then((documents) => {
       if (documents.data.length === 0) {
@@ -62,12 +71,6 @@ export default function Order() {
         let orderNumber = Number(documents.data[0].orderNumber) + 1;
         setOrderNumberTextBoxInput(orderNumber);
       }
-    });
-  }, []);
-
-  function searchAvailableData() {
-    Axios.get("/api/orders_page/getAssets").then((documents) => {
-      setOrderTableData(documents.data);
     });
   }
 
@@ -84,7 +87,6 @@ export default function Order() {
           somethingAllocated = true;
 
           //make sure allocated is not more than stock
-          console.log(element.stock);
           if (Number(element.allocated) > Number(element.stock)) {
             alert(
               "You have allocated more than is in stock for: " + element.item
@@ -120,7 +122,8 @@ export default function Order() {
             clientName: clientNameTextBoxInput,
             orderNumber: orderNumberTextBoxInput,
             notes: additionalOrderNotesTextBoxInput,
-            rush: rushOrderCheckBox,
+            technician: technicianTextBox,
+            poNumber: poNumberTextBox,
           }).then((response) => {
             console.log(response.status);
           });
@@ -136,6 +139,11 @@ export default function Order() {
           });
         });
 
+        setClientNameTextBoxInput("");
+        setAdditionalOrderNotesTextBoxInput("");
+        setPOOrderTextBox("");
+        setTechnicianTextBox("");
+        searchAvailableData();
         window.location.reload();
       } else if (somethingAllocated === false) {
         alert("Please do not submit an order without allocating anything.");
@@ -161,11 +169,6 @@ export default function Order() {
       editable: "never",
     },
     {
-      title: "Vendor",
-      field: "vendor",
-      editable: "never",
-    },
-    {
       title: "Stock",
       field: "stock",
       editable: "never",
@@ -174,11 +177,6 @@ export default function Order() {
       title: "Allocated",
       field: "allocated",
       editable: "always",
-    },
-    {
-      title: "Sell",
-      field: "sellPrice",
-      editable: "never",
     },
   ]);
 
@@ -213,11 +211,19 @@ export default function Order() {
               disabled={true}
               name="order"
               id="orderNumber"
-              placeholder="NTDT-O-"
               addonType="prepend"
             />
           </FormGroup>
-          {/* This is so you can attatch which employee is making the order */}
+          <FormGroup className="w-50">
+            <Label for="poNumber">PO Number:</Label>
+            <Input
+              value={poNumberTextBox}
+              onChange={(e) => setPOOrderTextBox(e.target.value)}
+              name="purchaseorder"
+              id="PurchaseOrder"
+              placeholder="PO#"
+            />
+          </FormGroup>
           <FormGroup className="w-50">
             <Label for="exampleText">Additional Order Notes:</Label>
             <Input
@@ -229,17 +235,15 @@ export default function Order() {
               id="exampleText"
             />
           </FormGroup>
-          <br />
-          <FormGroup check>
-            <Label check>
-              <Input
-                value={rushOrderCheckBox}
-                onChange={() => setRushOrderCheckBox(!rushOrderCheckBox)}
-                type="checkbox"
-              />{" "}
-              Rush Order?
-            </Label>
+          <FormGroup className="w-50">
+            <Label>Technician Name</Label>
+            <Input
+              value={technicianTextBox}
+              onChange={(e) => setTechnicianTextBox(e.target.value)}
+              id="technicianBox"
+            />
           </FormGroup>
+          <br />
         </Form>
 
         <div style={{ maxWidth: "100%", paddingTop: "50px" }}>
@@ -267,26 +271,21 @@ export default function Order() {
             }}
             title="Add Items to Order"
             icons={{
-              Clear: () => <DeleteIcon />,
+              Clear: () => <ClearIcon />,
               Search: () => <SearchIcon />,
               ResetSearch: () => <DeleteIcon />,
             }}
-            components={{
-              Action: (props) => (
-                <Button
-                  onClick={(event) => props.action.onClick(event, props.data)}
-                  variant="text"
-                  style={{ textTransform: "none", color: "#2481ba" }}
-                  size="small"
-                >
-                  <DeleteIcon />
-                </Button>
-              ),
-            }}
+            // actions={[
+            //   {
+            //     icon: "delete",
+            //     tooltip: "Delete Item",
+            //     onClick: (event, rowData) => deleteItem(rowData.item)
+            //   }
+            // ]}
             options={{
               headerStyle: {
                 backgroundColor: "#2481ba",
-                color: "#FFF",
+                color: "#FF-F",
                 rowStyle: {
                   borderBottom: "5px solid white",
                 },

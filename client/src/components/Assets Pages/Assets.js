@@ -1,9 +1,9 @@
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
-import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
+import ClearIcon from "@material-ui/icons/Clear";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SearchIcon from "@material-ui/icons/Search";
 import React, { useEffect, useState } from "react";
@@ -46,21 +46,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Assets() {
-  //Initializes the order_table_data variable as a blank array
+
   const [itemsTableData, setItemsTableData] = useState([]);
-
-  //Runs on page load, populates Items Table
-  useEffect(() => {
-    fetchItemsTableData();
-  }, []);
-
-  //Text field state values
   const [itemNameTextBoxValue, setItemNameTextBoxValue] = useState("");
   const [modelNumberTextBoxValue, setModelNumberTextBoxValue] = useState("");
   const [manufacturerTextBoxValue, setManufacturerTextBoxValue] = useState("");
-  const [vendorTextBoxValue, setVendorTextBoxValue] = useState("");
-  const [costTextBoxValue, setCostTextBoxValue] = useState("");
-  const [sellTextBoxValue, setSellTextBoxValue] = useState("");
 
   //Determines the columns for the Items table
   const [columns, setColumns] = useState([
@@ -80,35 +70,21 @@ export default function Assets() {
       editable: "never",
     },
     {
-      title: "Vendor",
-      field: "vendor",
-      editable: "never",
-    },
-    {
       title: "Stock",
       field: "stock",
       initialEditValue: "0",
       editable: "onAdd",
     },
-    {
-      title: "Cost",
-      field: "cost",
-      editable: "always",
-    },
-    {
-      title: "Sell",
-      field: "sellPrice",
-      editable: "always",
-    },
   ]);
+
+  useEffect(() => {
+    fetchItemsTableData();
+  }, []);
 
   function resetTextValues() {
     setItemNameTextBoxValue("");
     setModelNumberTextBoxValue("");
     setManufacturerTextBoxValue("");
-    setVendorTextBoxValue("");
-    setCostTextBoxValue("");
-    setSellTextBoxValue("");
   }
 
   function handleSaveButtonClicked() {
@@ -117,9 +93,6 @@ export default function Assets() {
       item: itemNameTextBoxValue,
       modelNumber: modelNumberTextBoxValue,
       manufacturer: manufacturerTextBoxValue,
-      vendor: vendorTextBoxValue,
-      cost: costTextBoxValue,
-      sellPrice: sellTextBoxValue,
       stock: "0",
     }).then(() => {
       resetTextValues();
@@ -150,13 +123,14 @@ export default function Assets() {
       });
   }
 
-  function deleteItem(item) {
+  //I kept this in case we decide to bring back the delete button
+  /* function deleteItem(item) {
     Axios.post("/api/assets_page/delete", {
       item: item,
     }).then(() => {
       fetchItemsTableData();
     });
-  }
+  } */
 
   const classes = useStyles();
   return (
@@ -187,35 +161,6 @@ export default function Assets() {
           value={manufacturerTextBoxValue}
           onChange={(e) => setManufacturerTextBoxValue(e.target.value)}
         />
-        <TextField
-          label="Vendor"
-          value={vendorTextBoxValue}
-          onChange={(e) => setVendorTextBoxValue(e.target.value)}
-        />
-        <div>
-          <TextField
-            label="Cost"
-            type="number"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">$</InputAdornment>
-              ),
-            }}
-            value={costTextBoxValue}
-            onChange={(e) => setCostTextBoxValue(e.target.value)}
-          />
-          <TextField
-            label="Sell Price"
-            type="number"
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">$</InputAdornment>
-              ),
-            }}
-            value={sellTextBoxValue}
-            onChange={(e) => setSellTextBoxValue(e.target.value)}
-          />
-        </div>
 
         <div style={{ maxWidth: "100%", paddingTop: "12px" }}>
           <Button
@@ -250,17 +195,10 @@ export default function Assets() {
           }}
           title="Items"
           icons={{
-            Clear: () => <DeleteIcon />,
+            Clear: () => <ClearIcon />,
             Search: () => <SearchIcon />,
             ResetSearch: () => <DeleteIcon />,
           }}
-          actions={[
-            {
-              icon: "delete",
-              tooltip: "Delete Item",
-              onClick: (event, rowData) => deleteItem(rowData.item)
-            }
-          ]}
           options={{
             headerStyle: {
               backgroundColor: "#2481ba",

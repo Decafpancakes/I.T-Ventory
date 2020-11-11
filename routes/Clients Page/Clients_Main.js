@@ -24,7 +24,7 @@ router.post("/postInfo", async (req, res) => {
     city: req.body.city,
     state: req.body.state,
     address: req.body.address,
-    po: req.body.po,
+    email: req.body.email,
   });
   res.json(response);
 });

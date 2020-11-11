@@ -6,6 +6,8 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+const session = require('express-session');
+const passport = require("passport");
 //const cookieParser = require('cookie-parser');
 
 //Establishes a variable "client" with the database connection info
@@ -17,8 +19,28 @@ let client = new MongoClient(getSecret("uri"), {
   useUnifiedTopology: true,
 });
 
+// Session Setup 
+app.use(session({ 
+  
+  // Holds the secret key for the session 
+  secret: 'Super_Secret_Key', 
+
+  // Forces the session to be saved 
+  // back to the session store 
+  resave: true, 
+
+  // Forces a session that is "uninitialized" 
+  // to be saved to the store
+  saveUninitialized: true
+}));
+app.use(passport.initialize()); 
+app.use(passport.session()); 
+
 //Allows the app to read JSON data
 app.use(express.json());
+
+//Login Routing
+app.use("/api/login_page",require("./routes/Login Page/Login_Main"));
 
 //Routes to each page's respective backend file, does not need .js for the file
 app.use("/api/clients_page", require("./routes/Clients Page/Clients_Main"));
