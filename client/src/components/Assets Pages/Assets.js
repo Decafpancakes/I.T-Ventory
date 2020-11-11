@@ -4,6 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
+import ClearIcon from '@material-ui/icons/Clear';
 import DeleteIcon from "@material-ui/icons/Delete";
 import SearchIcon from "@material-ui/icons/Search";
 import React, { useEffect, useState } from "react";
@@ -192,6 +193,11 @@ export default function Assets() {
           value={vendorTextBoxValue}
           onChange={(e) => setVendorTextBoxValue(e.target.value)}
         />
+        <TextField
+          label="Asset ID:"
+          // value={vendorTextBoxValue}
+          // onChange={(e) => setVendorTextBoxValue(e.target.value)}
+        />
         <div>
           <TextField
             label="Cost"
@@ -250,17 +256,10 @@ export default function Assets() {
           }}
           title="Items"
           icons={{
-            Clear: () => <DeleteIcon />,
+            Clear: () => <ClearIcon />,
             Search: () => <SearchIcon />,
             ResetSearch: () => <DeleteIcon />,
           }}
-          actions={[
-            {
-              icon: "delete",
-              tooltip: "Delete Item",
-              onClick: (event, rowData) => deleteItem(rowData.item)
-            }
-          ]}
           options={{
             headerStyle: {
               backgroundColor: "#2481ba",

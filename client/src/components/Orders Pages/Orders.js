@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import MaterialTable from "material-table";
 import DeleteIcon from "@material-ui/icons/Delete";
 import SearchIcon from "@material-ui/icons/Search";
+import ClearIcon from '@material-ui/icons/Clear';
 import { Button } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -180,6 +181,10 @@ export default function Order() {
       field: "sellPrice",
       editable: "never",
     },
+    {
+      title: "PO#",
+      field: "po",
+    },
   ]);
 
   const classes = useStyles();
@@ -213,11 +218,17 @@ export default function Order() {
               disabled={true}
               name="order"
               id="orderNumber"
-              placeholder="NTDT-O-"
               addonType="prepend"
             />
           </FormGroup>
-          {/* This is so you can attatch which employee is making the order */}
+          <FormGroup className="w-50">
+            <Label for="poNumber">PO Number:</Label>
+            <Input
+              name="purchaseorder"
+              id="PurchaseOrder"
+              placeholder="PO#"
+            />
+          </FormGroup>
           <FormGroup className="w-50">
             <Label for="exampleText">Additional Order Notes:</Label>
             <Input
@@ -267,26 +278,21 @@ export default function Order() {
             }}
             title="Add Items to Order"
             icons={{
-              Clear: () => <DeleteIcon />,
+              Clear: () => <ClearIcon />,
               Search: () => <SearchIcon />,
               ResetSearch: () => <DeleteIcon />,
             }}
-            components={{
-              Action: (props) => (
-                <Button
-                  onClick={(event) => props.action.onClick(event, props.data)}
-                  variant="text"
-                  style={{ textTransform: "none", color: "#2481ba" }}
-                  size="small"
-                >
-                  <DeleteIcon />
-                </Button>
-              ),
-            }}
+            // actions={[
+            //   {
+            //     icon: "delete",
+            //     tooltip: "Delete Item",
+            //     onClick: (event, rowData) => deleteItem(rowData.item)
+            //   }
+            // ]}
             options={{
               headerStyle: {
                 backgroundColor: "#2481ba",
-                color: "#FFF",
+                color: "#FF-F",
                 rowStyle: {
                   borderBottom: "5px solid white",
                 },

@@ -65,6 +65,11 @@ export default function Clients() {
       editable: "always",
     },
     {
+      title: "Email",
+      field: "email",
+      editable: "always",
+    },
+    {
       title: "City",
       field: "city",
       editable: "never",
@@ -78,11 +83,6 @@ export default function Clients() {
       title: "Address",
       field: "address",
       editable: "never",
-    },
-    {
-      title: "PO",
-      field: "po",
-      editable: "always",
     },
   ]);
 
@@ -149,9 +149,7 @@ export default function Clients() {
           onChange={(e) => setPhoneNumberTextField(e.target.value)}
         />
         <TextField
-          label="PO Number"
-          value={poNumberTextField}
-          onChange={(e) => setPONumberTextField(e.target.value)}
+          label="Email"
         />
         <div style={{ maxWidth: "100%", paddingTop: "12px" }}>
           <Button
