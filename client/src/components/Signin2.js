@@ -1,17 +1,17 @@
-import React, { useState  }from 'react';
-import axios from 'axios';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import React, { useState } from "react";
+import axios from "axios";
+import Avatar from "@material-ui/core/Avatar";
+import Button from "@material-ui/core/Button";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import TextField from "@material-ui/core/TextField";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import Link from "@material-ui/core/Link";
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import Container from "@material-ui/core/Container";
 import Login from "./Auth/Login";
 import Registration from "./Auth/Registration";
 
@@ -48,26 +48,45 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn2({handleLogin, handleLogout}) {
-
+export default function SignIn2({ handleLogout }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const classes = useStyles();
 
-  function handleSuccessfulAuth(data){
+  /* function handleSuccessfulAuth(data) {
     handleLogin(data);
+  } */
+
+  function handleLogoutClick() {
+    axios
+      .delete("http://localhost:3001/logout", { withCredentials: true })
+      .then((response) => {
+        handleLogout();
+      })
+      .catch((error) => {
+        console.log("logout error", error);
+      });
   }
 
-  function handleLogoutClick(){
-    axios
-    .delete("http://localhost:3001/logout", { withCredentials: true}) 
-    .then(response => {
-        handleLogout();
-    }) 
-    .catch(error => {
-        console.log("logout error", error); 
+  //Send the entered username and password to the backend
+  async function handleLogin() {
+    let response = await axios.post("/api/login_page/login", {
+      username: username,
+      password: password,
     });
-}
+
+    
+    if(response.data.status === true){
+      //Put code for a successful login here
+      //Reroute to dashboard
+      //Also make sure the user can't just navigate to another page without logging in via the URL bar
+      
+      alert("These credentials are correct");
+    }else{
+      //Put code for an invalid login here
+      alert("These credentials are incorrect");
+    }
+  }
 
   return (
     <Container component="main" maxWidth="xs" Position="center">
@@ -89,32 +108,25 @@ export default function SignIn2({handleLogin, handleLogout}) {
             margin="normal"
             required
             fullWidth
-            id="username"
-            label="User Name"
-            name="username"
-            autoComplete="username"
             autoFocus
           />
           <TextField
-            value={password} 
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            name="password"
-            label="Password"
             type="password"
-            id="password"
             autoComplete="current-password"
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
-          <Button 
-            onClick={handleLogoutClick}
-            type="submit"
+          <Button
+            onClick={handleLogin}
+            id="signInButton"
             fullWidth
             variant="contained"
             color="primary"
@@ -122,8 +134,10 @@ export default function SignIn2({handleLogin, handleLogout}) {
           >
             Sign In
           </Button>
-          <Registration handleSuccessfulAuth={(data)=> handleSuccessfulAuth(data)} />
-          <Login handleSuccessfulAuth={(data)=> handleSuccessfulAuth(data)} />
+          {/* <Registration
+            handleSuccessfulAuth={(data) => handleSuccessfulAuth(data)}
+          /> */}
+          {/* <Login handleSuccessfulAuth={(data) => handleSuccessfulAuth(data)} /> */}
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2" href="https://bit.ly/3ky7jgn">

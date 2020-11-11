@@ -26,9 +26,9 @@ router.post("/signup", (req, res) => {
   //on the front-end file, if the response is 200, consider the user logged in
 });
 
-//Recieves HTTP GET requests at http://localhost:3000/api/login_page/login
+//Recieves HTTP POST requests at http://localhost:3000/api/login_page/login
 //Used for logging users in
-router.get("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   const users = req.app.get("db").db("itventory").collection("Users");
   let username = req.body.username;
   let password = req.body.password;
