@@ -51,7 +51,7 @@ export default function Clients() {
   const [cityTextField, setCityTextField] = useState("");
   const [stateTextField, setStateTextField] = useState("");
   const [phoneNumberTextField, setPhoneNumberTextField] = useState("");
-  const [poNumberTextField, setPONumberTextField] = useState("");
+  const [emailTextField, setEmailTextField] = useState("");
 
   const [columns, setColumns] = useState([
     {
@@ -103,7 +103,7 @@ export default function Clients() {
       city: cityTextField,
       state: stateTextField,
       address: addressTextField,
-      po: poNumberTextField,
+      email: emailTextField,
     }).then((response) => {
       console.log(response.status);
       getClientData();
@@ -150,6 +150,8 @@ export default function Clients() {
         />
         <TextField
           label="Email"
+          value={emailTextField}
+          onChange={(e) => setEmailTextField(e.target.value)}
         />
         <div style={{ maxWidth: "100%", paddingTop: "12px" }}>
           <Button

@@ -3,30 +3,20 @@ const express = require("express");
 const router = express.Router();
 
 //Recieves HTTP POST requests at http://localhost:3000/api/assets_page/post
-router.post("/post", (req, res) => {
+router.post("/post", async (req, res) => {
   //const db = req.app.get('db');
   const assets = req.app.get("db").db("itventory").collection("Assets");
 
-  assets.insertOne(
-    {
-      item: req.body.item,
-      modelNumber: req.body.modelNumber,
-      manufacturer: req.body.manufacturer,
-      vendor: req.body.vendor,
-      cost: req.body.cost,
-      sellPrice: req.body.sellPrice,
-      stock: req.body.stock,
-      allocated: "0",
-    },
-    (err, res) => {
-      if (err) throw err;
-      console.log(res);
-    }
-  );
-
-  res.json({
-    status: 200,
+  //insert items into DB
+  let response = await assets.insertOne({
+    item: req.body.item,
+    modelNumber: req.body.modelNumber,
+    manufacturer: req.body.manufacturer,
+    stock: req.body.stock,
+    allocated: "0",
   });
+
+  res.json(response);
 });
 
 //Recieves HTTP GET requests at http://localhost:3000/api/assets_page/get
@@ -41,7 +31,10 @@ router.get("/get", async (req, res) => {
 //Recieves HTTP POST requests at http://localhost:3000/api/assets_page/update
 router.post("/update", async (req, res) => {
   const assets = req.app.get("db").db("itventory").collection("Assets");
+  const test = req.app.get("db").db("itventory").collection("test");
+  const indivAssets = req.app.get("db").db("itventory").collection("Individual Assets");
 
+  //Update stock count
   let response = await assets.updateOne(
     { item: req.body.item },
     {
@@ -50,19 +43,41 @@ router.post("/update", async (req, res) => {
       },
     }
   );
-  res.json({
-    status: 200,
+
+  //Pull last used asset tag and add 1 to prevent duplicates
+  let lastAssetTag = await test.find({}).toArray();
+  lastAssetTag = lastAssetTag[0].lastAsset + 1;
+
+  //While req.body.valueToUpdateWith > 0, insert an item into the Individual Assets collection with a unique asset tag
+  let loopVar = Number(req.body.valueToUpdateWith);
+  console.log(loopVar);
+  while(loopVar > 0){
+    response = await indivAssets.insertOne({
+      item: req.body.item,
+      asset: lastAssetTag,
+      allocated: false,
+    });
+    //Increment the asset tag since it was used
+    lastAssetTag++;
+    loopVar--;
+  }
+
+  //Post the current state of lastAssetTag
+  response = await test.updateOne({},{
+    $set: {
+      lastAsset: lastAssetTag,
+    }
   });
+
+  res.json(response);
 });
 
 //Recieves HTTP POST requests at http://localhost:3000/api/assets_page/delete
 router.post("/delete", async (req, res) => {
   const assets = req.app.get("db").db("itventory").collection("Assets");
 
-  let documents = await assets.deleteOne({ item: req.body.item });
-  res.json({
-    message: "woo",
-  });
+  let response = await assets.deleteOne({ item: req.body.item });
+  res.json(response);
 });
 
 //DO NOT EVER FORGET THIS LINE
