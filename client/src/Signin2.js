@@ -15,6 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import App from "./App";
+import bcrypt from "bcryptjs";
 
 function Copyright() {
   return (
@@ -72,23 +73,27 @@ export default function SignIn2() {
   async function handleLogin() {
     let response = await axios.post("/api/login_page/login", {
       username: username,
-      password: password,
     });
 
-    if (response.data.status === true) {
-      //Reroute to dashboard
-      ReactDOM.render(
-        <ThemeProvider theme={theme}>
-          <React.StrictMode>
-            <App />
-          </React.StrictMode>
-        </ThemeProvider>,
-        document.getElementById("root")
-      );
-    } else {
-      //Invalid Login
-      alert("These credentials are incorrect");
-    }
+    //Decrypt the password and compare it with the entered one
+    bcrypt.compare(password, response.data.password, (err, result) => {
+      if (result === true) {
+        //Gives a cookie
+        localStorage.setItem("loggedIn", true);
+        //Reroute to dashboard
+        ReactDOM.render(
+          <ThemeProvider theme={theme}>
+            <React.StrictMode>
+              <App />
+            </React.StrictMode>
+          </ThemeProvider>,
+          document.getElementById("root")
+        );
+      } else {
+        //Invalid Login
+        alert("These credentials are incorrect");
+      }
+    });
   }
 
   return (

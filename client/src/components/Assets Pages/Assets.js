@@ -53,7 +53,7 @@ export default function Assets() {
   const [manufacturerTextBoxValue, setManufacturerTextBoxValue] = useState("");
 
   //Determines the columns for the Items table
-  const columns = useState[
+  const columns = [
     {
       title: "Item",
       field: "item",

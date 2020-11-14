@@ -155,6 +155,8 @@ const App = () => {
   });
 
   function handleLogout(){
+    //Removes the cookie
+    localStorage.clear();
     ReactDOM.render(
       <ThemeProvider theme={muiTheme}>
         <React.StrictMode>
