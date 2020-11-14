@@ -65,6 +65,18 @@ router.get("/getOrderNumber", async (req, res) => {
   res.json(documents);
 });
 
+//Recieves HTTP GET requests at http://localhost:3000/api/orders_page/getClientNames
+//For filling the order number text box
+router.get("/getClientNames", async (req, res) => {
+  const clients = req.app.get("db").db("itventory").collection("Clients");
+
+  let documents = await clients
+    .find({}, { projection: { client: 1 } })
+    .toArray();
+
+  res.json(documents);
+});
+
 //Recieves HTTP POST requests at http://localhost:3000/api/orders_page/post
 //For inserting a client order
 router.post("/post", async (req, res) => {

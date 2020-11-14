@@ -65,11 +65,12 @@ export default function Order() {
   }, []);
 
   function searchAvailableData() {
-    //get all available assets
+    //Get all available assets
     Axios.get("/api/orders_page/getAssets").then((documents) => {
       setOrderTableData(documents.data);
     });
-    //set order number value
+    
+    //Set order number value
     Axios.get("/api/orders_page/getOrderNumber").then((documents) => {
       if (documents.data.length === 0) {
         setOrderNumberTextBoxInput("0");
@@ -77,6 +78,11 @@ export default function Order() {
         let orderNumber = Number(documents.data[0].orderNumber) + 1;
         setOrderNumberTextBoxInput(orderNumber);
       }
+    });
+
+    //Get Client names for drop down menu
+    Axios.get("/api/orders_page/getClientNames").then((documents)=>{
+      console.log(documents.data);
     });
   }
 
