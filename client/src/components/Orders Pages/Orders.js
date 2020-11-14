@@ -55,6 +55,7 @@ export default function Order() {
   const [orderTableData, setOrderTableData] = useState([]);
   const [clientNameMenu, setClientNameMenu] = useState("");
   const [orderNumberTextBoxInput, setOrderNumberTextBoxInput] = useState("");
+  const [clientName, setClientName] = useState("");
   const [
     additionalOrderNotesTextBoxInput,
     setAdditionalOrderNotesTextBoxInput,
@@ -218,13 +219,21 @@ export default function Order() {
             <FormGroup className="w-50">
               <InputLabel id="clientName">Client:</InputLabel>
               <Select
+              <Autocomplete
                 value={clientNameMenu}
                 onChange={(e) => setClientNameMenu(e.target.value)}
+                label="Client Name"
                 name="client"
                 id="Client Name"
+                autoHighlight
+                renderInput={(params) => <TextField {...params} label="autoHighlight" margin="normal" />}
               >
                 {clientName}
               </Select>
+                {/* <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem> */}
+              </Autocomplete>
             </FormGroup>
           </FormGroup>
 
