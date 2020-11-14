@@ -53,28 +53,6 @@ export default function Users() {
   const [phoneNumberTextField, setPhoneNumberTextField] = useState("");
   const [emailTextField, setEmailTextField] = useState("");
 
-  const [columns, setColumns] = useState([
-    {
-      title: "Name ",
-      field: "name",
-      editable: "never",
-    },
-    {
-      title: "Email",
-      field: "email",
-      editable: "always",
-    },
-    {
-      title: "Username",
-      field: "username",
-      editable: "always",
-    },
-    {
-      title: "Password",
-      field: "password",
-      editable: "always",
-    },
-  ]);
 
   useEffect(() => {
     getClientData();

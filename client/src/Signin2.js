@@ -15,6 +15,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import App from "./App";
+import bcrypt from "bcryptjs";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
@@ -109,7 +110,7 @@ export default function SignIn2() {
         );
       } else {
         //Invalid Login
-        alert("These credentials are incorrect");
+        alert("These credentials are incorrect, please try again!");
       }
     });
   }

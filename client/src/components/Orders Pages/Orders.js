@@ -43,18 +43,6 @@ const theme = createMuiTheme({
   },
 });
 
-const options = [
-  {name: 'Swedish', value: 'sv'},
-  {name: 'English', value: 'en'},
-  {
-      type: 'group',
-      name: 'Group name',
-      items: [
-          {name: 'Spanish', value: 'es'},
-      ]
-  },
-];
-
 export default function Order() {
   const [orderTableData, setOrderTableData] = useState([]);
   const [clientNameTextBoxInput, setClientNameTextBoxInput] = useState("");
@@ -205,7 +193,7 @@ export default function Order() {
 
         <Form>
           {/* Input to attatch a client */}
-          {/* <FormGroup className="w-50">
+          <FormGroup className="w-50">
             <Label for="clientName">Client:</Label>
             <Input
               value={clientNameTextBoxInput}
@@ -214,8 +202,7 @@ export default function Order() {
               id="clientName"
               placeholder="Client Name"
             />
-          </FormGroup> */}
-          <SelectSearch options={options} value="sv" name="language" placeholder="Choose your language" />
+          </FormGroup>
           {/* //This is to attatch who is making the order */}
           <FormGroup className="w-50">
             <Label for="orderNumber">Order #:</Label>

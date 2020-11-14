@@ -54,6 +54,11 @@ export default function ViewOrders() {
 
   const columns = [
     {
+      title: "Client Name",
+      field: "clientName",
+      editable: "never",
+    },
+    {
       title: "Item",
       field: "item",
       editable: "never",
@@ -64,13 +69,13 @@ export default function ViewOrders() {
       editable: "never",
     },
     {
-      title: "Client Name",
-      field: "clientName",
+      title: "Order Number",
+      field: "orderNumber",
       editable: "never",
     },
     {
-      title: "Order Number",
-      field: "orderNumber",
+      title: "Technician Name",
+      field: "technician",
       editable: "never",
     },
     {
