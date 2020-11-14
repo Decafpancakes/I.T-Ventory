@@ -97,17 +97,22 @@ export default function Clients() {
   }
 
   function handleSaveButton() {
-    Axios.post("/api/clients_page/postInfo", {
-      client: clientNameTextField,
-      phoneNumber: phoneNumberTextField,
-      city: cityTextField,
-      state: stateTextField,
-      address: addressTextField,
-      email: emailTextField,
-    }).then((response) => {
-      console.log(response.status);
-      getClientData();
-    });
+    if (clientNameTextField === "" || phoneNumberTextField == "" || cityTextField == "" || stateTextField == "" || addressTextField == "" || emailTextField == ""){
+      alert("All fields must have a value before submitting!");
+    }
+    else {
+      Axios.post("/api/clients_page/postInfo", {
+        client: clientNameTextField,
+        phoneNumber: phoneNumberTextField,
+        city: cityTextField,
+        state: stateTextField,
+        address: addressTextField,
+        email: emailTextField,
+      }).then((response) => {
+        console.log(response.status);
+        getClientData();
+      });
+    }
   }
 
   const classes = useStyles();

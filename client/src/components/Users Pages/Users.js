@@ -101,6 +101,7 @@ export default function Users() {
           label="Password"
           value={stateTextField}
           onChange={(e) => setStateTextField(e.target.value)}
+          type="password"
         />
         
         <div style={{ maxWidth: "100%", paddingTop: "12px" }}>

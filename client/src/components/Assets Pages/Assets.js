@@ -87,18 +87,25 @@ export default function Assets() {
     setManufacturerTextBoxValue("");
   }
 
+
+
   function handleSaveButtonClicked() {
     //Add the asset to the "Assets" MongoDB collection, also add an "allocated" field
-    Axios.post("/api/assets_page/post", {
-      item: itemNameTextBoxValue,
-      modelNumber: modelNumberTextBoxValue,
-      manufacturer: manufacturerTextBoxValue,
-      stock: "0",
-    }).then(() => {
-      resetTextValues();
-      fetchItemsTableData();
-    });
-  }
+    if (itemNameTextBoxValue === "" || modelNumberTextBoxValue == "" || manufacturerTextBoxValue){
+      alert("All fields must have a value before submitting!");
+    }
+    else{
+      Axios.post("/api/assets_page/post", {
+        item: itemNameTextBoxValue,
+        modelNumber: modelNumberTextBoxValue,
+        manufacturer: manufacturerTextBoxValue,
+        stock: "0",
+      }).then(() => {
+        resetTextValues();
+        fetchItemsTableData();
+      });
+    } 
+}
 
   async function fetchItemsTableData() {
     //Pull all assets from "Assets" MongoDB collection

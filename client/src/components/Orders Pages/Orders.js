@@ -236,7 +236,7 @@ export default function Order() {
             />
           </FormGroup>
           <FormGroup className="w-50">
-            <Label>Technician Name</Label>
+            <Label>Technician Name:</Label>
             <Input
               value={technicianTextBox}
               onChange={(e) => setTechnicianTextBox(e.target.value)}
