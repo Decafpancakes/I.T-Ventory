@@ -47,6 +47,10 @@ export default function Users() {
   const [passwordTextField, setPasswordTextField] = useState("");
 
   function handleSaveButton() {
+    if (usernameTextField == "" || passwordTextField == ""){
+      alert("Username and Password must be filled out before saving a user!");
+    }
+    else{
     //Encrypt the password before sending over HTTP to endpoint
     bcrypt.hash(passwordTextField, 10, (err, hash) => {
       //Send encrypted password and username to endpoint
@@ -58,6 +62,8 @@ export default function Users() {
         console.log(response);
       });
     });
+
+    }
   }
 
   const classes = useStyles();
@@ -80,8 +86,8 @@ export default function Users() {
         />
         <TextField
           label="Password"
-          value={stateTextField}
-          onChange={(e) => setStateTextField(e.target.value)}
+          value={passwordTextField}
+          onChange={(e) => setPasswordTextField(e.target.value)}
           type="password"
         />
 

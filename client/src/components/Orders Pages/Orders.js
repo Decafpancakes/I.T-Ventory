@@ -10,11 +10,10 @@ import { Input, Form, FormGroup, Label } from "reactstrap";
 import Axios from "axios";
 import PublishIcon from "@material-ui/icons/Publish";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
-import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControl from "@material-ui/core/FormControl";
+import Autocomplete from '@material-ui/lab/Autocomplete'; 
+import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
@@ -55,7 +54,6 @@ export default function Order() {
   const [orderTableData, setOrderTableData] = useState([]);
   const [clientNameMenu, setClientNameMenu] = useState("");
   const [orderNumberTextBoxInput, setOrderNumberTextBoxInput] = useState("");
-  const [clientName, setClientName] = useState("");
   const [
     additionalOrderNotesTextBoxInput,
     setAdditionalOrderNotesTextBoxInput,
@@ -218,7 +216,6 @@ export default function Order() {
             {/* Drop down menu for client's name */}
             <FormGroup className="w-50">
               <InputLabel id="clientName">Client:</InputLabel>
-              <Select
               <Autocomplete
                 value={clientNameMenu}
                 onChange={(e) => setClientNameMenu(e.target.value)}
@@ -229,10 +226,6 @@ export default function Order() {
                 renderInput={(params) => <TextField {...params} label="autoHighlight" margin="normal" />}
               >
                 {clientName}
-              </Select>
-                {/* <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem> */}
               </Autocomplete>
             </FormGroup>
           </FormGroup>
