@@ -91,7 +91,7 @@ export default function Assets() {
 
   function handleSaveButtonClicked() {
     //Add the asset to the "Assets" MongoDB collection, also add an "allocated" field
-    if (itemNameTextBoxValue === "" || modelNumberTextBoxValue == "" || manufacturerTextBoxValue){
+    if (itemNameTextBoxValue === "" || modelNumberTextBoxValue == "" || manufacturerTextBoxValue === ""){
       alert("All fields must have a value before submitting!");
     }
     else{

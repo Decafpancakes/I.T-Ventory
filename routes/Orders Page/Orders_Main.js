@@ -58,7 +58,7 @@ router.get("/getOrderNumber", async (req, res) => {
   let documents = await clientOrders
     .find({}, { projection: { _id: 0, orderNumber: 1 } })
     .sort({
-      orderNumber: 1,
+      orderNumber: -1,
     })
     .toArray();
 

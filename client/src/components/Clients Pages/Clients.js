@@ -109,7 +109,6 @@ export default function Clients() {
         address: addressTextField,
         email: emailTextField,
       }).then((response) => {
-        console.log(response.status);
         getClientData();
       });
     }

@@ -10,8 +10,6 @@ import { Input, Form, FormGroup, Label } from "reactstrap";
 import Axios from "axios";
 import PublishIcon from "@material-ui/icons/Publish";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
-import { Autocomplete } from "@material-ui/lab";
-import { TextField } from "@material-ui/core";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -49,12 +47,10 @@ const theme = createMuiTheme({
 });
 
 export default function Order() {
-  //For the drop down menu
-  let clientName = [];
-
   const [orderTableData, setOrderTableData] = useState([]);
   const [clientNameMenu, setClientNameMenu] = useState("");
   const [orderNumberTextBoxInput, setOrderNumberTextBoxInput] = useState("");
+  const [clientName] = useState([]);
   const [
     additionalOrderNotesTextBoxInput,
     setAdditionalOrderNotesTextBoxInput,
@@ -215,10 +211,10 @@ export default function Order() {
           {/* Input to attatch a client */}
           <FormGroup className="w-50">
             {/* Drop down menu for client's name */}
-            <InputLabel id="clientName">Client Name:</InputLabel>
+            <InputLabel id="client_Name">Client Name:</InputLabel>
             <Select
-              name="client"
               id="Client Name"
+              autoWidth="true"
               value={clientNameMenu}
               onChange={(e) => setClientNameMenu(e.target.value)}
             >
