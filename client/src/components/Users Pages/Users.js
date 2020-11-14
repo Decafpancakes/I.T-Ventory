@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import { ReactDOM, element } from "react-dom";
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
@@ -35,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
 const Users = () => {
   const classes = useStyles();
   return (
-    // These 2 lines are needed to maek sure the information is below the app bar
+    // These 2 lines are needed to make sure the information is below the app bar
     <main className={classes.content}>
       <div className={classes.appBarSpacer} />
       <Typography variant="h4" gutterBottom component="h2">

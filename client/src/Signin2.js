@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import ReactDOM from "react-dom";
 import axios from "axios";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
@@ -12,8 +13,8 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Login from "./Auth/Login";
-import Registration from "./Auth/Registration";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import App from "./App";
 
 function Copyright() {
   return (
@@ -48,25 +49,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn2({ handleLogout }) {
+export default function SignIn2() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const classes = useStyles();
 
-  /* function handleSuccessfulAuth(data) {
-    handleLogin(data);
-  } */
-
-  function handleLogoutClick() {
-    axios
-      .delete("http://localhost:3001/logout", { withCredentials: true })
-      .then((response) => {
-        handleLogout();
-      })
-      .catch((error) => {
-        console.log("logout error", error);
-      });
-  }
+  const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: "#2481ba", // This is the "Nortech Blue"
+      },
+      secondary: {
+        main: "#F21D1D",
+      },
+      success: {
+        main: "#00e676",
+      },
+    },
+  });
 
   //Send the entered username and password to the backend
   async function handleLogin() {
@@ -75,15 +75,18 @@ export default function SignIn2({ handleLogout }) {
       password: password,
     });
 
-    
-    if(response.data.status === true){
-      //Put code for a successful login here
+    if (response.data.status === true) {
       //Reroute to dashboard
-      //Also make sure the user can't just navigate to another page without logging in via the URL bar
-      
-      alert("These credentials are correct");
-    }else{
-      //Put code for an invalid login here
+      ReactDOM.render(
+        <ThemeProvider theme={theme}>
+          <React.StrictMode>
+            <App />
+          </React.StrictMode>
+        </ThemeProvider>,
+        document.getElementById("root")
+      );
+    } else {
+      //Invalid Login
       alert("These credentials are incorrect");
     }
   }
@@ -134,10 +137,6 @@ export default function SignIn2({ handleLogout }) {
           >
             Sign In
           </Button>
-          {/* <Registration
-            handleSuccessfulAuth={(data) => handleSuccessfulAuth(data)}
-          /> */}
-          {/* <Login handleSuccessfulAuth={(data) => handleSuccessfulAuth(data)} /> */}
           <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2" href="https://bit.ly/3ky7jgn">

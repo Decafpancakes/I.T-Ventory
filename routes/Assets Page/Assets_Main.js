@@ -4,7 +4,6 @@ const router = express.Router();
 
 //Recieves HTTP POST requests at http://localhost:3000/api/assets_page/post
 router.post("/post", async (req, res) => {
-  //const db = req.app.get('db');
   const assets = req.app.get("db").db("itventory").collection("Assets");
 
   //insert items into DB

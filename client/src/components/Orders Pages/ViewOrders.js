@@ -28,24 +28,23 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ViewOrders() {
-
   //Initializes the orderTableData variable as a blank array
   const [orderTableData, setOrderTableData] = useState([]);
 
-  useEffect(()=>{
+  useEffect(() => {
     getOrderTableData();
-  },[]);
+  }, []);
 
-  function getOrderTableData(){
-    Axios.get("/api/orders_page/getClientOrders").then((documents)=>{
+  function getOrderTableData() {
+    Axios.get("/api/orders_page/getClientOrders").then((documents) => {
       //This is a stupid work around for bad formatting in the table
-      documents.data.forEach((document)=>{
+      documents.data.forEach((document) => {
         let newAssetArray = [];
-        document.assets.forEach((assetTag)=>{
+        document.assets.forEach((assetTag) => {
           assetTag = assetTag.toString() + ", ";
           newAssetArray.push(assetTag);
         });
-        Object.assign(document, {assets: newAssetArray});
+        Object.assign(document, { assets: newAssetArray });
       });
 
       //Populates the table
@@ -53,7 +52,7 @@ export default function ViewOrders() {
     });
   }
 
-  const [columns, setColumns] = useState([
+  const columns = [
     {
       title: "Item",
       field: "item",
@@ -84,7 +83,7 @@ export default function ViewOrders() {
       field: "assets",
       editable: "never",
     },
-  ]);
+  ];
 
   const classes = useStyles();
   return (

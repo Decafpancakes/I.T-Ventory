@@ -53,7 +53,7 @@ export default function Assets() {
   const [manufacturerTextBoxValue, setManufacturerTextBoxValue] = useState("");
 
   //Determines the columns for the Items table
-  const [columns, setColumns] = useState([
+  const columns = useState[
     {
       title: "Item",
       field: "item",
@@ -75,7 +75,7 @@ export default function Assets() {
       initialEditValue: "0",
       editable: "onAdd",
     },
-  ]);
+  ];
 
   useEffect(() => {
     fetchItemsTableData();
@@ -135,7 +135,7 @@ export default function Assets() {
 
   const classes = useStyles();
   return (
-    // These 2 lines are needed to maek sure the information is below the app bar
+    // These 2 lines are needed to make sure the information is below the app bar
     <main className={classes.content}>
       <div className={classes.appBarSpacer} />
 

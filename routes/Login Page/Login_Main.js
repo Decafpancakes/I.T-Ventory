@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcrypt");
-const session = require("express-session");
 
 //Recieves HTTP POST requests at http://localhost:3000/api/login_page/signup
 //Used for adding users to the database
@@ -45,15 +44,6 @@ router.post("/login", async (req, res) => {
       status: result,
     });
   });
-});
-
-//Recieves HTTP GET requests at http://localhost:3000/api/login_page/logout
-//Used for logging users out
-router.get("/logout", async (req,res)=>{
-    req.session.destroy();
-    res.json({
-        session: req.session
-    });
 });
 
 module.exports = router;

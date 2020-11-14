@@ -7,20 +7,6 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Axios from "axios";
 
-let id = 0;
-function createData(name, stock, allocated, order) {
-  id += 1;
-  return { id, name, stock, allocated, order };
-}
-
-/* const data = [
-  createData("Dell 2GR91 Slim USB Keboard ", 50, 20, 15),
-  createData("HP SB USB Wired Optical Scroll Mouse", 50, 20, 8),
-  createData("Microsoft Surface Dock", 10, 3, 4),
-  createData("Segate 1TB EHD", 8, 0, 10),
-  createData("HP EliteDisplay S340c 34in", 3, 1, 5),
-]; */
-
 export default class SimpleTable extends React.Component {
   constructor(props) {
     super(props);
@@ -49,8 +35,8 @@ export default class SimpleTable extends React.Component {
 
   render() {
     return (
-      <Paper /* className={classes.root} */>
-        <Table /* className={classes.table} */>
+      <Paper>
+        <Table>
           <TableHead>
             <TableRow>
               <TableCell>Items</TableCell>

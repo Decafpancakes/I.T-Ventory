@@ -152,7 +152,7 @@ export default function Order() {
   }
 
   //Determines the columns for the Items table
-  const [columns, setColumns] = useState([
+  const columns = [
     {
       title: "Item",
       field: "item",
@@ -178,7 +178,7 @@ export default function Order() {
       field: "allocated",
       editable: "always",
     },
-  ]);
+  ];
 
   const classes = useStyles();
   return (
@@ -275,13 +275,6 @@ export default function Order() {
               Search: () => <SearchIcon />,
               ResetSearch: () => <DeleteIcon />,
             }}
-            // actions={[
-            //   {
-            //     icon: "delete",
-            //     tooltip: "Delete Item",
-            //     onClick: (event, rowData) => deleteItem(rowData.item)
-            //   }
-            // ]}
             options={{
               headerStyle: {
                 backgroundColor: "#2481ba",
@@ -302,15 +295,6 @@ export default function Order() {
             alignItems: "center",
           }}
         ></div>
-        {/* <Button
-          onClick={handleSubmitOrder}
-          type="submit"
-          variant="contained"
-          color="submit"
-        >
-          <PublishIcon />
-          Submit Order
-        </Button> */}
         <ThemeProvider theme={theme}>
           <Button
             onClick={handleSubmitOrder}
