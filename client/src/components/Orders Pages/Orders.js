@@ -10,6 +10,11 @@ import { Input, Form, FormGroup, Label } from "reactstrap";
 import Axios from "axios";
 import PublishIcon from "@material-ui/icons/Publish";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
@@ -46,6 +51,7 @@ const theme = createMuiTheme({
 export default function Order() {
   const [orderTableData, setOrderTableData] = useState([]);
   const [clientNameTextBoxInput, setClientNameTextBoxInput] = useState("");
+  const [clientNameMenu, setClientNameMenu] = useState("");
   const [orderNumberTextBoxInput, setOrderNumberTextBoxInput] = useState("");
   const [
     additionalOrderNotesTextBoxInput,
@@ -180,6 +186,7 @@ export default function Order() {
     },
   ];
 
+  const clientName = [];
   const classes = useStyles();
   return (
     <main className={classes.content}>
@@ -194,15 +201,26 @@ export default function Order() {
         <Form>
           {/* Input to attatch a client */}
           <FormGroup className="w-50">
-            <Label for="clientName">Client:</Label>
-            <Input
-              value={clientNameTextBoxInput}
-              onChange={(e) => setClientNameTextBoxInput(e.target.value)}
-              name="client"
-              id="clientName"
-              placeholder="Client Name"
-            />
+
+            {/* Drop down menu for client's name */}
+            <FormGroup className="w-50">
+              <InputLabel id="clientName">Client:</InputLabel>
+
+
+              <Select
+                value={clientNameMenu}
+                onChange={(e) => setClientNameMenu(e.target.value)}
+                name="client"
+                id="Client Name"
+              >
+                {clientName}
+                <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem>
+              </Select>
+            </FormGroup>
           </FormGroup>
+
           {/* //This is to attatch who is making the order */}
           <FormGroup className="w-50">
             <Label for="orderNumber">Order #:</Label>
