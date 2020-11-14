@@ -35,9 +35,6 @@ router.post("/login", async (req, res) => {
   //Get user information from db
   let user = await users.findOne({ username: username });
 
-  //Store the _id from MongoDB into the sessionID so we can keep the user logged in
-  req.session.userId = user._id;
-
   //Make sure it's correct
   bcrypt.compare(password, user.password, (err, result) => {
     res.json({
