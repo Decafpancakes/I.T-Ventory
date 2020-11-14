@@ -25,6 +25,7 @@
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
+    "mdbreact": "^4.27.0",
     "mongodb": "^3.6.2",
     "nodemon": "^2.0.6",
     "passport": "^0.4.1",

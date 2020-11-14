@@ -10,6 +10,7 @@ import { Input, Form, FormGroup, Label } from "reactstrap";
 import Axios from "axios";
 import PublishIcon from "@material-ui/icons/Publish";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import SelectSearch from 'react-select-search';
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
@@ -42,6 +43,18 @@ const theme = createMuiTheme({
     },
   },
 });
+
+const options = [
+  {name: 'Swedish', value: 'sv'},
+  {name: 'English', value: 'en'},
+  {
+      type: 'group',
+      name: 'Group name',
+      items: [
+          {name: 'Spanish', value: 'es'},
+      ]
+  },
+];
 
 export default function Order() {
   const [orderTableData, setOrderTableData] = useState([]);
@@ -127,7 +140,7 @@ export default function Order() {
           }).then((response) => {
             console.log(response.status);
           });
-        });
+        });        
 
         //Subtract allocated from stock of each item
         allocatedItemsArray.forEach((element) => {
@@ -193,7 +206,7 @@ export default function Order() {
 
         <Form>
           {/* Input to attatch a client */}
-          <FormGroup className="w-50">
+          {/* <FormGroup className="w-50">
             <Label for="clientName">Client:</Label>
             <Input
               value={clientNameTextBoxInput}
@@ -202,7 +215,8 @@ export default function Order() {
               id="clientName"
               placeholder="Client Name"
             />
-          </FormGroup>
+          </FormGroup> */}
+          <SelectSearch options={options} value="sv" name="language" placeholder="Choose your language" />
           {/* //This is to attatch who is making the order */}
           <FormGroup className="w-50">
             <Label for="orderNumber">Order #:</Label>
