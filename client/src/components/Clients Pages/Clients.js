@@ -53,7 +53,7 @@ export default function Clients() {
   const [phoneNumberTextField, setPhoneNumberTextField] = useState("");
   const [emailTextField, setEmailTextField] = useState("");
 
-  const [columns, setColumns] = useState([
+  const columns = [
     {
       title: "Client ",
       field: "client",
@@ -84,7 +84,7 @@ export default function Clients() {
       field: "address",
       editable: "never",
     },
-  ]);
+  ];
 
   useEffect(() => {
     getClientData();

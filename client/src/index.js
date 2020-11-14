@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import SignIn2 from "./Signin2";
 
 const theme = createMuiTheme({
   palette: {
@@ -20,10 +20,11 @@ const theme = createMuiTheme({
 
 export default theme;
 
+//Renders the sign in page
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <React.StrictMode>
-      <App />
+      <SignIn2 />
     </React.StrictMode>
   </ThemeProvider>,
   document.getElementById("root")

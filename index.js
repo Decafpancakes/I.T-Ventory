@@ -1,13 +1,7 @@
-//This is the primary backend file.
-//All other backend files are within the "backend-files" folder
-//See "Things to remember" if the app is not working for you
-
 //Required imports
 const express = require("express");
 const app = express();
 const path = require("path");
-const session = require("express-session");
-//const cookieParser = require('cookie-parser');
 
 //Establishes a variable "client" with the database connection info
 //Login information is in Secret.js, which is in the .gitignore so it must be locally created on each machine
@@ -17,14 +11,6 @@ let client = new MongoClient(getSecret("uri"), {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-
-//For Login stuff
-//using sessions for tracking logins
-app.use(session({
-  secret: 'this is a test',
-  resave: true,
-  saveUninitialized: false
-}));
 
 //Allows the app to read JSON data
 app.use(express.json());
@@ -40,7 +26,6 @@ app.use(
   require("./routes/Assets Page/Assets_Main")
 );
 app.use("/api/orders_page", require("./routes/Orders Page/Orders_Main"));
-app.use("/api/reports_page", require("./routes/Reports Page/Reports_Main"));
 
 //All are needed to prevent crashing on page refresh, this is also what serves the frontend to the browser
 app.set("views", path.join(__dirname, "views"));
@@ -67,5 +52,4 @@ client.connect((err, database) => {
   });
 });
 
-//This line is apparently not required, but I'll leave it here in case stuff starts to break
 module.exports = app;

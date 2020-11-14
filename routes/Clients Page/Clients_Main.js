@@ -5,7 +5,6 @@ const router = express.Router();
 //Recieves HTTP GET requests at http://localhost:3000/api/clients_page/clientInfo
 //Used to get all client data
 router.get("/clientInfo", async (req, res) => {
-  //Establish a database connection
   const clients = req.app.get("db").db("itventory").collection("Clients");
 
   let documents = await clients.find({}).toArray();
@@ -15,7 +14,6 @@ router.get("/clientInfo", async (req, res) => {
 //Recieves HTTP POST requests at http://localhost:3000/api/clients_page/postInfo
 //Used to post client info
 router.post("/postInfo", async (req, res) => {
-  //Establish a database connection
   const clients = req.app.get("db").db("itventory").collection("Clients");
 
   let response = await clients.insertOne({
@@ -32,7 +30,6 @@ router.post("/postInfo", async (req, res) => {
 //Recieves HTTP POST requests at http://localhost:3000/api/clients_page/updateInfo
 //Used to update client info
 router.post("/updateInfo", async (req, res) => {
-  //Establish a database connection
   const clients = req.app.get("db").db("itventory").collection("Clients");
 
   let response = await clients.updateOne(

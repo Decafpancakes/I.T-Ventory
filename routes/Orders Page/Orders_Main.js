@@ -5,7 +5,6 @@ const router = express.Router();
 //Recieves HTTP GET requests at http://localhost:3000/api/orders_page/get
 //For populating Order Table
 router.get("/getAssets", async (req, res) => {
-  //Establish a database connection
   const assets = req.app.get("db").db("itventory").collection("Assets");
 
   let documents = await assets.find({}).toArray();
@@ -16,7 +15,6 @@ router.get("/getAssets", async (req, res) => {
 //Recieves HTTP GET requests at http://localhost:3000/api/orders_page/getClientOrders
 //For populating Client Order Table
 router.get("/getClientOrders", async (req, res) => {
-  //Establish a database connection
   const clientOrders = req.app
     .get("db")
     .db("itventory")
@@ -43,7 +41,7 @@ router.get("/getClientOrders", async (req, res) => {
       }
     });
     //Add those assets to the order they are associated with
-    Object.assign(document, {assets: assetTagsForClient});
+    Object.assign(document, { assets: assetTagsForClient });
   });
 
   res.json(documents);
@@ -52,7 +50,6 @@ router.get("/getClientOrders", async (req, res) => {
 //Recieves HTTP GET requests at http://localhost:3000/api/orders_page/getOrderNumber
 //For filling the order number text box
 router.get("/getOrderNumber", async (req, res) => {
-  //Establish a database connection
   const clientOrders = req.app
     .get("db")
     .db("itventory")
@@ -71,7 +68,6 @@ router.get("/getOrderNumber", async (req, res) => {
 //Recieves HTTP POST requests at http://localhost:3000/api/orders_page/post
 //For inserting a client order
 router.post("/post", async (req, res) => {
-  //Establish a database connection
   const clientOrders = req.app
     .get("db")
     .db("itventory")

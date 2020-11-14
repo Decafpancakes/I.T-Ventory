@@ -1,7 +1,9 @@
 //import React from 'react';
-import React, { Component, useEffect, useState } from "react";
-import axios from "axios";
-import { BrowserRouter, Router, Route, Link, Switch } from "react-router-dom";
+import React, { useState } from "react";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import ReactDOM from "react-dom";
+import SignIn2 from "./Signin2";
+import { BrowserRouter,  Route, Link, Switch } from "react-router-dom";
 import clsx from "clsx";
 import Drawer from "@material-ui/core/Drawer";
 import AppBar from "@material-ui/core/AppBar";
@@ -30,25 +32,12 @@ import ViewOrders from "./components/Orders Pages/ViewOrders";
 import Home from "./components/Home Pages/Home";
 import Clients from "./components/Clients Pages/Clients";
 import Users from "./components/Users Pages/Users";
-import SignIn2 from "./components/Signin2";
 import Assets from "./components/Assets Pages/Assets";
 import Login from "./components/Auth/Login";
 import Registration from "./components/Auth/Registration";
 
-//Test Code for default page
-
-function Display(props) {
-  const isLoggedIn = props.isLoggedIn;
-  if (isLoggedIn) {
-    return <AppBar />;
-  }
-  return <SignIn2 />;
-}
-
 //Defining
-const App = (props) => {
-  const [loggedInStatus, setLoggedInStatus] = useState("NOT_LOGGED_IN");
-  const [user, setUser] = useState({});
+const App = () => {
 
   const drawerWidth = 240;
   const useStyles = makeStyles((theme) => ({
@@ -140,33 +129,6 @@ const App = (props) => {
   }));
   //End Styling
 
-  /* function checkLoginStatus() {
-    axios
-      .get("http://localhost:3001/logged_in", { withCredentials: true })
-      .then(response => {
-        if (response.data.logged_in && loggedInStatus === "NOT_LOGGED_IN") {
-          setLoggedInStatus("LOGGED_IN");
-          setUser(response.data.user);
-        } else if (!response.data.logged_in & loggedInStatus === "LOGGED_IN") {
-          setLoggedInStatus("NOT_LOGGED_IN");
-          setUser({});
-        }
-      })
-    
-      .catch(error => {
-        console.log("check login error", error);
-      });
-  } */
-
-  useEffect(() => {
-    //checkLoginStatus();
-  }, []);
-
-  function handleLogout() {
-    setLoggedInStatus("NOT_LOGGED_IN");
-    setUser({});
-  }
-
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -178,10 +140,32 @@ const App = (props) => {
     setOpen(false);
   };
 
-  //All Styling
+  const muiTheme = createMuiTheme({
+    palette: {
+      primary: {
+        main: "#2481ba", // This is the "Nortech Blue"
+      },
+      secondary: {
+        main: "#F21D1D",
+      },
+      success: {
+        main: "#00e676",
+      },
+    },
+  });
+
+  function handleLogout(){
+    ReactDOM.render(
+      <ThemeProvider theme={muiTheme}>
+        <React.StrictMode>
+          <SignIn2 />
+        </React.StrictMode>
+      </ThemeProvider>,
+      document.getElementById("root")
+    );
+  }
 
   return (
-    //<Display className="App" isLoggedIn={false}>
       <div className={classes.root}>
         <CssBaseline />
         <AppBar
@@ -215,7 +199,7 @@ const App = (props) => {
             </div>
 
             <div className={classes.logout}>
-              <Button type="submit" variant="contained" color="secondary">
+              <Button onClick={handleLogout} type="submit" variant="contained" color="secondary">
                 Logout
               </Button>
             </div>
@@ -248,7 +232,7 @@ const App = (props) => {
 
             <Divider />
 
-            <Link to="/Home" className={classes.link}>
+            <Link to="/" className={classes.link}>
               <ListItem button>
                 <ListItemIcon>
                   <HomeIcon />
@@ -312,8 +296,7 @@ const App = (props) => {
           </Drawer>
 
           <Switch>
-            <Route exact path={"/"} component={SignIn2} />
-            <Route path={"/Home"} component={Home} />
+            <Route exact path={"/"} component={Home} />
             <Route path={"/Create Order"} component={Order} />
             <Route path={"/View Orders"} component={ViewOrders} />
             <Route path={"/Clients"} component={Clients} />
@@ -323,7 +306,6 @@ const App = (props) => {
           </Switch>
         </BrowserRouter>
       </div>
-    //</Display>
   );
 };
 
