@@ -15,8 +15,6 @@ import { TextField } from "@material-ui/core";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
-import Autocomplete from '@material-ui/lab/Autocomplete'; 
-import TextField from "@material-ui/core/TextField";
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
@@ -219,10 +217,10 @@ export default function Order() {
             {/* Drop down menu for client's name */}
             <InputLabel id="clientName">Client Name:</InputLabel>
             <Select
-              labelId="clientName"
-              id="demo-simple-select"
+              name="client"
+              id="Client Name"
               value={clientNameMenu}
-              onChange={(e)=>setClientNameMenu(e.target.value)}
+              onChange={(e) => setClientNameMenu(e.target.value)}
             >
               {clientName}
             </Select>
