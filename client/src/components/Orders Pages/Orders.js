@@ -10,6 +10,9 @@ import { Input, Form, FormGroup, Label } from "reactstrap";
 import Axios from "axios";
 import PublishIcon from "@material-ui/icons/Publish";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import { Autocomplete } from "@material-ui/lab";
+import { TextField } from "@material-ui/core";
+import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import Autocomplete from '@material-ui/lab/Autocomplete'; 
@@ -214,20 +217,15 @@ export default function Order() {
           {/* Input to attatch a client */}
           <FormGroup className="w-50">
             {/* Drop down menu for client's name */}
-            <FormGroup className="w-50">
-              <InputLabel id="clientName">Client:</InputLabel>
-              <Autocomplete
-                value={clientNameMenu}
-                onChange={(e) => setClientNameMenu(e.target.value)}
-                label="Client Name"
-                name="client"
-                id="Client Name"
-                autoHighlight
-                renderInput={(params) => <TextField {...params} label="autoHighlight" margin="normal" />}
-              >
-                {clientName}
-              </Autocomplete>
-            </FormGroup>
+            <InputLabel id="clientName">Client Name:</InputLabel>
+            <Select
+              labelId="clientName"
+              id="demo-simple-select"
+              value={clientNameMenu}
+              onChange={(e)=>setClientNameMenu(e.target.value)}
+            >
+              {clientName}
+            </Select>
           </FormGroup>
 
           {/* //This is to attatch who is making the order */}
