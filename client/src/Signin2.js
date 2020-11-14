@@ -15,7 +15,11 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
 import App from "./App";
-import bcrypt from "bcryptjs";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 function Copyright() {
   return (
@@ -38,8 +42,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
   },
   avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    margin: theme.spacing(),
+    backgroundColor: theme.palette.primary.main,
   },
   form: {
     width: "100%",
@@ -48,12 +52,26 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  large: {
+    width: theme.spacing(10),
+    height: theme.spacing(10),
+  },
 }));
 
 export default function SignIn2() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const classes = useStyles();
+
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const theme = createMuiTheme({
     palette: {
@@ -117,6 +135,7 @@ export default function SignIn2() {
             required
             fullWidth
             autoFocus
+            label="Username"
           />
           <TextField
             value={password}
@@ -127,6 +146,7 @@ export default function SignIn2() {
             fullWidth
             type="password"
             autoComplete="current-password"
+            label="Password"
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -144,9 +164,30 @@ export default function SignIn2() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2" href="https://bit.ly/3ky7jgn">
+              <Link href="#" variant="body2" onClick={handleClickOpen}>
                 Forgot password?
               </Link>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Forgot Password?"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText id="alert-dialog-description">
+                    If you forgot your password, you'll need to contact the site
+                    administrator at support@ntdt.co
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose} color="primary">
+                    OK
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </Grid>
           </Grid>
         </form>
