@@ -113,11 +113,7 @@ export default function Users() {
       </div>
 
       <form className={classes.input}>
-        <TextField
-          label="Employee Name"
-          value={clientNameTextField}
-          onChange={(e) => setClientNameTextField(e.target.value)}
-        />
+  
         <TextField
           label="Username"
           value={addressTextField}
@@ -127,11 +123,6 @@ export default function Users() {
           label="Password"
           value={stateTextField}
           onChange={(e) => setStateTextField(e.target.value)}
-        />
-        <TextField
-          label="Email"
-          value={emailTextField}
-          onChange={(e) => setEmailTextField(e.target.value)}
         />
         
         <div style={{ maxWidth: "100%", paddingTop: "12px" }}>
@@ -146,47 +137,6 @@ export default function Users() {
           </Button>
         </div>
       </form>
-
-      <div style={{ maxWidth: "100%", paddingTop: "100px" }}>
-        <MaterialTable
-          //defines the columns, what the title is and its associated value.
-          columns={columns}
-          data={clientsTableData}
-          //allows the user to edit the cells
-          cellEditable={{
-            onCellEditApproved: (newValue, oldValue, rowData, columnDef) => {
-              return new Promise((resolve, reject) => {
-                //Sends the info it needs to update the database with
-                Axios.post("/api/clients_page/updateInfo", {
-                  client: rowData.client,
-                  infoToUpdate: columnDef.field,
-                  valueToUpdateWith: newValue,
-                })
-                  .then(() => {
-                    getClientData();
-                    resolve(true);
-                  })
-                  .catch(() => {
-                    getClientData();
-                    resolve(false);
-                  });
-              });
-            },
-          }}
-          title="View Users"
-          icons={{
-            Clear: () => <DeleteIcon />,
-            Search: () => <SearchIcon />,
-            ResetSearch: () => <DeleteIcon />,
-          }}
-          options={{
-            headerStyle: {
-              backgroundColor: "#2481ba",
-              color: "#FFF",
-            },
-          }}
-        />
-      </div>
       <div />
     </main>
   );

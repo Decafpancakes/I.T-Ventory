@@ -10,7 +10,6 @@ import { Input, Form, FormGroup, Label } from "reactstrap";
 import Axios from "axios";
 import PublishIcon from "@material-ui/icons/Publish";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
-import SelectSearch from 'react-select-search';
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
