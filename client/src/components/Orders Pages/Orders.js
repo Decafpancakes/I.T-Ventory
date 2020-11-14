@@ -10,6 +10,11 @@ import { Input, Form, FormGroup, Label } from "reactstrap";
 import Axios from "axios";
 import PublishIcon from "@material-ui/icons/Publish";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core";
+import Select from "@material-ui/core/Select";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
@@ -44,9 +49,13 @@ const theme = createMuiTheme({
 });
 
 export default function Order() {
+  //For the drop down menu
+  let clientName = [];
+
   const [orderTableData, setOrderTableData] = useState([]);
-  const [clientNameTextBoxInput, setClientNameTextBoxInput] = useState("");
+  const [clientNameMenu, setClientNameMenu] = useState("");
   const [orderNumberTextBoxInput, setOrderNumberTextBoxInput] = useState("");
+  const [clientName, setClientName] = useState("");
   const [
     additionalOrderNotesTextBoxInput,
     setAdditionalOrderNotesTextBoxInput,
@@ -59,11 +68,12 @@ export default function Order() {
   }, []);
 
   function searchAvailableData() {
-    //get all available assets
+    //Get all available assets
     Axios.get("/api/orders_page/getAssets").then((documents) => {
       setOrderTableData(documents.data);
     });
-    //set order number value
+
+    //Set order number value
     Axios.get("/api/orders_page/getOrderNumber").then((documents) => {
       if (documents.data.length === 0) {
         setOrderNumberTextBoxInput("0");
@@ -72,10 +82,21 @@ export default function Order() {
         setOrderNumberTextBoxInput(orderNumber);
       }
     });
+
+    //Get Client names for drop down menu
+    Axios.get("/api/orders_page/getClientNames").then((documents) => {
+      //Loops through all clients returned from DB
+      documents.data.forEach((element) => {
+        //Push a MenuItem component to clientName
+        clientName.push(
+          <MenuItem value={element.client}>{element.client}</MenuItem>
+        );
+      });
+    });
   }
 
   function handleSubmitOrder() {
-    if (clientNameTextBoxInput === "" || orderNumberTextBoxInput === "") {
+    if (clientNameMenu === "" || orderNumberTextBoxInput === "") {
       alert("You have not entered all of the required information");
     } else {
       //check if they have allocated stock to the client (don't allow nothing to be allocated)
@@ -119,7 +140,7 @@ export default function Order() {
           Axios.post("/api/orders_page/post", {
             item: element.item,
             allocated: element.allocated,
-            clientName: clientNameTextBoxInput,
+            clientName: clientNameMenu,
             orderNumber: orderNumberTextBoxInput,
             notes: additionalOrderNotesTextBoxInput,
             technician: technicianTextBox,
@@ -127,7 +148,7 @@ export default function Order() {
           }).then((response) => {
             console.log(response.status);
           });
-        });        
+        });
 
         //Subtract allocated from stock of each item
         allocatedItemsArray.forEach((element) => {
@@ -139,7 +160,7 @@ export default function Order() {
           });
         });
 
-        setClientNameTextBoxInput("");
+        setClientNameMenu("");
         setAdditionalOrderNotesTextBoxInput("");
         setPOOrderTextBox("");
         setTechnicianTextBox("");
@@ -194,15 +215,28 @@ export default function Order() {
         <Form>
           {/* Input to attatch a client */}
           <FormGroup className="w-50">
-            <Label for="clientName">Client:</Label>
-            <Input
-              value={clientNameTextBoxInput}
-              onChange={(e) => setClientNameTextBoxInput(e.target.value)}
-              name="client"
-              id="clientName"
-              placeholder="Client Name"
-            />
+            {/* Drop down menu for client's name */}
+            <FormGroup className="w-50">
+              <InputLabel id="clientName">Client:</InputLabel>
+              <Select
+              <Autocomplete
+                value={clientNameMenu}
+                onChange={(e) => setClientNameMenu(e.target.value)}
+                label="Client Name"
+                name="client"
+                id="Client Name"
+                autoHighlight
+                renderInput={(params) => <TextField {...params} label="autoHighlight" margin="normal" />}
+              >
+                {clientName}
+              </Select>
+                {/* <MenuItem value={10}>Ten</MenuItem>
+                <MenuItem value={20}>Twenty</MenuItem>
+                <MenuItem value={30}>Thirty</MenuItem> */}
+              </Autocomplete>
+            </FormGroup>
           </FormGroup>
+
           {/* //This is to attatch who is making the order */}
           <FormGroup className="w-50">
             <Label for="orderNumber">Order #:</Label>

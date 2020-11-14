@@ -3,11 +3,9 @@ import Typography from "@material-ui/core/Typography";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import SaveIcon from "@material-ui/icons/Save";
-import DeleteIcon from "@material-ui/icons/Delete";
-import SearchIcon from "@material-ui/icons/Search";
 import React, { useEffect, useState } from "react";
-import MaterialTable from "material-table";
 import Axios from "axios";
+import bcrypt from "bcryptjs";
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
@@ -45,36 +43,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Users() {
-  const [clientsTableData, setClientsTableData] = useState([]);
-  const [clientNameTextField, setClientNameTextField] = useState("");
-  const [addressTextField, setAddressTextField] = useState("");
-  const [cityTextField, setCityTextField] = useState("");
-  const [stateTextField, setStateTextField] = useState("");
-  const [phoneNumberTextField, setPhoneNumberTextField] = useState("");
-  const [emailTextField, setEmailTextField] = useState("");
-
-
-  useEffect(() => {
-    getClientData();
-  }, []);
-
-  function getClientData() {
-    Axios.get("/api/clients_page/clientInfo").then((documents) => {
-      setClientsTableData(documents.data);
-    });
-  }
+  const [usernameTextField, setUsernameTextField] = useState("");
+  const [passwordTextField, setPasswordTextField] = useState("");
 
   function handleSaveButton() {
-    Axios.post("/api/clients_page/postInfo", {
-      client: clientNameTextField,
-      phoneNumber: phoneNumberTextField,
-      city: cityTextField,
-      state: stateTextField,
-      address: addressTextField,
-      email: emailTextField,
-    }).then((response) => {
-      console.log(response.status);
-      getClientData();
+    //Encrypt the password before sending over HTTP to endpoint
+    bcrypt.hash(passwordTextField, 10, (err, hash) => {
+      //Send encrypted password and username to endpoint
+      Axios.post("/api/login_page/signup", {
+        username: usernameTextField,
+        password: hash,
+      }).then((response)=>{
+        //Handle response
+        console.log(response);
+      });
     });
   }
 
@@ -91,11 +73,10 @@ export default function Users() {
       </div>
 
       <form className={classes.input}>
-  
         <TextField
           label="Username"
-          value={addressTextField}
-          onChange={(e) => setAddressTextField(e.target.value)}
+          value={usernameTextField}
+          onChange={(e) => setUsernameTextField(e.target.value)}
         />
         <TextField
           label="Password"
@@ -103,7 +84,7 @@ export default function Users() {
           onChange={(e) => setStateTextField(e.target.value)}
           type="password"
         />
-        
+
         <div style={{ maxWidth: "100%", paddingTop: "12px" }}>
           <Button
             onClick={handleSaveButton}
@@ -120,4 +101,3 @@ export default function Users() {
     </main>
   );
 }
-
