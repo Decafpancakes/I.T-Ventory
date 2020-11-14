@@ -317,10 +317,9 @@ const App = (props) => {
             <Route path={"/Create Order"} component={Order} />
             <Route path={"/View Orders"} component={ViewOrders} />
             <Route path={"/Clients"} component={Clients} />
-            <Route path={"/Users"} component={Users} />
             <Route path={"/Assets"} component={Assets} />
             <Route path={"/Login"} component={Login} />
-            <Route path={"/Register"} component={Registration} />
+            <Route path={"/Register"} component={Users} />
           </Switch>
         </BrowserRouter>
       </div>
