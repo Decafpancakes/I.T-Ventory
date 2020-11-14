@@ -6,17 +6,14 @@ const bcrypt = require("bcrypt");
 //Used for adding users to the database
 router.post("/signup", async (req, res) => {
   //Assume that the password is already hashed when sent
-  let username = req.body.username;
-  let password = req.body.password;
-
   const users = req.app.get("db").db("itventory").collection("Users");
 
-    //Once hased, post the user information to the database
-    let response = await users.insertOne({
-      username: username,
-      password: password,
-    });
-    res.json(response);
+  //Once hased, post the user information to the database
+  let response = await users.insertOne({
+    username: req.body.username,
+    password: req.body.password,
+  });
+  res.json(response);
   //on the front-end file, if the response is 200, consider the user logged in
 });
 
