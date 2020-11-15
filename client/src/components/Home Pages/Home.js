@@ -1,14 +1,15 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import SimpleBarChart from "./BarChart";
+import SimpleTable from "./SimpleTable";
 import Typography from "@material-ui/core/Typography";
-import { ReactDOM, element } from "react-dom";
 
 const useStyles = makeStyles((theme) => ({
   // necessary for content to be below app bar
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     height: "100vh",
     overflow: "auto",
   },
@@ -32,18 +33,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Users = () => {
+const Home = () => {
   const classes = useStyles();
   return (
     // These 2 lines are needed to maek sure the information is below the app bar
     <main className={classes.content}>
       <div className={classes.appBarSpacer} />
       <Typography variant="h4" gutterBottom component="h2">
-        Users
+        Orders
       </Typography>
-      <div />
+      <Typography component="div" className={classes.chartContainer}>
+        <SimpleBarChart />
+      </Typography>
+      <Typography variant="h4" gutterBottom component="h2">
+        Assets
+      </Typography>
+      <div className={classes.tableContainer}>
+        <SimpleTable />
+      </div>
     </main>
   );
 };
 
-export default Users;
+export default Home;
