@@ -19,6 +19,7 @@
   "homepage": "https://github.com/kevmich/CMPS285-Fall2020-Section1-Group-1#readme",
   "dependencies": {
     "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.5.2",
     "build": "^0.1.4",

@@ -33,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
   },
+  searchInput: {
+    minWidth: "200px",
+    margin: "5px",
+  },
 }));
 
 const theme = createMuiTheme({
@@ -213,6 +217,9 @@ export default function Order() {
             {/* Drop down menu for client's name */}
             <InputLabel id="client_Name">Client Name:</InputLabel>
             <Select
+              variant="outlined"
+              className={classes.searchInput}
+              autoComplete
               id="Client Name"
               autoWidth="true"
               value={clientNameMenu}
